@@ -1,1 +1,1 @@
-# Todolist (Igor) with Reducer + tests
+# 10: среда 2 занятие react-redux, TodolistWithRedux
