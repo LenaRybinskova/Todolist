@@ -1,4 +1,4 @@
-import React, {Reducer, useReducer, useState} from 'react';
+import React, {Reducer, useCallback, useReducer, useState} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v1} from 'uuid';
@@ -69,9 +69,10 @@ function AppWithRedux() {
         dispatch(changeTodolistTitleAC(id, title))
     }
 
-    function addTodolist(title: string) {
-        dispatch(addTodolistAC(title))
-    }
+
+    const addTodolist=useCallback((title: string)=> {
+        dispatch(addTodolistAC(title))},[dispatch])
+
 
     return (
         <div className="App">
@@ -91,18 +92,7 @@ function AppWithRedux() {
                     <AddItemForm addItem={addTodolist}/>
                 </Grid>
                 <Grid container spacing={3}>
-                    {
-                        todolists.map(tl => {
-                            // let allTodolistTasks = tasks[tl.id];
-                            // let tasksForTodolist = allTodolistTasks;
-                            //
-                            // if (tl.filter === "active") {
-                            //     tasksForTodolist = allTodolistTasks.filter(t => t.isDone === false);
-                            // }
-                            // if (tl.filter === "completed") {
-                            //     tasksForTodolist = allTodolistTasks.filter(t => t.isDone === true);
-                            // }
-
+                    {todolists.map(tl => {
                             return <Grid key={tl.id} item>
                                 <Paper style={{padding: "10px"}}>
                                     <TodolistWithRedux
