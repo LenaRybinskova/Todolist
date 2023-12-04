@@ -1,21 +1,14 @@
-import React from 'react';
+import React,{memo} from 'react';
+import {ButtonProps} from '@mui/material';
 import {Button} from '@mui/material';
 
-export type ButtonWithReduxType ={
-    variant:'text' | 'outlined' | 'contained'
-    onClick:()=>void
-    color:'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning'
-    name:string
+export type ButtonContainerType = ButtonProps & {
+    children: React.ReactNode
 }
 
-export const ButtonWithRedux = React.memo((props:ButtonWithReduxType) => {
-    console.log("ButtonWithRedux")
-    return (
-        <Button variant={props.variant}
-                onClick={props.onClick}
-                color={props.color}
-        >{props.name}
-        </Button>
-    );
+const ButtonContainer = memo((props: ButtonContainerType) => {
+    const {children, ...rest} = props
+        console.log('Button', children)
+    return <Button {...rest}>{children}</Button>
 })
-
+export default ButtonContainer
