@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField/TextField';
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {AddBox} from '@mui/icons-material';
 
-type AddItemFormPropsType = {
+export type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
 

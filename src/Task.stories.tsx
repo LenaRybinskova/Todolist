@@ -1,0 +1,56 @@
+import {Meta, StoryObj} from '@storybook/react';
+import {action} from '@storybook/addon-actions';
+import {Task} from './Task';
+import React, { useState} from 'react';
+
+
+const meta: Meta<typeof Task> = {
+    title: 'TODOLISTS/TaskWithRedux',
+    component: Task,
+    parameters: {layout: 'centered'},
+    tags: ['autodocs'],
+    argTypes: {
+        removeTask: {action: 'removeTask'},
+        changeTaskStatus: {action: 'changeTaskStatus'},
+        changeTaskTitle: {action: 'changeTaskTitle'}
+    },
+    args: {
+        task: {id: '1', title: 'молоко', isDone: true},
+        todolistId: '1111111111111111'
+    }
+}
+
+export default meta;
+type Story = StoryObj<typeof Task>;
+
+//1 история
+export const TaskIsDoneStory: Story = {};
+
+//2 история
+export const TaskNotIsDoneStory: Story = {
+    args: {
+        task: {id: '2', title: 'хлеб', isDone: false},
+        todolistId: '2222222222222222',
+    },
+};
+
+// чтобы оживить компоненту и коллбеки работали придется создать новую комп Таск c стейтом
+const TaskToggle = ()=>{
+    const [task, setTask]=useState({id: '1', title: 'молоко', isDone: true})
+
+    return <Task
+        task={task}
+        todolistId={"1111111111111111"}
+        changeTaskStatus={(id,isDone,todolistId)=>setTask({...task,isDone:!task.isDone})}
+        changeTaskTitle={(taskId, newTitle,todolistId)=>setTask({...task,title:newTitle})}
+        removeTask={action("Task removed")}/>
+}
+
+//3 история, засунули ее в класс
+/*
+export const TaskToggleStory:Story={
+    render: ()=><TaskToggle/>
+}*/
+
+//3 история, засунули ее в функцию
+export const TaskToggleStory=()=><TaskToggle/>
