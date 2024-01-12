@@ -4,7 +4,7 @@ import App from './App';
 import { createRoot } from 'react-dom/client';
 import * as serviceWorker from './serviceWorker';
 import AppWithReducers from "./AppWithReducers";
-import AppWithRedux from "./AppWithRedux";
+import AppWithRedux from "./AppWithRedux/AppWithRedux";
 import {Provider} from "react-redux";
 import {store} from "./state/store";
 

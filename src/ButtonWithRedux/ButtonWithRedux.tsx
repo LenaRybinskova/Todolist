@@ -8,7 +8,7 @@ export type ButtonContainerType = ButtonProps & {
 
 const ButtonContainer = memo((props: ButtonContainerType) => {
     const {children, ...rest} = props
-        console.log('Button', children)
+        console.log('ButtonButtonButtonButtonButtonButtonButtonButton', children)
     return <Button {...rest}>{children}</Button>
 })
 export default ButtonContainer
