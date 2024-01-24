@@ -1,0 +1,74 @@
+import axios from 'axios'
+
+type TodolistType = {
+    id: string,
+    addedDate: string,
+    order: number
+    title: string
+}
+type TaskType = {
+    id: string,
+    title: string,
+    description: string | null,
+    todoListId: string,
+    order: number,
+    status: number,
+    priority: number,
+    startDate: string | null,
+    deadline: string | null,
+    addedDate: string
+}
+type ResponseType<T = {}> = {
+    data: T,
+    resultCode: number,
+    fieldsErrors: string[],
+    messages: string[]
+}
+type GetTaskResponseType = {
+    error: string | null,
+    totalCount: number,
+    items: TaskType[]
+}
+export type UpdateTaskModelType = {
+    title: string | null
+    description: string | null
+    status: number
+    priority: number
+    startDate: string | null
+    deadline: string | null
+    order: number
+}
+
+
+const instanse = axios.create({
+    baseURL: 'https://social-network.samuraijs.com/api/1.1',
+    withCredentials: true,
+    headers: {'API-KEY': 'cfacfa61-3290-40bc-9928-a2a62acda293'}
+})
+
+export const TodolistAPI = {
+    getTodolists() {
+        return instanse.get<TodolistType[]>('/todo-lists')
+    },
+    createTodolist(title: string) {
+        return instanse.post<ResponseType<{ item: TodolistType }>>('/todo-lists', {title})
+    },
+    deleteTodolist(todolistId: string) {
+        return instanse.delete<ResponseType>(`/todo-lists/${todolistId}`)
+    },
+    updateTodolist(todolistId: string, title: string) {
+        return instanse.put<ResponseType>(`/todo-lists/${todolistId}`, {title})
+    },
+    getTasks(todolistId: string) {
+        return instanse.get<GetTaskResponseType>(`/todo-lists/${todolistId}/tasks`)
+    },
+    createTask(todolistId: string, title: string) {
+        return instanse.post<ResponseType<{item:TaskType[]}>>(`/todo-lists/${todolistId}/tasks`, {title})
+    },
+    deleteTask(todolistId:string,taskId:string){
+        return instanse.delete<ResponseType>(`/todo-lists/${todolistId}/tasks/${taskId}`)
+    },
+    updateTask(todolistId:string,taskId:string,model:UpdateTaskModelType){
+        return instanse.put<ResponseType<{item:TaskType}>>(`/todo-lists/${todolistId}/tasks/${taskId}`, model)
+    }
+}

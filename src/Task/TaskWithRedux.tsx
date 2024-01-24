@@ -1,10 +1,8 @@
-import React, {ChangeEvent, memo} from 'react';
+import React, { memo} from 'react';
 import {Checkbox} from '@mui/material';
 import {EditableSpan} from '../EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton/IconButton';
 import {Delete} from '@mui/icons-material';
-import {useDispatch} from 'react-redux';
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from '../state/tasks-reducer';
 import {useTasksWithRedux} from './hooks/useTasksWithRedux';
 
 export type TaskWithReduxType = {
