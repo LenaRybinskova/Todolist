@@ -1,17 +1,12 @@
 import React, {ChangeEvent} from 'react';
-import {FilterValuesType} from './App';
 import {AddItemForm} from './AddItemsForm/AddItemForm';
 import {EditableSpan} from './EditableSpan/EditableSpan';
-import IconButton from "@mui/material/IconButton/IconButton";
-import {Delete} from "@mui/icons-material";
-import {Button, Checkbox} from "@mui/material";
+import IconButton from '@mui/material/IconButton/IconButton';
+import {Delete} from '@mui/icons-material';
+import {Button, Checkbox} from '@mui/material';
+import {TaskStatuses, TaskType} from './api/todolists-api';
+import {FilterValuesType} from './state/todolists-reducer';
 
-
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
 
 type PropsType = {
     id: string
@@ -20,7 +15,7 @@ type PropsType = {
     removeTask: (taskId: string, todolistId: string) => void
     changeFilter: (value: FilterValuesType, todolistId: string) => void
     addTask: (title: string, todolistId: string) => void
-    changeTaskStatus: (id: string, isDone: boolean, todolistId: string) => void
+    changeTaskStatus: (id: string, status: number, todolistId: string) => void
     removeTodolist: (id: string) => void
     changeTodolistTitle: (id: string, newTitle: string) => void
     filter: FilterValuesType
@@ -56,16 +51,17 @@ export function Todolist(props: PropsType) {
                     const onClickHandler = () => props.removeTask(t.id, props.id)
                     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                         let newIsDoneValue = e.currentTarget.checked;
-                        props.changeTaskStatus(t.id, newIsDoneValue, props.id);
+
+                        props.changeTaskStatus(t.id, newIsDoneValue? TaskStatuses.Completed: TaskStatuses.New, props.id);
                     }
                     const onTitleChangeHandler = (newValue: string) => {
                         props.changeTaskTitle(t.id, newValue, props.id);
                     }
 
 
-                    return <div key={t.id} className={t.isDone ? "is-done" : ""}>
+                    return <div key={t.id} className={t.status===TaskStatuses.Completed ? "is-done" : ""}>
                         <Checkbox
-                            checked={t.isDone}
+                            checked={t.status ===TaskStatuses.Completed}
                             color="primary"
                             onChange={onChangeHandler}
                         />

@@ -2,12 +2,16 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../state/store';
 import {useCallback, useMemo} from 'react';
 import {addTaskAC} from '../../state/tasks-reducer';
-import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from '../../state/todolists-reducer';
-import {TaskType} from '../TodolistWithRedux';
-import {TodolistType} from '../../AppWithReducers';
+import {
+    changeTodolistFilterAC,
+    changeTodolistTitleAC,
+    removeTodolistAC,
+    TodolistDomainType
+} from '../../state/todolists-reducer';
+import {TaskStatuses, TaskType} from '../../api/todolists-api';
 
 
-export const UseTodolistWithRedux = ({id, filter, title}:TodolistType) => {
+export const UseTodolistWithRedux = ({id, filter, title}:TodolistDomainType) => {
 
 
     let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[id])
@@ -33,10 +37,10 @@ export const UseTodolistWithRedux = ({id, filter, title}:TodolistType) => {
 // это у нас как бы расчет математический, его надо обернуть в useMemo()
     tasks = useMemo(() => {
         if (filter === 'active') {
-            tasks = tasks.filter(t => t.isDone === false);
+            tasks = tasks.filter(t => t.status === TaskStatuses.New);
         }
         if (filter === 'completed') {
-            tasks = tasks.filter(t => t.isDone === true);
+            tasks = tasks.filter(t => t.status === TaskStatuses.Completed);
         }
         return tasks
     }, [tasks, filter])

@@ -4,9 +4,22 @@ import {EditableSpan} from '../EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton/IconButton';
 import {Delete} from '@mui/icons-material';
 import {useTasksWithRedux} from './hooks/useTasksWithRedux';
+import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
 
+type TaskType = {
+    id: string,
+    title: string,
+    description: string | null,
+    todoListId: string,
+    order: number,
+    status: TaskStatuses,
+    priority: TaskPriorities,
+    startDate: string | null,
+    deadline: string | null,
+    addedDate: string
+}
 export type TaskWithReduxType = {
-    task: { id: string, title: string, isDone: boolean }
+    task: TaskType
     todolistId: string
 }
 
@@ -15,9 +28,9 @@ const TaskWithRedux = memo((props: TaskWithReduxType) => {
     const {onChangeHandler, onTitleChangeHandler, onClickHandler} = useTasksWithRedux({...props})
 
     return (
-        <div className={props.task.isDone ? 'is-done' : ''}>
+        <div className={props.task.status===TaskStatuses.Completed ? 'is-done' : ''}>
             <Checkbox
-                checked={props.task.isDone}
+                checked={props.task.status=== TaskStatuses.Completed}
                 color="primary"
                 onChange={onChangeHandler}
             />

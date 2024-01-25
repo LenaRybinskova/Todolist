@@ -2,6 +2,7 @@ import {useDispatch} from 'react-redux';
 import {ChangeEvent} from 'react';
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from '../../state/tasks-reducer';
 import {TaskWithReduxType} from '../TaskWithRedux';
+import {TaskStatuses} from '../../api/todolists-api';
 
 
 export const useTasksWithRedux = ({task, todolistId}: TaskWithReduxType) => {
@@ -14,7 +15,7 @@ export const useTasksWithRedux = ({task, todolistId}: TaskWithReduxType) => {
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked;
-        dispatch(changeTaskStatusAC(task.id, newIsDoneValue, todolistId))
+        dispatch(changeTaskStatusAC(task.id, newIsDoneValue ?TaskStatuses.Completed:TaskStatuses.New, todolistId))
     }
     const onTitleChangeHandler = (newValue: string) => {
         dispatch(changeTaskTitleAC(task.id, newValue, todolistId))

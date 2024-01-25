@@ -1,19 +1,19 @@
 import axios from 'axios'
 
-type TodolistType = {
+export type TodolistType = {
     id: string,
     addedDate: string,
     order: number
     title: string
 }
-type TaskType = {
+export type TaskType = {
     id: string,
     title: string,
     description: string | null,
     todoListId: string,
     order: number,
-    status: number,
-    priority: number,
+    status: TaskStatuses,
+    priority: TaskPriorities,
     startDate: string | null,
     deadline: string | null,
     addedDate: string
@@ -29,7 +29,7 @@ type GetTaskResponseType = {
     totalCount: number,
     items: TaskType[]
 }
-export type UpdateTaskModelType = {
+type UpdateTaskModelType = {
     title: string | null
     description: string | null
     status: number
@@ -39,6 +39,19 @@ export type UpdateTaskModelType = {
     order: number
 }
 
+export enum TaskStatuses {
+    New = 0,
+    InProgress = 1,
+    Completed,
+    Draft
+}
+export enum TaskPriorities {
+    Low = 0,
+    Middle = 1,
+    Hi,
+    Ungently,
+    Later = 4
+}
 
 const instanse = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1',

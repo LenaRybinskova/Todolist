@@ -3,19 +3,15 @@ import {AddItemForm} from '../AddItemsForm/AddItemForm';
 import {EditableSpan} from '../EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton/IconButton';
 import {Delete} from '@mui/icons-material';
-import {TodolistType} from '../AppWithReducers';
 import ButtonContainer from '../ButtonWithRedux/ButtonWithRedux';
 import TaskWithRedux from '../Task/TaskWithRedux';
 import {UseTodolistWithRedux} from './hooks/useTodolistWithRedux';
+import {TodolistDomainType} from '../state/todolists-reducer';
 
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
+
 
 type PropsType = {
-    todolist: TodolistType
+    todolist: TodolistDomainType
 }
 
 export const TodolistWithRedux = React.memo(({todolist}: PropsType) => {
