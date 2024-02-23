@@ -8,12 +8,10 @@ import {TodolistWithRedux} from '../TodolistWithRedux/TodolistWithRedux';
 import {useAppWithRedux} from './hooks/useAppWithRedux';
 
 
-
-
-
 function AppWithRedux() {
 
     const {addTodolist, todolists} = useAppWithRedux()
+
     /*  let todolists = useSelector<AppRootStateType, Array<TodolistType>>(state => state.todolists)
 
     //let tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks) // таски нам тут не нужны
@@ -51,6 +49,7 @@ function AppWithRedux() {
 
       const addTodolist=useCallback((title: string)=> {
           dispatch(addTodolistAC(title))},[dispatch])*/
+    console.log("ререндер компоненты Апп")
 
     return (
         <div className="App">

@@ -29,14 +29,14 @@ type GetTaskResponseType = {
     totalCount: number,
     items: TaskType[]
 }
-type UpdateTaskModelType = {
+export type UpdateTaskModelType = {
     title: string | null
     description: string | null
-    status: number
-    priority: number
+    status: TaskStatuses
+    priority: TaskPriorities
     startDate: string | null
     deadline: string | null
-    order: number
+    order: number| null
 }
 
 export enum TaskStatuses {
@@ -59,7 +59,7 @@ const instanse = axios.create({
     headers: {'API-KEY': 'cfacfa61-3290-40bc-9928-a2a62acda293'}
 })
 
-export const TodolistAPI = {
+export const todolistAPI = {
     getTodolists() {
         return instanse.get<TodolistType[]>('/todo-lists')
     },
@@ -76,7 +76,7 @@ export const TodolistAPI = {
         return instanse.get<GetTaskResponseType>(`/todo-lists/${todolistId}/tasks`)
     },
     createTask(todolistId: string, title: string) {
-        return instanse.post<ResponseType<{item:TaskType[]}>>(`/todo-lists/${todolistId}/tasks`, {title})
+        return instanse.post<ResponseType<{item:TaskType}>>(`/todo-lists/${todolistId}/tasks`, {title})
     },
     deleteTask(todolistId:string,taskId:string){
         return instanse.delete<ResponseType>(`/todo-lists/${todolistId}/tasks/${taskId}`)

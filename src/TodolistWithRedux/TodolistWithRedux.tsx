@@ -9,13 +9,11 @@ import {UseTodolistWithRedux} from './hooks/useTodolistWithRedux';
 import {TodolistDomainType} from '../state/todolists-reducer';
 
 
-
 type PropsType = {
     todolist: TodolistDomainType
 }
 
 export const TodolistWithRedux = React.memo(({todolist}: PropsType) => {
-    console.log('TodolistWithRedux',todolist.title  )
 
     const {title,changeTodolistTitle,removeTodolist,addTask,tasks,onAllClickHandler,onActiveClickHandler, onCompletedClickHandler,id,filter}=UseTodolistWithRedux({...todolist})
 

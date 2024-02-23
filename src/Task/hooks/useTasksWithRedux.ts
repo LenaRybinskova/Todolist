@@ -1,27 +1,24 @@
-import {useDispatch} from 'react-redux';
 import {ChangeEvent} from 'react';
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from '../../state/tasks-reducer';
+import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, removeTaskTC, updateTaskTC} from '../../state/tasks-reducer';
 import {TaskWithReduxType} from '../TaskWithRedux';
 import {TaskStatuses} from '../../api/todolists-api';
+import {useAppDispatch} from '../../state/store';
 
 
 export const useTasksWithRedux = ({task, todolistId}: TaskWithReduxType) => {
 
-// компорненту TaskWithRedux можно было написать двумя способами:
-    //1. передать в нее таксИД и тудулист ИД и вытянуть таски по юзСелекетору и тогда юзМемо не нужно.
-    //2. передать в нее объект таски(как у меня и написано)  и тудулист ИД  и обернуть в юзМемо. В этом  кейсе лучше этот вар
-
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked;
-        dispatch(changeTaskStatusAC(task.id, newIsDoneValue ?TaskStatuses.Completed:TaskStatuses.New, todolistId))
+        let status=newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New
+        dispatch(updateTaskTC(todolistId, task.id,{status:status} ))
     }
     const onTitleChangeHandler = (newValue: string) => {
-        dispatch(changeTaskTitleAC(task.id, newValue, todolistId))
+        dispatch(updateTaskTC(todolistId,task.id, {title:newValue}))
     }
 
-    const onClickHandler = () => dispatch(removeTaskAC(task.id, todolistId))
+    const onClickHandler = () => dispatch(removeTaskTC(task.id, todolistId))
 
     return {onChangeHandler, onTitleChangeHandler, onClickHandler}
 }

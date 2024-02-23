@@ -1,38 +1,34 @@
-import {useDispatch, useSelector} from 'react-redux';
-import {AppRootStateType} from '../../state/store';
-import {useCallback, useMemo} from 'react';
-import {addTaskAC} from '../../state/tasks-reducer';
-import {
-    changeTodolistFilterAC,
-    changeTodolistTitleAC,
-    removeTodolistAC,
-    TodolistDomainType
-} from '../../state/todolists-reducer';
+import {useAppDispatch, useAppSelector} from '../../state/store';
+import {useCallback, useEffect, useMemo} from 'react';
+import {addTaskTC, getTaskTC} from '../../state/tasks-reducer';
+import {removeTodolistTC, TodolistDomainType, updateTodolistTC} from '../../state/todolists-reducer';
 import {TaskStatuses, TaskType} from '../../api/todolists-api';
 
 
-export const UseTodolistWithRedux = ({id, filter, title}:TodolistDomainType) => {
+export const UseTodolistWithRedux = ({id, filter, title}: TodolistDomainType) => {
 
+    let tasks = useAppSelector<Array<TaskType>>(state => state.tasks[id])
+    const dispatch = useAppDispatch()
 
-    let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[id])
-
-    const dispatch = useDispatch()
+    useEffect(()=>{
+        dispatch(getTaskTC(id))
+    },[])
 
     const addTask = useCallback((title: string) => {
-        dispatch(addTaskAC(title, id))
+        dispatch(addTaskTC(title, id))
     }, [dispatch])
 
     const removeTodolist = () => {
-        dispatch(removeTodolistAC(id))
+        dispatch(removeTodolistTC(id))
     }
     const changeTodolistTitle = useCallback((title: string) => {
-        dispatch(changeTodolistTitleAC(id, title))
+
+        dispatch(updateTodolistTC(id, {title:title}))
     }, [dispatch, id, title])
 
-
-    const onAllClickHandler = useCallback(() => dispatch(changeTodolistFilterAC(id, 'all')), [dispatch,id])
-    const onActiveClickHandler = useCallback(() => dispatch(changeTodolistFilterAC(id, 'active')), [dispatch,id])
-    const onCompletedClickHandler = useCallback(() => dispatch(changeTodolistFilterAC(id, 'completed')), [dispatch,id])
+    const onAllClickHandler = useCallback(() => dispatch(updateTodolistTC(id, {filter:'all'})), [dispatch, id])
+    const onActiveClickHandler = useCallback(() => dispatch(updateTodolistTC(id, {filter:'active'})), [dispatch, id])
+    const onCompletedClickHandler = useCallback(() => dispatch(updateTodolistTC(id, {filter:'completed'})), [dispatch, id])
 
 // это у нас как бы расчет математический, его надо обернуть в useMemo()
     tasks = useMemo(() => {
@@ -45,8 +41,17 @@ export const UseTodolistWithRedux = ({id, filter, title}:TodolistDomainType) => 
         return tasks
     }, [tasks, filter])
 
-
-    return {title,changeTodolistTitle,removeTodolist,addTask,tasks,onAllClickHandler,onActiveClickHandler, onCompletedClickHandler,id,filter}
-
+    return {
+        title,
+        changeTodolistTitle,
+        removeTodolist,
+        addTask,
+        tasks,
+        onAllClickHandler,
+        onActiveClickHandler,
+        onCompletedClickHandler,
+        id,
+        filter
+    }
 }
 
