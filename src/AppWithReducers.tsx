@@ -1,25 +1,21 @@
-/*
-import React, { useReducer} from 'react';
+import React, {useReducer} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import {v1} from 'uuid';
 import {AddItemForm} from './AddItemsForm/AddItemForm';
-import {AppBar, Button, Container, Grid, Paper, Toolbar, Typography} from "@mui/material";
-import IconButton from "@mui/material/IconButton/IconButton";
-import {Menu} from "@mui/icons-material";
+import {AppBar, Button, Container, Grid, Paper, Toolbar, Typography} from '@mui/material';
+import IconButton from '@mui/material/IconButton/IconButton';
+import {Menu} from '@mui/icons-material';
 import {
-    addTodolistAC,
-    changeTodolistFilterAC,
-    changeTodolistTitleAC, FilterValuesType,
+    createTodolistAC,
+    FilterValuesType,
     removeTodolistAC,
-    todolistsReducer
+    todolistsReducer,
+    updateTodolistAC
 } from './state/todolists-reducer';
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './state/tasks-reducer';
 import {TaskPriorities, TaskStatuses} from './api/todolists-api';
 import {todolistId1, todolistId2} from './AppWithRedux/id-utils';
-
-
-
 
 
 function AppWithReducers() {
@@ -125,7 +121,18 @@ function AppWithReducers() {
     }
 
     function addTask(title: string, todolistId: string) {
-        dispatchToTasks(addTaskAC(title, todolistId))
+        dispatchToTasks(addTaskAC({
+            id: 'id-exist',
+            title: title,
+            status: TaskStatuses.New,
+            description: '',
+            priority: TaskPriorities.Low,
+            startDate: '',
+            deadline: '',
+            order: 0,
+            addedDate: '',
+            todoListId: todolistId
+        }))
     }
 
     function changeStatus(id: string, status: number, todolistId: string) {
@@ -138,7 +145,7 @@ function AppWithReducers() {
 
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
-        dispatchToTodolists(changeTodolistFilterAC(todolistId, value))
+        dispatchToTodolists(updateTodolistAC(todolistId, {filter: value}))
     }
 
     function removeTodolist(id: string) {
@@ -148,13 +155,13 @@ function AppWithReducers() {
     }
 
     function changeTodolistTitle(id: string, title: string) {
-        dispatchToTodolists(changeTodolistTitleAC(id, title))
+        dispatchToTodolists(updateTodolistAC(id, {title: title}))
     }
 
     function addTodolist(title: string) {
-        let action = addTodolistAC(title)
-        dispatchToTodolists(action)
-        dispatchToTasks(action)
+        const action = createTodolistAC({id: v1(), title: title, addedDate: '', order: 0});
+        dispatchToTasks(action);
+        dispatchToTodolists(action);
     }
 
     return (
@@ -171,7 +178,7 @@ function AppWithReducers() {
                 </Toolbar>
             </AppBar>
             <Container fixed>
-                <Grid container style={{padding: "20px"}}>
+                <Grid container style={{padding: '20px'}}>
                     <AddItemForm addItem={addTodolist}/>
                 </Grid>
                 <Grid container spacing={3}>
@@ -180,15 +187,15 @@ function AppWithReducers() {
                             let allTodolistTasks = tasks[tl.id];
                             let tasksForTodolist = allTodolistTasks;
 
-                            if (tl.filter === "active") {
+                            if (tl.filter === 'active') {
                                 tasksForTodolist = allTodolistTasks.filter(t => t.status === TaskStatuses.New);
                             }
-                            if (tl.filter === "completed") {
+                            if (tl.filter === 'completed') {
                                 tasksForTodolist = allTodolistTasks.filter(t => t.status === TaskStatuses.Completed);
                             }
 
                             return <Grid key={tl.id} item>
-                                <Paper style={{padding: "10px"}}>
+                                <Paper style={{padding: '10px'}}>
                                     <Todolist
                                         key={tl.id}
                                         id={tl.id}
@@ -214,4 +221,3 @@ function AppWithReducers() {
 }
 
 export default AppWithReducers;
-*/

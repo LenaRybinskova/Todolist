@@ -6,8 +6,8 @@ import {
     tasksReducer,
     TasksStateType
 } from './tasks-reducer';
-import {addTodolistAC, removeTodolistAC} from './todolists-reducer';
-import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
+import {createTodolistAC, removeTodolistAC} from './todolists-reducer';
+import {TaskPriorities, TaskStatuses, TaskType, TodolistType} from '../api/todolists-api';
 import {todolistId1, todolistId2} from '../AppWithRedux/id-utils';
 
 let startState: TasksStateType
@@ -86,8 +86,19 @@ test('correct task should be deleted from correct array', () => {
 
 test('correct task should be added to correct array', () => {
 
-
-    const action = addTaskAC("juce", "todolistId2");
+const newTask:TaskType = {
+    id: "newTaskId",
+    title: "juce",
+    description: "",
+    todoListId: "todolistId2",
+    order: 0,
+    status: TaskStatuses.New,
+    priority: TaskPriorities.Low,
+    startDate: "",
+    deadline: "",
+    addedDate: ""
+}
+    const action = addTaskAC(newTask);
     const endState = tasksReducer(startState, action)
 
     expect(endState["todolistId1"].length).toBe(3);
@@ -119,8 +130,14 @@ test('title of specified task should be changed', () => {
 
 test('new property with new array should be added when new todolist is added', () => {
 
+    const newTodolist:TodolistType = {
+        id: "newTodolistId",
+        addedDate:"",
+        order:0,
+        title: "newTodolistTitle"
+    }
 
-    const action = addTodolistAC("title no matter");
+    const action = createTodolistAC(newTodolist);
     const endState = tasksReducer(startState, action)
 
 
