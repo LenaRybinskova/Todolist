@@ -1,8 +1,8 @@
 import {ChangeEvent} from 'react';
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, removeTaskTC, updateTaskTC} from '../../state/tasks-reducer';
+import { removeTaskTC, updateTaskTC} from '../../../state/tasks-reducer';
 import {TaskWithReduxType} from '../TaskWithRedux';
-import {TaskStatuses} from '../../api/todolists-api';
-import {useAppDispatch} from '../../state/store';
+import {TaskStatuses} from '../../../api/todolists-api';
+import {useAppDispatch} from '../../../state/store';
 
 
 export const useTasksWithRedux = ({task, todolistId}: TaskWithReduxType) => {

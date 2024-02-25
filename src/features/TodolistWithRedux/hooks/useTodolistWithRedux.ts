@@ -1,8 +1,8 @@
-import {useAppDispatch, useAppSelector} from '../../state/store';
+import {useAppDispatch, useAppSelector} from '../../../state/store';
 import {useCallback, useEffect, useMemo} from 'react';
-import {addTaskTC, getTaskTC} from '../../state/tasks-reducer';
-import {removeTodolistTC, TodolistDomainType, updateTodolistTC} from '../../state/todolists-reducer';
-import {TaskStatuses, TaskType} from '../../api/todolists-api';
+import {addTaskTC, getTaskTC} from '../../../state/tasks-reducer';
+import {removeTodolistTC, TodolistDomainType, updateTodolistTC} from '../../../state/todolists-reducer';
+import {TaskStatuses, TaskType} from '../../../api/todolists-api';
 
 
 export const UseTodolistWithRedux = ({id, filter, title}: TodolistDomainType) => {

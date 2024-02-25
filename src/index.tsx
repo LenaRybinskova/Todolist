@@ -1,5 +1,5 @@
 import React from 'react';
-import './index.css';
+import './AppWithRedux/index.css';
 import { createRoot } from 'react-dom/client';
 import * as serviceWorker from './serviceWorker';
 import AppWithRedux from "./AppWithRedux/AppWithRedux";

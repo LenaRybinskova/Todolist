@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
-import './App.css';
+import '../AppWithRedux/App.css';
 import {Todolist} from './Todolist';
 import {v1} from 'uuid';
-import {AddItemForm} from './AddItemsForm/AddItemForm';
+import {AddItemForm} from '../components/AddItemsForm/AddItemForm';
 import {AppBar, Button, Container, Grid, Paper, Toolbar, Typography} from '@mui/material';
 import IconButton from '@mui/material/IconButton/IconButton';
 import {Menu} from '@mui/icons-material';
-import {TasksStateType} from './state/tasks-reducer';
-import {FilterValuesType, TodolistDomainType} from './state/todolists-reducer';
-import {TaskPriorities, TaskStatuses} from './api/todolists-api';
-import {todolistId1, todolistId2} from './AppWithRedux/id-utils';
+import {TasksStateType} from '../state/tasks-reducer';
+import {FilterValuesType, TodolistDomainType} from '../state/todolists-reducer';
+import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
+import {todolistId1, todolistId2} from '../AppWithRedux/id-utils';
 
 
 function App() {

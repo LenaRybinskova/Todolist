@@ -4,7 +4,7 @@ import {EditableSpan} from '../EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton/IconButton';
 import {Delete} from '@mui/icons-material';
 import {useTasksWithRedux} from './hooks/useTasksWithRedux';
-import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
+import {TaskPriorities, TaskStatuses} from '../../api/todolists-api';
 
 type TaskType = {
     id: string,

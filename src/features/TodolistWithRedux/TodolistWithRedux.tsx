@@ -1,12 +1,12 @@
 import React from 'react';
-import {AddItemForm} from '../AddItemsForm/AddItemForm';
-import {EditableSpan} from '../EditableSpan/EditableSpan';
+import {AddItemForm} from '../../components/AddItemsForm/AddItemForm';
+import {EditableSpan} from '../../components/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton/IconButton';
 import {Delete} from '@mui/icons-material';
-import ButtonContainer from '../ButtonWithRedux/ButtonWithRedux';
-import TaskWithRedux from '../Task/TaskWithRedux';
+import ButtonContainer from '../../components/ButtonWithRedux/ButtonContainer';
+import TaskWithRedux from '../../components/Task/TaskWithRedux';
 import {UseTodolistWithRedux} from './hooks/useTodolistWithRedux';
-import {TodolistDomainType} from '../state/todolists-reducer';
+import {TodolistDomainType} from '../../state/todolists-reducer';
 
 
 type PropsType = {
@@ -14,7 +14,7 @@ type PropsType = {
 }
 
 export const TodolistWithRedux = React.memo(({todolist}: PropsType) => {
-
+    console.log("TodolistWithRedux")
     const {title,changeTodolistTitle,removeTodolist,addTask,tasks,onAllClickHandler,onActiveClickHandler, onCompletedClickHandler,id,filter}=UseTodolistWithRedux({...todolist})
 
 

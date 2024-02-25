@@ -2,8 +2,8 @@ import {Meta, StoryObj} from '@storybook/react';
 import {action} from '@storybook/addon-actions';
 import {Task} from './Task';
 import React, {useState} from 'react';
-import {TaskPriorities, TaskStatuses} from './api/todolists-api';
-import {todolistId1} from './AppWithRedux/id-utils';
+import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
+import {todolistId1} from '../AppWithRedux/id-utils';
 
 // TOGGLE НЕ РАБОТАЕТ
 const meta: Meta<typeof Task> = {

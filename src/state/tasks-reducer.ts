@@ -4,20 +4,6 @@ import {Dispatch} from 'redux';
 import {AppRootStateType} from './store';
 
 
-export type TasksStateType = {
-    [key: string]: Array<TaskType>
-}
-
-export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
-export type AddTaskActionType = ReturnType<typeof addTaskAC>
-export type ChangeTaskStatusActionType = ReturnType<typeof changeTaskStatusAC>
-export type ChangeTaskTitleActionType = ReturnType<typeof changeTaskTitleAC>
-export type GetTasksACType = ReturnType<typeof getTasksAC>
-export type UpdateTaskACType = ReturnType<typeof updateTaskAC>
-
-
-type ActionsType = RemoveTaskActionType | AddTaskActionType
-    | ChangeTaskStatusActionType | ChangeTaskTitleActionType | RemoveTodolistActionType | GetTodolistACType | GetTasksACType | UpdateTaskACType | CreateTodolistACType
 
 // isDone заменили на status, у новых тасок по умолчанию priority: TaskPriorities.Low
 const initialState = {
@@ -121,15 +107,12 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             return copyState;
         case 'GET-TASKS':
             return {...state, [action.tlId]: action.tasks}
-        case 'REMOVE-TASK': {
+        case 'REMOVE-TASK':
             return {...state, [action.todolistId]: state[action.todolistId].filter(tl => tl.id !== action.taskId)}
-        }
-        case 'ADD-TASK': {
+        case 'ADD-TASK':
             return {...state, [action.task.todoListId]: [action.task, ...state[action.task.todoListId]]}
-        }
         case 'UPDATE-TASK':
             return {...state, [action.todolistId]: state[action.todolistId].map(t => t.id === action.taskId ? {...t,...action.model} : t)}
-
         case "CREATE-TODOLIST":
             return {...state, [action.todolist.id]:[]}
         case 'REMOVE-TODOLIST': {
@@ -142,17 +125,12 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
     }
 }
 
+//action
 export const removeTaskAC = (taskId: string, todolistId: string) => {
     return {type: 'REMOVE-TASK', todolistId, taskId} as const
 }
 export const addTaskAC = (task: TaskType) => {
     return {type: 'ADD-TASK', task} as const
-}
-export const changeTaskStatusAC = (taskId: string, status: number, todolistId: string) => {
-    return {type: 'CHANGE-TASK-STATUS', status, todolistId, taskId} as const
-}
-export const changeTaskTitleAC = (taskId: string, title: string, todolistId: string) => {
-    return {type: 'CHANGE-TASK-TITLE', title, todolistId, taskId} as const
 }
 export const getTasksAC = (tasks: TaskType[], tlId: string) => {
     return {
@@ -169,7 +147,9 @@ export const updateTaskAC = (todolistId: string, taskId: string, model: UpdateTa
         model
     } as const
 }
-//TC-----------
+
+
+//thunk
 export const getTaskTC = (tlId: string) => {
     return (dispatch: Dispatch) => {
         todolistAPI.getTasks(tlId).then(res => dispatch(getTasksAC(res.data.items, tlId)))
@@ -186,16 +166,6 @@ export const removeTaskTC = (taskId: string, todolistId: string) => {
         todolistAPI.deleteTask(todolistId, taskId)
             .then(res => dispatch(removeTaskAC(taskId, todolistId)))
     }
-}
-
-
-export type UpdateTaskDomainType = {
-    title?: string,
-    description?: string,
-    status?: TaskStatuses,
-    priority?: TaskPriorities,
-    startDate?: string
-    deadline?: string
 }
 export const updateTaskTC = (todolistId: string, taskId: string, model: UpdateTaskDomainType) => {
 
@@ -223,3 +193,25 @@ export const updateTaskTC = (todolistId: string, taskId: string, model: UpdateTa
     }
 }
 
+
+//types
+export type TasksStateType = {
+    [key: string]: Array<TaskType>
+}
+type ActionsType =
+    ReturnType<typeof addTaskAC>
+    | ReturnType<typeof removeTaskAC>
+    | ReturnType<typeof updateTaskAC>
+    | RemoveTodolistActionType
+    | GetTodolistACType
+    | ReturnType<typeof getTasksAC>
+    | CreateTodolistACType
+
+export type UpdateTaskDomainType = {
+    title?: string,
+    description?: string,
+    status?: TaskStatuses,
+    priority?: TaskPriorities,
+    startDate?: string
+    deadline?: string
+}
