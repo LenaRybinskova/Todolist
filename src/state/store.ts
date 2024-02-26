@@ -1,7 +1,7 @@
-import {tasksReducer} from './tasks-reducer';
-import {todolistsReducer} from './todolists-reducer';
+import {TasksActionsType, tasksReducer} from './tasks-reducer';
+import {TodolistsActionsType, todolistsReducer} from './todolists-reducer';
 import {AnyAction, applyMiddleware, combineReducers, legacy_createStore} from 'redux';
-import {thunk, ThunkDispatch} from 'redux-thunk';
+import {thunk, ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 
 const rootReducer = combineReducers({
@@ -12,7 +12,12 @@ const rootReducer = combineReducers({
 export const store = legacy_createStore(rootReducer, applyMiddleware(thunk));
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
-export type AppDispatchType=ThunkDispatch<AppRootStateType,unknown,AnyAction>
+export type AppActionsType = TodolistsActionsType | TasksActionsType
+
+//сделали универс диспач, чтобы мог дисп и эакшены и санки
+export type AppDispatchType=ThunkDispatch<AppRootStateType,unknown,AppActionsType>
+// сделали универс типизацию Thunk для всех санк
+export type AppThunk<ReturnType=void>=ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsType>
 
 export const useAppDispatch = useDispatch<AppDispatchType>;
 export const useAppSelector:TypedUseSelectorHook<AppRootStateType>=useSelector
