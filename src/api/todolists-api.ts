@@ -56,7 +56,7 @@ export enum TaskPriorities {
 const instanse = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1',
     withCredentials: true,
-    headers: {'API-KEY': 'cfacfa61-3290-40bc-9928-a2a62acda293'}
+    headers: {'API-KEY': ''}
 })
 
 export const todolistAPI = {

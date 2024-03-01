@@ -5,26 +5,27 @@ import IconButton from '@mui/material/IconButton/IconButton';
 import {Delete} from '@mui/icons-material';
 import ButtonContainer from '../../components/ButtonWithRedux/ButtonContainer';
 import TaskWithRedux from '../../components/Task/TaskWithRedux';
-import {UseTodolistWithRedux} from './hooks/useTodolistWithRedux';
-import {TodolistDomainType} from '../../state/todolists-reducer';
+import {UseTodolist} from './hooks/useTodolist';
+import {TodolistDomainType} from '../todolists-reducer';
 
 
 type PropsType = {
     todolist: TodolistDomainType
+    demo?:boolean
 }
 
-export const TodolistWithRedux = React.memo(({todolist}: PropsType) => {
-    console.log("TodolistWithRedux")
-    const {title,changeTodolistTitle,removeTodolist,addTask,tasks,onAllClickHandler,onActiveClickHandler, onCompletedClickHandler,id,filter}=UseTodolistWithRedux({...todolist})
+export const Todolist = React.memo(({todolist,demo}: PropsType) => {
 
+    const {title,changeTodolistTitle,removeTodolist,addTask,tasks,onAllClickHandler,onActiveClickHandler, onCompletedClickHandler,id,filter}=UseTodolist({...todolist},demo)
 
+    console.log(todolist.entityStatus==="loading")
     return <div>
         <h3><EditableSpan value={title} onChange={changeTodolistTitle}/>
             <IconButton onClick={removeTodolist}>
                 <Delete/>
             </IconButton>
         </h3>
-        <AddItemForm addItem={addTask}/>
+        <AddItemForm addItem={addTask} disabled={todolist.entityStatus==="loading"}/>
         <div>
             {tasks.map(t => <TaskWithRedux key={t.id} task={t} todolistId={id}/>)}
         </div>

@@ -6,8 +6,8 @@ import {AddItemForm} from '../components/AddItemsForm/AddItemForm';
 import {AppBar, Button, Container, Grid, Paper, Toolbar, Typography} from '@mui/material';
 import IconButton from '@mui/material/IconButton/IconButton';
 import {Menu} from '@mui/icons-material';
-import {TasksStateType} from '../state/tasks-reducer';
-import {FilterValuesType, TodolistDomainType} from '../state/todolists-reducer';
+import {TasksStateType} from '../features/tasks-reducer';
+import {FilterValuesType, TodolistDomainType} from '../features/todolists-reducer';
 import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
 import {todolistId1, todolistId2} from '../AppWithRedux/id-utils';
 
@@ -15,8 +15,8 @@ import {todolistId1, todolistId2} from '../AppWithRedux/id-utils';
 function App() {
 
     let [todolists, setTodolists] = useState<Array<TodolistDomainType>>([
-        {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: ''},
-        {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, addedDate: ''}
+        {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: '',entityStatus:"idle"},
+        {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, addedDate: '',entityStatus:"idle"}
     ])
 
     let [tasks, setTasks] = useState<TasksStateType>({
@@ -192,7 +192,7 @@ function App() {
 
     function addTodolist(title: string) {
         let newTodolistId = v1();
-        let newTodolist: TodolistDomainType = {id: newTodolistId, title: title, filter: 'all', order: 0, addedDate: ''};
+        let newTodolist: TodolistDomainType = {id: newTodolistId, title: title, filter: 'all', order: 0, addedDate: '',entityStatus:"idle"};
         setTodolists([newTodolist, ...todolists]);
         setTasks({
             ...tasks,
@@ -215,7 +215,8 @@ function App() {
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: "20px"}}>
-                    <AddItemForm addItem={addTodolist}/>
+      {/*              //заглушка*/}
+                    <AddItemForm addItem={addTodolist} disabled={false}/>
                 </Grid>
                 <Grid container spacing={3}>
                     {

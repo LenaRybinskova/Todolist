@@ -18,6 +18,9 @@ const meta: Meta<typeof AddItemForm> = {
             action: 'clicked' //если тут указали экшн то в args{} не указываем
         }
     },
+    args:{
+        disabled:false
+    }
 };
 
 export default meta;
@@ -75,7 +78,15 @@ const ErrorAddItemForm = React.memo((props: AddItemFormPropsType) => {
 //ИСТОРИЯ с ошибкой
 export const ErrorAddItemFormStory: Story = {
     // ту тут хуки нельзя исп, пришлось пересоздавать целую компон с ошибкой
-    render: () => <ErrorAddItemForm addItem={action('Button clicked inside form')}/>
+    render: () => <ErrorAddItemForm addItem={action('Button clicked inside form')} disabled={false}/>
+};
+
+// ИСТОРИЯ с disabled
+export const AddItemFormDisabledStory: Story = {
+    args:{
+        disabled:true
+    }
+
 };
 
 // истории можно писать двумя способами: через функ рендер или созд перем AddItemFormStory и передали объект с аргументами

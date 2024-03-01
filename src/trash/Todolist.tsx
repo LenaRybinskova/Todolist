@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton/IconButton';
 import {Delete} from '@mui/icons-material';
 import {Button, Checkbox} from '@mui/material';
 import {TaskStatuses, TaskType} from '../api/todolists-api';
-import {FilterValuesType} from '../state/todolists-reducer';
+import {FilterValuesType} from '../features/todolists-reducer';
 
 
 type PropsType = {
@@ -44,7 +44,8 @@ export function Todolist(props: PropsType) {
                 <Delete />
             </IconButton>
         </h3>
-        <AddItemForm addItem={addTask}/>
+{/*        //заглушка*/}
+        <AddItemForm addItem={addTask} disabled={false}/>
         <div>
             {
                 props.tasks.map(t => {

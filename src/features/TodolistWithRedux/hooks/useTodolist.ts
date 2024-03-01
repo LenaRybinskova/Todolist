@@ -1,17 +1,20 @@
-import {useAppDispatch, useAppSelector} from '../../../state/store';
+import {useAppDispatch, useAppSelector} from '../../../AppWithRedux/store';
 import {useCallback, useEffect, useMemo} from 'react';
-import {addTaskTC, getTaskTC} from '../../../state/tasks-reducer';
-import {removeTodolistTC, TodolistDomainType, updateTodolistTC} from '../../../state/todolists-reducer';
+import {addTaskTC, getTaskTC} from '../../tasks-reducer';
+import {removeTodolistTC, TodolistDomainType, updateTodolistTC} from '../../todolists-reducer';
 import {TaskStatuses, TaskType} from '../../../api/todolists-api';
 
 
-export const UseTodolistWithRedux = ({id, filter, title}: TodolistDomainType) => {
+export const UseTodolist = ({id, filter, title}: TodolistDomainType, demo?:boolean) => {
 
     let tasks = useAppSelector<Array<TaskType>>(state => state.tasks[id])
     const dispatch = useAppDispatch()
 
     useEffect(()=>{
-        dispatch(getTaskTC(id))
+        if(!demo){
+            dispatch(getTaskTC(id))
+        }
+        else{return}
     },[])
 
     const addTask = useCallback((title: string) => {

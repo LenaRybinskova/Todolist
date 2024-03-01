@@ -12,16 +12,16 @@ import {
     removeTodolistAC,
     todolistsReducer,
     updateTodolistAC
-} from '../state/todolists-reducer';
-import {addTaskAC, removeTaskAC, tasksReducer, updateTaskAC} from '../state/tasks-reducer';
+} from '../features/todolists-reducer';
+import {addTaskAC, removeTaskAC, tasksReducer, updateTaskAC} from '../features/tasks-reducer';
 import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
 import {todolistId1, todolistId2} from '../AppWithRedux/id-utils';
 
 
 function AppWithReducers() {
     let [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [
-        {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: ''},
-        {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, addedDate: ''}
+        {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: '',entityStatus:"idle"},
+        {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, addedDate: '',entityStatus:"idle"}
     ])
 
     let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
@@ -178,7 +178,8 @@ function AppWithReducers() {
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>
-                    <AddItemForm addItem={addTodolist}/>
+       {/*             //заглушка*/}
+                    <AddItemForm addItem={addTodolist} disabled={false}/>
                 </Grid>
                 <Grid container spacing={3}>
                     {

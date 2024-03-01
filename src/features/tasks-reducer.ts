@@ -1,7 +1,13 @@
-import {CreateTodolistACType, GetTodolistACType, RemoveTodolistActionType} from './todolists-reducer';
+import {
+    changeTodolistEntityStatusAC,
+    CreateTodolistACType,
+    GetTodolistACType,
+    RemoveTodolistActionType
+} from './todolists-reducer';
 import {TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType} from '../api/todolists-api';
 import {Dispatch} from 'redux';
-import {AppActionsType, AppRootStateType, AppThunk} from './store';
+import {AppActionsType, AppRootStateType, AppThunk} from '../AppWithRedux/store';
+import {RequestStatusType, setAppErrorAC, setAppStatusAC} from '../AppWithRedux/app-reducer';
 
 
 // isDone заменили на status, у новых тасок по умолчанию priority: TaskPriorities.Low
@@ -151,22 +157,41 @@ export const updateTaskAC = (todolistId: string, taskId: string, model: UpdateTa
 }
 
 
+
 //thunk
 export const getTaskTC = (tlId: string): AppThunk => {
     return (dispatch: Dispatch) => {
+        dispatch(setAppStatusAC('loading'))
         todolistAPI.getTasks(tlId).then(res => dispatch(getTasksAC(res.data.items, tlId)))
+        dispatch(setAppStatusAC('succeeded'))
     }
 }
 export const addTaskTC = (title: string, todolistId: string): AppThunk => {
     return (dispatch: Dispatch) => {
+        dispatch(setAppStatusAC('loading'))
         todolistAPI.createTask(todolistId, title)
-            .then(res => dispatch(addTaskAC(res.data.data.item)))
+            .then(res => {
+                if (res.data.resultCode === 0) {
+                    dispatch(addTaskAC(res.data.data.item))
+                    dispatch(setAppStatusAC('succeeded'))
+                    console.log('сюда попали')
+                } else {
+                    if (res.data.messages.length) {
+                        dispatch(setAppErrorAC(res.data.messages[0]))
+                    } else {
+                        dispatch(setAppErrorAC('произошла какая то ошибка при вводе таски'))
+                    }
+                    dispatch(setAppStatusAC('failed'))
+                }
+            })
     }
 }
 export const removeTaskTC = (taskId: string, todolistId: string): AppThunk => {
     return (dispatch: Dispatch) => {
+        dispatch(setAppStatusAC('loading'))
         todolistAPI.deleteTask(todolistId, taskId)
             .then(res => dispatch(removeTaskAC(taskId, todolistId)))
+        dispatch(setAppStatusAC('succeeded'))
     }
 }
 export const updateTaskTC = (todolistId: string, taskId: string, model: UpdateTaskDomainType): AppThunk => {
@@ -189,8 +214,12 @@ export const updateTaskTC = (todolistId: string, taskId: string, model: UpdateTa
             order: task.order,
             ...model
         }
-
-        todolistAPI.updateTask(todolistId, taskId, apiModel).then(res => dispatch(updateTaskAC(todolistId, taskId, model)))
+        dispatch(setAppStatusAC('loading'))
+        todolistAPI.updateTask(todolistId, taskId, apiModel).then(res => {
+                dispatch(updateTaskAC(todolistId, taskId, model))
+                dispatch(setAppStatusAC('succeeded'))
+            }
+        )
     }
 }
 
@@ -207,6 +236,7 @@ export type TasksActionsType =
     | GetTodolistACType
     | ReturnType<typeof getTasksAC>
     | CreateTodolistACType
+
 
 export type UpdateTaskDomainType = {
     title?: string,
