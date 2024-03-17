@@ -5,6 +5,8 @@ import {ThunkAction} from 'redux-thunk';
 import {RequestStatusType, setAppErrorAC, setAppStatusAC, SetStatusACType} from '../AppWithRedux/app-reducer';
 import {debug} from 'util';
 import {handleServerAppError, handleServerNetworkError} from '../utils/error-utils';
+import {number} from 'prop-types';
+import {AxiosError} from 'axios';
 
 
 const initialState: TodolistDomainType[] = [
@@ -79,17 +81,9 @@ export const removeTodolistTC = (todolistId: string): AppThunk => {
                 dispatch(setAppStatusAC('succeeded')) // закончили крутилку
             } else {
                 handleServerAppError(res.data, dispatch)
-                /*if (res.data.messages.length) {
-                    dispatch(setAppErrorAC(res.data.messages[0])) // вывели в попап то что от сервера
-                } else {
-                    dispatch(setAppErrorAC('some error occured')) // вывели в попап хоть что то
-                }
-                dispatch(setAppStatusAC("failed")) // закончили крутилку*/
             }
-        }).catch(error=>{
-/*            dispatch(setAppErrorAC('some error occured, CATCH')) // вывели в попап
-            dispatch(setAppStatusAC("failed")) // закончили крутилку*/
-            handleServerNetworkError(error,dispatch)
+        }).catch((error: AxiosError<ResponseErrorType>) => {
+            handleServerNetworkError(error, dispatch)
         })
     }
 }
@@ -110,9 +104,16 @@ export const updateTodolistTC = (todolistId: string, model: TodolistDomainModelT
         }
         dispatch(setAppStatusAC('loading'))
         todolistAPI.updateTodolist(todolistId, modelApi.title).then(res => {
-            dispatch(updateTodolistAC(todolistId, model))
-            dispatch(setAppStatusAC('succeeded'))
+            if (res.data.resultCode === 0) {
+                dispatch(removeTodolistAC(todolistId))
+                dispatch(setAppStatusAC('succeeded')) // закончили крутилку
+            } else {
+                handleServerAppError(res.data, dispatch)
+            }
+        }).catch((e: AxiosError<ResponseErrorType>) => {
+            handleServerNetworkError(e, dispatch)
         })
+
     }
 }
 
@@ -139,6 +140,11 @@ type TodolistDomainModelType = {
     order?: number
     title?: string
     filter?: FilterValuesType
+}
+export type ResponseErrorType = {
+    resultCode: number
+    messages: string[]
+    data: {}
 }
 
 

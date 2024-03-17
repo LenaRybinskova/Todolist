@@ -2,12 +2,14 @@ import {
     changeTodolistEntityStatusAC,
     CreateTodolistACType,
     GetTodolistACType,
-    RemoveTodolistActionType
+    RemoveTodolistActionType, ResponseErrorType
 } from './todolists-reducer';
 import {TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType} from '../api/todolists-api';
 import {Dispatch} from 'redux';
 import {AppActionsType, AppRootStateType, AppThunk} from '../AppWithRedux/store';
 import {RequestStatusType, setAppErrorAC, setAppStatusAC} from '../AppWithRedux/app-reducer';
+import {handleServerAppError} from '../utils/error-utils';
+import {AxiosError} from 'axios';
 
 
 // isDone заменили на status, у новых тасок по умолчанию priority: TaskPriorities.Low
@@ -157,7 +159,6 @@ export const updateTaskAC = (todolistId: string, taskId: string, model: UpdateTa
 }
 
 
-
 //thunk
 export const getTaskTC = (tlId: string): AppThunk => {
     return (dispatch: Dispatch) => {
@@ -176,14 +177,11 @@ export const addTaskTC = (title: string, todolistId: string): AppThunk => {
                     dispatch(setAppStatusAC('succeeded'))
                     console.log('сюда попали')
                 } else {
-                    if (res.data.messages.length) {
-                        dispatch(setAppErrorAC(res.data.messages[0]))
-                    } else {
-                        dispatch(setAppErrorAC('произошла какая то ошибка при вводе таски'))
-                    }
-                    dispatch(setAppStatusAC('failed'))
+                    handleServerAppError(res.data, dispatch)
                 }
-            })
+            }).catch((error: AxiosError<ResponseErrorType>) => {
+
+        })
     }
 }
 export const removeTaskTC = (taskId: string, todolistId: string): AppThunk => {
@@ -199,7 +197,6 @@ export const updateTaskTC = (todolistId: string, taskId: string, model: UpdateTa
         const state = getState()
         const task = state.tasks[todolistId].find(t => t.id === taskId)
         if (!task) {
-            console.log('task is not exist')
             return
         }
 
