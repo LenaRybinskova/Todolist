@@ -6,14 +6,18 @@ import {Menu} from '@mui/icons-material';
 import TodolistList from '../features/TodolistList/TodolistList';
 import {useAppSelector} from './store';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
+import {Login} from '../features/login/Login';
+import {Route, Routes} from 'react-router-dom';
 
 
-type AppPropsType={
-    demo?:boolean
+type AppPropsType = {
+    demo?: boolean
 }
-function App({demo=false}:AppPropsType) {
+
+function App({demo = false}: AppPropsType) {
     console.log('ререндер компоненты Апп')
     const status = useAppSelector<string | null>(state => state.app.status)
+
     return (
         <div className="App">
             <AppBar position="static">
@@ -27,10 +31,13 @@ function App({demo=false}:AppPropsType) {
                     <Button color="inherit">Login</Button>
                 </Toolbar>
                 {status === 'loading' && <LinearProgress/>}
+                <ErrorSnackbar/>
             </AppBar>
             <Container fixed>
-                <ErrorSnackbar/>
-                <TodolistList demo={demo}/>
+                <Routes>
+                    <Route path={'/'} element={<TodolistList demo={demo}/>}/>
+                    <Route path={'/login'} element={<Login/>}/>
+                </Routes>
             </Container>
         </div>
     );

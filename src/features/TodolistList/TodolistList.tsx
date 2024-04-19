@@ -22,7 +22,6 @@ const TodolistList: React.FC<TodolistListType> = ({demo = false}) => {
                             <Todolist
                                 todolist={tl}
                                 demo={demo}
-
                             />
                         </Paper>
                     </Grid>
