@@ -1,14 +1,20 @@
 import {useFormik} from 'formik';
 import {Button, Checkbox, FormControlLabel, FormGroup, FormLabel, Grid, TextField} from '@mui/material';
 import {FormControl} from '@material-ui/core';
+import {loginTC} from './auth-reducer';
+import {useAppDispatch, useAppSelector} from '../../AppWithRedux/store';
+import {Navigate} from 'react-router-dom';
+import {selectIsLoggedIn} from './login-selectors';
 
 
 type ErrorType = {
     email?: string
     password?: string
-    rememberMe?: boolean
 }
+
 export const Login = () => {
+    const dispatch = useAppDispatch()
+    const isLoggedIn = useAppSelector<boolean>(selectIsLoggedIn)
 
     const formik = useFormik({
         initialValues: {
@@ -16,6 +22,7 @@ export const Login = () => {
             password: '',
             rememberMe: false
         },
+        //validate фукн сраб при каждом впечатывании в инпуты
         validate: (values) => {
             const errors: ErrorType = {}
             if (!values.email) {
@@ -30,11 +37,19 @@ export const Login = () => {
             }
             return errors
         },
-
+        // onSubmit не сраб, если в объекте error что то есть
+        // onSubmit когда сработает, все поля инпутов запишет в объект touched и выведутся все ошибки если они есть
         onSubmit: values => {
-            alert(JSON.stringify(values));
+            dispatch(loginTC(values))
+            formik.resetForm() //зачистка формы после сабмит до initialValues
         },
     });
+
+    //если залогиненты -редирект на главную
+    if (isLoggedIn) {
+        return <Navigate to={'/'}/>
+    }
+
     return (
         <Grid container justifyContent={'center'}>
             <Grid item justifyContent={'center'}>
@@ -83,5 +98,5 @@ export const Login = () => {
                 </form>
             </Grid>
         </Grid>
-    );
+    )
 }

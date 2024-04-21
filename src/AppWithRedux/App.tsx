@@ -1,13 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
-import {AppBar, Button, Container, LinearProgress, Toolbar, Typography} from '@mui/material';
+import {AppBar, Button, CircularProgress, Container, LinearProgress, Toolbar, Typography} from '@mui/material';
 import IconButton from '@mui/material/IconButton/IconButton';
 import {Menu} from '@mui/icons-material';
 import TodolistList from '../features/TodolistList/TodolistList';
-import {useAppSelector} from './store';
+import {useAppDispatch, useAppSelector} from './store';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
 import {Login} from '../features/login/Login';
-import {Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes} from 'react-router-dom';
+import {selectIsInitialize, selectStatus} from './app-selectors';
+import {authMeTC, logoutTC} from '../features/login/auth-reducer';
+import {selectIsLoggedIn} from '../features/login/login-selectors';
 
 
 type AppPropsType = {
@@ -15,8 +18,23 @@ type AppPropsType = {
 }
 
 function App({demo = false}: AppPropsType) {
-    console.log('ререндер компоненты Апп')
-    const status = useAppSelector<string | null>(state => state.app.status)
+    const dispatch = useAppDispatch()
+    const status = useAppSelector<string | null>(selectStatus)
+    const isInitialized = useAppSelector<boolean>(selectIsInitialize)
+    const isLoggedIn=useAppSelector<boolean>(selectIsLoggedIn)
+
+    useEffect(() => {
+        dispatch(authMeTC())
+    }, [])
+
+    //если прил не проиниц =>крутилка и дальше useEffect с authMeTC() в кот проверка куки и тд
+    if (!isInitialized) {
+        return <CircularProgress style={{justifyContent:"center"}}/>
+    }
+
+    const logoutHandler=()=>{
+        dispatch(logoutTC())
+    }
 
     return (
         <div className="App">
@@ -28,7 +46,7 @@ function App({demo = false}: AppPropsType) {
                     <Typography variant="h6">
                         News
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    {isLoggedIn && <Button onClick={logoutHandler} color="inherit">Log out</Button>}
                 </Toolbar>
                 {status === 'loading' && <LinearProgress/>}
                 <ErrorSnackbar/>
@@ -37,6 +55,9 @@ function App({demo = false}: AppPropsType) {
                 <Routes>
                     <Route path={'/'} element={<TodolistList demo={demo}/>}/>
                     <Route path={'/login'} element={<Login/>}/>
+                    <Route path={'/404'}
+                           element={<h1>PAGE NOT FOUND</h1>}></Route> {/*// сделали чтобы ошибке в урл было 404*/}
+                    <Route path={'*'} element={<Navigate to={'/404'}/>}/>
                 </Routes>
             </Container>
         </div>

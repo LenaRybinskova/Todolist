@@ -1,15 +1,23 @@
-const initialState:InitialStateType = {
-    status: 'idle' ,
-    error: null
+import {authAPI} from '../api/todolists-api';
+import {AppThunk} from './store';
+import {handleServerAppError, handleServerNetworkError} from '../utils/error-utils';
+import {setLoginAC} from '../features/login/auth-reducer';
+
+const initialState: InitialStateType = {
+    status: 'idle',
+    error: null,
+    isInitialized:false
 }
 
 
-export const appReducer = (state:InitialStateType = initialState, action: AppActionType):InitialStateType => {
+export const appReducer = (state: InitialStateType = initialState, action: AppActionType): InitialStateType => {
     switch (action.type) {
         case 'APP/SET-STATUS':
-            return {...state, status:action.status}
+            return {...state, status: action.status}
         case 'APP/SET-ERROR':
-            return {...state, error:action.error}
+            return {...state, error: action.error}
+        case 'APP/SET-INITIALISED':
+            return {...state, isInitialized: action.value}
         default:
             return {...state}
     }
@@ -22,19 +30,30 @@ export const setAppStatusAC = (status: RequestStatusType) => {
         status
     } as const
 }
-export const setAppErrorAC = (error: string |null) => {
+export const setAppErrorAC = (error: string | null) => {
     return {
         type: 'APP/SET-ERROR',
         error
     } as const
 }
+export const setInitializedAC = (value: boolean) => {
+    return {
+        type: 'APP/SET-INITIALISED',
+        value
+    } as const
+}
+
+//TC
+
 
 //types
 export type  RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 export type InitialStateType = {
     status: RequestStatusType
     error: null | string
+    isInitialized:boolean
 }
 export type SetStatusACType = ReturnType<typeof setAppStatusAC>
 export type SetErrorACType = ReturnType<typeof setAppErrorAC>
-export type AppActionType = SetStatusACType | SetErrorACType
+export type SetInitializedACType = ReturnType<typeof setInitializedAC>
+export type AppActionType = SetStatusACType | SetErrorACType | SetInitializedACType
