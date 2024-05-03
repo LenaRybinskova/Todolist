@@ -1,17 +1,17 @@
 import {Dispatch} from 'redux';
-import {setAppErrorAC, setAppStatusAC, SetErrorACType, SetStatusACType} from '../AppWithRedux/app-reducer';
+import {appActions} from '../AppWithRedux/app-reducer';
 
-export const handleServerAppError = (data: any, dispatch: Dispatch<SetErrorACType | SetStatusACType>) => {
+export const handleServerAppError = (data: any, dispatch: Dispatch) => {
     if (data.messages.length) {
-        dispatch(setAppErrorAC(data.messages[0])) // вывели в попап то что от сервера
+        dispatch(appActions.setAppError({error: data.messages[0]})) // вывели в попап то что от сервера
     } else {
-        dispatch(setAppErrorAC('some error occured')) // вывели в попап хоть что то
+        dispatch(appActions.setAppError({error: 'some error occured'})) // вывели в попап хоть что то
     }
-    dispatch(setAppStatusAC('failed')) // закончили крутилку
+    dispatch(appActions.setAppStatus({status: 'failed'})) // закончили крутилку
 }
 
 
-export const handleServerNetworkError=(error:{message:string}, dispatch:Dispatch<SetErrorACType | SetStatusACType>)=>{
-    dispatch(setAppErrorAC('some error occured, CATCH')) // вывели в попап
-    dispatch(setAppStatusAC("failed")) // закончили крутилку
+export const handleServerNetworkError = (error: { message: string }, dispatch: Dispatch) => {
+    dispatch(appActions.setAppError({error: 'some error occured, CATCH'})) // вывели в попап
+    dispatch(appActions.setAppStatus({status: 'failed'})) // закончили крутилку
 }

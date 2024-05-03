@@ -7,21 +7,18 @@ import {AppBar, Button, Container, Grid, Paper, Toolbar, Typography} from '@mui/
 import IconButton from '@mui/material/IconButton/IconButton';
 import {Menu} from '@mui/icons-material';
 import {
-    createTodolistAC,
-    FilterValuesType,
-    removeTodolistAC,
+    FilterValuesType, todolistsActions,
     todolistsReducer,
-    updateTodolistAC
 } from '../features/todolists-reducer';
-import {addTaskAC, removeTaskAC, tasksReducer, updateTaskAC} from '../features/tasks-reducer';
+import {tasksActions, tasksReducer} from '../features/tasks-reducer';
 import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
 import {todolistId1, todolistId2} from '../AppWithRedux/id-utils';
 
 
 function AppWithReducers() {
     let [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [
-        {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: '',entityStatus:"idle"},
-        {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, addedDate: '',entityStatus:"idle"}
+        {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: '', entityStatus: 'idle'},
+        {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, addedDate: '', entityStatus: 'idle'}
     ])
 
     let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
@@ -115,50 +112,51 @@ function AppWithReducers() {
         ]
     });
 
-
     function removeTask(id: string, todolistId: string) {
-        dispatchToTasks(removeTaskAC(id, todolistId))
+        dispatchToTasks(tasksActions.removeTask({taskId: id, todolistId}))
     }
 
     function addTask(title: string, todolistId: string) {
-        dispatchToTasks(addTaskAC({
-            id: 'id-exist',
-            title: title,
-            status: TaskStatuses.New,
-            description: '',
-            priority: TaskPriorities.Low,
-            startDate: '',
-            deadline: '',
-            order: 0,
-            addedDate: '',
-            todoListId: todolistId
+        dispatchToTasks(tasksActions.addTask({
+            task: {
+                id: 'id-exist',
+                title: title,
+                status: TaskStatuses.New,
+                description: '',
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                order: 0,
+                addedDate: '',
+                todoListId: todolistId
+            }
         }))
     }
 
     function changeStatus(id: string, status: number, todolistId: string) {
-        dispatchToTasks(updateTaskAC(todolistId,id, {status:status} ))
+        dispatchToTasks(tasksActions.updateTask({todolistId, taskId: id, model: {status: status}}))
     }
 
     function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
-        dispatchToTasks(updateTaskAC(todolistId,id, {title:newTitle}))
+        dispatchToTasks(tasksActions.updateTask({todolistId: todolistId, taskId: id, model: {title: newTitle}}))
     }
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
-        dispatchToTodolists(updateTodolistAC(todolistId, {filter: value}))
+        dispatchToTodolists(todolistsActions.updateTodolist({todolistId, model: {filter: value}}))
     }
 
     function removeTodolist(id: string) {
-        let action = removeTodolistAC(id)
+        let action = todolistsActions.removeTodolist({todolistId: id})
         dispatchToTodolists(action)
         dispatchToTasks(action)
     }
 
     function changeTodolistTitle(id: string, title: string) {
-        dispatchToTodolists(updateTodolistAC(id, {title: title}))
+        dispatchToTodolists(todolistsActions.updateTodolist({todolistId: id, model: {title: title}}))
     }
 
     function addTodolist(title: string) {
-        const action = createTodolistAC({id: v1(), title: title, addedDate: '', order: 0});
+        const action = todolistsActions.createTodolist({todolist:{id: v1(), title: title, addedDate: '', order: 0}});
         dispatchToTasks(action);
         dispatchToTodolists(action);
     }
@@ -178,7 +176,7 @@ function AppWithReducers() {
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>
-       {/*             //заглушка*/}
+                    {/*             //заглушка*/}
                     <AddItemForm addItem={addTodolist} disabled={false}/>
                 </Grid>
                 <Grid container spacing={3}>

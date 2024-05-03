@@ -11,6 +11,8 @@ import {Navigate, Route, Routes} from 'react-router-dom';
 import {selectIsInitialize, selectStatus} from './app-selectors';
 import {authMeTC, logoutTC} from '../features/login/auth-reducer';
 import {selectIsLoggedIn} from '../features/login/login-selectors';
+import {useDispatch} from 'react-redux';
+
 
 
 type AppPropsType = {
@@ -18,11 +20,12 @@ type AppPropsType = {
 }
 
 function App({demo = false}: AppPropsType) {
-    const dispatch = useAppDispatch()
+    const dispatch = useDispatch() //useAppDispatch() не работает
     const status = useAppSelector<string | null>(selectStatus)
     const isInitialized = useAppSelector<boolean>(selectIsInitialize)
     const isLoggedIn=useAppSelector<boolean>(selectIsLoggedIn)
 
+    // после CircularProgress сработает юзЭффект
     useEffect(() => {
         dispatch(authMeTC())
     }, [])

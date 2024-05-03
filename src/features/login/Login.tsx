@@ -5,6 +5,7 @@ import {loginTC} from './auth-reducer';
 import {useAppDispatch, useAppSelector} from '../../AppWithRedux/store';
 import {Navigate} from 'react-router-dom';
 import {selectIsLoggedIn} from './login-selectors';
+import {useDispatch} from 'react-redux';
 
 
 type ErrorType = {
@@ -13,7 +14,7 @@ type ErrorType = {
 }
 
 export const Login = () => {
-    const dispatch = useAppDispatch()
+    const dispatch = useDispatch() // useAppDispatch не работает
     const isLoggedIn = useAppSelector<boolean>(selectIsLoggedIn)
 
     const formik = useFormik({
@@ -100,3 +101,4 @@ export const Login = () => {
         </Grid>
     )
 }
+

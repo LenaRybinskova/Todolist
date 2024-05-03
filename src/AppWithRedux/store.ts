@@ -1,3 +1,35 @@
+import {tasksReducer} from '../features/tasks-reducer';
+import {todolistsReducer} from '../features/todolists-reducer';
+import {ThunkAction} from 'redux-thunk';
+import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
+import {appReducer} from './app-reducer';
+import {authReducer} from '../features/login/auth-reducer';
+import {configureStore,UnknownAction} from '@reduxjs/toolkit';
+
+
+export const store = configureStore({
+    reducer: {
+        tasks: tasksReducer,
+        todolists: todolistsReducer,
+        app: appReducer,
+        auth: authReducer
+    }
+})
+
+export type AppRootStateType = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, UnknownAction>;
+
+export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
+
+// а это, чтобы можно было в консоли браузера обращаться к store в любой момент
+// @ts-ignore
+window.store = store;
+
+
+
+/*//REDUX
 import {TasksActionsType, tasksReducer} from '../features/tasks-reducer';
 import {TodolistsActionsType, todolistsReducer} from '../features/todolists-reducer';
 import {applyMiddleware, combineReducers, legacy_createStore} from 'redux';
@@ -29,6 +61,6 @@ export const useAppSelector:TypedUseSelectorHook<AppRootStateType>=useSelector
 // @ts-ignore
 window.store = store;
 
-//window.store.getState()
+//window.store.getState()*/
 
 

@@ -2,7 +2,7 @@ import {ChangeEvent, KeyboardEvent, useState} from 'react';
 
 
 export const useAddItemForm = (onAddItem: (title: string) => void) => {
-    console.log("AddItemForm")
+
     let [title, setTitle] = useState('')
     let [error, setError] = useState<string | null>(null)
 

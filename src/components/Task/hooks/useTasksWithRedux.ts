@@ -3,11 +3,12 @@ import { removeTaskTC, updateTaskTC} from '../../../features/tasks-reducer';
 import {TaskWithReduxType} from '../TaskWithRedux';
 import {TaskStatuses} from '../../../api/todolists-api';
 import {useAppDispatch} from '../../../AppWithRedux/store';
+import {useDispatch} from 'react-redux';
 
 
 export const useTasksWithRedux = ({task, todolistId}: TaskWithReduxType) => {
 
-    const dispatch = useAppDispatch()
+    const dispatch = useDispatch() // useAppDispatch() не работает
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked;
