@@ -34,6 +34,9 @@ export const todolistsSlice = createSlice({
     createTodolist: (state, action: PayloadAction<{ todolist: TodolistType }>) => {
       state.unshift({ ...action.payload.todolist, filter: "all", entityStatus: "idle" });
     },
+    clearState: (state) => {
+      return [];
+    },
   },
 });
 export const todolistSlice = todolistsSlice.reducer;

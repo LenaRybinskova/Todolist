@@ -33,12 +33,6 @@ export type appInitialState = ReturnType<typeof appSlice.getInitialState>;
 //types
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed";
 
-/*export type SetStatusACType = ReturnType<typeof setAppStatus>
-export type SetErrorACType = ReturnType<typeof setAppErrorAC>
-export type SetInitializedACType = ReturnType<typeof setInitializedAC>
-
-export type AppActionType = SetStatusACType | SetErrorACType | SetInitializedACType*/
-
 /*
 // REDUX
 const initialState: InitialStateType = {

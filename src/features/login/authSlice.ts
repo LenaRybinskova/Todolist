@@ -4,6 +4,7 @@ import { appActions } from "AppWithRedux/appSlice";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Dispatch } from "redux";
 import { AppThunk } from "AppWithRedux/store";
+import { todolistsActions } from "features/todolistSlice";
 
 export const authSlice = createSlice({
   name: "auth",
@@ -67,6 +68,7 @@ export const logoutTC = (): AppThunk => async (dispatch) => {
     const res = await authAPI.logout();
     if (res.data.resultCode === 0) {
       dispatch(authActions.setLogin({ value: false }));
+      dispatch(todolistsActions.clearState());
       dispatch(appActions.setAppStatus({ status: "succeeded" }));
     } else {
       handleServerAppError(res.data, dispatch);
