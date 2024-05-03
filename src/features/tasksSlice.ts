@@ -1,7 +1,7 @@
-import { ResponseErrorType, todolistsActions } from "./todolists-reducer";
+import { ResponseErrorType, todolistsActions } from "features/todolistSlice";
 import { TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType } from "api/todolists-api";
 import { Dispatch } from "redux";
-import { appActions } from "AppWithRedux/app-reducer";
+import { appActions } from "AppWithRedux/appSlice";
 import { handleServerAppError } from "utils/error-utils";
 import { AxiosError } from "axios";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -87,7 +87,7 @@ export const sliceTasks = createSlice({
   },
 });
 
-export const tasksReducer = sliceTasks.reducer;
+export const tasksSlice = sliceTasks.reducer;
 export const tasksActions = sliceTasks.actions;
 export type tasksReducer = ReturnType<typeof sliceTasks.getInitialState>;
 
@@ -275,7 +275,7 @@ const initialState = {
       ]*!/
 }
 
-export const tasksReducer = (state: TasksStateType = initialState, action: TasksActionsType): TasksStateType => {
+export const tasksSlice = (state: TasksStateType = initialState, action: TasksActionsType): TasksStateType => {
     switch (action.type) {
         case 'SET-TODOLISTS':
             const copyState = {...state};

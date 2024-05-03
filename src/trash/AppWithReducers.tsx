@@ -6,18 +6,18 @@ import { AddItemForm } from "components/AddItemsForm/AddItemForm";
 import { AppBar, Button, Container, Grid, Paper, Toolbar, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton/IconButton";
 import { Menu } from "@mui/icons-material";
-import { FilterValuesType, todolistsActions, todolistsReducer } from "features/todolists-reducer";
-import { tasksActions, tasksReducer } from "features/tasks-reducer";
+import { FilterValuesType, todolistsActions, todolistSlice } from "features/todolistSlice";
+import { tasksActions, tasksSlice } from "features/tasksSlice";
 import { TaskPriorities, TaskStatuses } from "api/todolists-api";
 import { todolistId1, todolistId2 } from "AppWithRedux/id-utils";
 
 function AppWithReducers() {
-  let [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [
+  let [todolists, dispatchToTodolists] = useReducer(todolistSlice, [
     { id: todolistId1, title: "What to learn", filter: "all", order: 0, addedDate: "", entityStatus: "idle" },
     { id: todolistId2, title: "What to buy", filter: "all", order: 0, addedDate: "", entityStatus: "idle" },
   ]);
 
-  let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
+  let [tasks, dispatchToTasks] = useReducer(tasksSlice, {
     [todolistId1]: [
       {
         id: v1(),

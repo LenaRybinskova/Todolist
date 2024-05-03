@@ -1,6 +1,6 @@
 import { todolistAPI, TodolistType } from "api/todolists-api";
 import { AppRootStateType, AppThunk } from "AppWithRedux/store";
-import { appActions, RequestStatusType } from "AppWithRedux/app-reducer";
+import { appActions, RequestStatusType } from "AppWithRedux/appSlice";
 import { handleServerAppError, handleServerNetworkError } from "utils/error-utils";
 import { AxiosError } from "axios";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -36,7 +36,7 @@ export const todolistsSlice = createSlice({
     },
   },
 });
-export const todolistsReducer = todolistsSlice.reducer;
+export const todolistSlice = todolistsSlice.reducer;
 export const todolistsActions = todolistsSlice.actions;
 export type todolistsInitialState = ReturnType<typeof todolistsSlice.getInitialState>;
 
@@ -158,7 +158,7 @@ const initialState: TodolistDomainType[] = [
     /!*    {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: ''},
         {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, addedDate: ''}*!/
 ]
-export const todolistsReducer = (state = initialState, action: TodolistsActionsType): Array<TodolistDomainType> => {
+export const todolistSlice = (state = initialState, action: TodolistsActionsType): Array<TodolistDomainType> => {
     switch (action.type) {
         case 'SET-TODOLISTS':
             return action.todolists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))

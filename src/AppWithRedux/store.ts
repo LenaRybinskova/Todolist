@@ -1,15 +1,15 @@
-import { tasksReducer } from "features/tasks-reducer";
-import { todolistsReducer } from "features/todolists-reducer";
+import { tasksSlice } from "features/tasksSlice";
+import { todolistSlice } from "features/todolistSlice";
 import { ThunkAction } from "redux-thunk";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { appReducer } from "./app-reducer";
-import { authReducer } from "features/login/auth-reducer";
+import { appReducer } from "AppWithRedux/appSlice";
+import { authReducer, authSlice } from "features/login/authSlice";
 import { configureStore, UnknownAction } from "@reduxjs/toolkit";
 
 export const store = configureStore({
   reducer: {
-    tasks: tasksReducer,
-    todolists: todolistsReducer,
+    tasks: tasksSlice,
+    todolists: todolistSlice,
     app: appReducer,
     auth: authReducer,
   },
@@ -27,19 +27,19 @@ export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelecto
 window.store = store;
 
 /*//REDUX
-import {TasksActionsType, tasksReducer} from '../features/tasks-reducer';
-import {TodolistsActionsType, todolistsReducer} from '../features/todolists-reducer';
+import {TasksActionsType, tasksSlice} from '../features/tasks-reducer';
+import {TodolistsActionsType, todolistSlice} from '../features/todolists-reducer';
 import {applyMiddleware, combineReducers, legacy_createStore} from 'redux';
 import {thunk, ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
-import {AppActionType, appReducer} from './app-reducer';
-import {LoginActionType, authReducer} from '../features/login/auth-reducer';
+import {AppActionType, appSlice} from './app-reducer';
+import {LoginActionType, authSlice} from '../features/login/auth-reducer';
 
 const rootReducer = combineReducers({
-    tasks: tasksReducer,
-    todolists: todolistsReducer,
-    app:appReducer,
-    auth:authReducer
+    tasks: tasksSlice,
+    todolists: todolistSlice,
+    app:appSlice,
+    auth:authSlice
 })
 
 export const store = legacy_createStore(rootReducer, applyMiddleware(thunk));

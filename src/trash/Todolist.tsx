@@ -5,7 +5,7 @@ import IconButton from "@mui/material/IconButton/IconButton";
 import { Delete } from "@mui/icons-material";
 import { Button, Checkbox } from "@mui/material";
 import { TaskStatuses, TaskType } from "api/todolists-api";
-import { FilterValuesType } from "features/todolists-reducer";
+import { FilterValuesType } from "features/todolistSlice";
 
 type PropsType = {
   id: string;

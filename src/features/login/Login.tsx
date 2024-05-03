@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import { Button, Checkbox, FormControlLabel, FormGroup, FormLabel, Grid, TextField } from "@mui/material";
 import { FormControl } from "@material-ui/core";
-import { loginTC } from "./auth-reducer";
+import { loginTC } from "features/login/authSlice";
 import { useAppSelector } from "AppWithRedux/store";
 import { Navigate } from "react-router-dom";
 import { selectIsLoggedIn } from "./login-selectors";

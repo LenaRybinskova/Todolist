@@ -1,6 +1,6 @@
 import { authAPI, LoginParamType } from "api/todolists-api";
 import { handleServerAppError, handleServerNetworkError } from "utils/error-utils";
-import { appActions } from "AppWithRedux/app-reducer";
+import { appActions } from "AppWithRedux/appSlice";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Dispatch } from "redux";
 import { AppThunk } from "AppWithRedux/store";
@@ -87,7 +87,7 @@ const InitialState = {
     isLoggedIn: false
 }
 
-export const authReducer = (state: InitialStateType = InitialState, action: LoginActionType) => {
+export const authSlice = (state: InitialStateType = InitialState, action: LoginActionType) => {
     switch (action.type) {
         case 'AUTH/SET-IS-LOGGED-IN':
             return {...state, isLoggedIn: action.value}

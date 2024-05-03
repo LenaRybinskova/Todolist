@@ -9,7 +9,7 @@ import { ErrorSnackbar } from "components/ErrorSnackbar/ErrorSnackbar";
 import { Login } from "features/login/Login";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { selectIsInitialize, selectStatus } from "./app-selectors";
-import { authMeTC, logoutTC } from "features/login/auth-reducer";
+import { authMeTC, logoutTC } from "features/login/authSlice";
 import { selectIsLoggedIn } from "features/login/login-selectors";
 import { useDispatch } from "react-redux";
 

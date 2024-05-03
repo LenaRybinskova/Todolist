@@ -6,7 +6,7 @@ import { Delete } from "@mui/icons-material";
 import ButtonContainer from "../../components/ButtonWithRedux/ButtonContainer";
 import TaskWithRedux from "../../components/Task/TaskWithRedux";
 import { UseTodolist } from "./hooks/useTodolist";
-import { TodolistDomainType } from "../todolists-reducer";
+import { TodolistDomainType } from "features/todolistSlice";
 
 type PropsType = {
   todolist: TodolistDomainType;

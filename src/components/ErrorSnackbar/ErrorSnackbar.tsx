@@ -2,7 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Snackbar from "@mui/material/Snackbar";
 import { useAppDispatch, useAppSelector } from "AppWithRedux/store";
-import { appActions, selectError } from "AppWithRedux/app-reducer";
+import { appActions, selectError } from "AppWithRedux/appSlice";
 
 export function ErrorSnackbar() {
   const error = useAppSelector(selectError);

@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { removeTaskTC, updateTaskTC } from "features/tasks-reducer";
+import { removeTaskTC, updateTaskTC } from "features/tasksSlice";
 import { TaskWithReduxType } from "../TaskWithRedux";
 import { TaskStatuses } from "api/todolists-api";
 import { useDispatch } from "react-redux";
