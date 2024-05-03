@@ -1,17 +1,18 @@
+# 17: prettier, оптим импортов
+
 # 17: redux toolkit (без изм в ТС)
 
 # 16: formik, иниц прил со старта
 
 # 15 axios
 
-библиотека axios -  удобный вариант чтобы делать ajax запросы.
+библиотека axios - удобный вариант чтобы делать ajax запросы.
 
 Создаем уровень DAL c объектом TodolistAPI с методами CRUD(det, post, put, delete),типизируем то что они возвращают
 
 Создаем instanse c baseURL и настройками
 
 Обращаемся к уровню DAL на UI
-
 
 # 14 кастомные хуки
 
@@ -52,27 +53,30 @@ yarn add @storybook/addon-storysource --dev
 ```
 
 для ui тестирования
+
 ```
 yarn add puppeteer jest-puppeteer jest-image-snapshot start-server-and-test --dev
 ```
 
-или 
+или
+
 ```
 yarn add puppeteer jest-puppeteer jest-image-snapshot start-server-and-test jest jest-environment-jsdom --dev
 ```
+
 добавить скрипты
 
 "jest:integration": "jest -c integration/jest.config.js",
 "test:integration": "start-server-and-test storybook http-get://localhost:9009 jest:integration"
 
-
-
 создать integration папку с файлами setupTests.js
+
 ```
 const { toMatchImageSnapshot } = require('jest-image-snapshot');
 
 expect.extend({ toMatchImageSnapshot });
 ```
+
 и jest.config.js
 
 ```
@@ -82,12 +86,12 @@ expect.extend({ toMatchImageSnapshot });
    setupFilesAfterEnv: ['./setupTests.js']
 };
 ```
+
 ```
 yarn run jest:integration --updateSnapshot  обновить эталонный вид
 ```
 
-
-# 11: среда 3 занятие React.memo() , useCallback(), useMemo() 
+# 11: среда 3 занятие React.memo() , useCallback(), useMemo()
 
 Исп в связки, все коллбеки передаваемые в компоненты, оборач в useCallback().
 
@@ -96,5 +100,3 @@ yarn run jest:integration --updateSnapshot  обновить эталонный 
 Мат расчеты оборачиваем в useMemo()
 
 # 10: среда 2 занятие react-redux, TodolistWithRedux
-
-

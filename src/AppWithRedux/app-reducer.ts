@@ -1,44 +1,42 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const appSlice = createSlice({
-    name: 'app',
-    initialState: {
-        status: 'idle' as RequestStatusType,
-        error: null as string | null,
-        isInitialized: false
-    }, reducers: {
-        setAppStatus: (state, action: PayloadAction<{ status: RequestStatusType }>) => {
-            state.status = action.payload.status
-        },
-        setAppError: (state, action: PayloadAction<{ error: string | null }>) => {
-            state.error = action.payload.error
-        },
-        setInitialized: (state, action: PayloadAction<{ isInitialized: boolean }>) => {
-            state.isInitialized = action.payload.isInitialized
-        }
+  name: "app",
+  initialState: {
+    status: "idle" as RequestStatusType,
+    error: null as string | null,
+    isInitialized: false,
+  },
+  reducers: {
+    setAppStatus: (state, action: PayloadAction<{ status: RequestStatusType }>) => {
+      state.status = action.payload.status;
     },
-    selectors: {
-        selectError: sliceState => sliceState.error,
-        selectStatus: sliceState => sliceState.status,
-        selectIsInitialized: sliceState => sliceState.isInitialized
-    }
-})
+    setAppError: (state, action: PayloadAction<{ error: string | null }>) => {
+      state.error = action.payload.error;
+    },
+    setInitialized: (state, action: PayloadAction<{ isInitialized: boolean }>) => {
+      state.isInitialized = action.payload.isInitialized;
+    },
+  },
+  selectors: {
+    selectError: (sliceState) => sliceState.error,
+    selectStatus: (sliceState) => sliceState.status,
+    selectIsInitialized: (sliceState) => sliceState.isInitialized,
+  },
+});
 
-export const appReducer = appSlice.reducer
-export const appActions = appSlice.actions
-export const {selectError, selectStatus, selectIsInitialized} = appSlice.selectors
-export type appInitialState = ReturnType<typeof appSlice.getInitialState>
-
+export const appReducer = appSlice.reducer;
+export const appActions = appSlice.actions;
+export const { selectError, selectStatus, selectIsInitialized } = appSlice.selectors;
+export type appInitialState = ReturnType<typeof appSlice.getInitialState>;
 
 //types
-export type  RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
+export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed";
 
 /*export type SetStatusACType = ReturnType<typeof setAppStatus>
 export type SetErrorACType = ReturnType<typeof setAppErrorAC>
 export type SetInitializedACType = ReturnType<typeof setInitializedAC>
 export type AppActionType = SetStatusACType | SetErrorACType | SetInitializedACType*/
-
 
 /*
 // REDUX

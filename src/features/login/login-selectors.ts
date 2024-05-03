@@ -1,3 +1,3 @@
-import {AppRootStateType} from '../../AppWithRedux/store';
+import { AppRootStateType } from "AppWithRedux/store";
 
-export const selectIsLoggedIn = (state:AppRootStateType) => state.auth.isLoggedIn
+export const selectIsLoggedIn = (state: AppRootStateType) => state.auth.isLoggedIn;
