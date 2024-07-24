@@ -25,7 +25,7 @@ const TodolistList: React.FC<TodolistListType> = ({ demo = false }): ReactElemen
         {todolists.map((tl) => {
           return (
             <Grid key={tl.id} item xs={12} sm={6} md={4}>
-              <Paper style={{ padding: "10px", minHeight: "400px"} }>
+              <Paper style={{ padding: "10px", minHeight: "400px", position: "relative" }}>
                 <Todolist todolist={tl} demo={demo} />
               </Paper>
             </Grid>

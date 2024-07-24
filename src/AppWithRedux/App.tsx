@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import { AppBar, Button, CircularProgress, Container, LinearProgress, Toolbar, Typography } from "@mui/material";
+import { AppBar, Button, Container, LinearProgress, Toolbar } from "@mui/material";
 import IconButton from "@mui/material/IconButton/IconButton";
 import { Menu } from "@mui/icons-material";
 import TodolistList from "../features/TodolistList/TodolistList";
@@ -30,7 +30,7 @@ function App({ demo = false }: AppPropsType) {
 
   //если прил не проиниц =>крутилка и дальше useEffect с authMeTC() в кот проверка куки и тд
   if (!isInitialized) {
-    return <CircularProgress style={{ justifyContent: "center" }} />;
+    return <div>Loading..</div>;
   }
 
   const logoutHandler = () => {
@@ -40,7 +40,7 @@ function App({ demo = false }: AppPropsType) {
   return (
     <Container fixed style={{ maxWidth: "1200px", marginTop: "20px" }}>
       <div className="App">
-        <AppBar position="static">
+        <AppBar position="static" style={{ position: "relative" }}>
           <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
             <IconButton edge="start" color="inherit" aria-label="menu">
               <Menu />
@@ -52,7 +52,11 @@ function App({ demo = false }: AppPropsType) {
               </Button>
             )}
           </Toolbar>
-          {status === "loading" && <LinearProgress />}
+          {status === "loading" && (
+            <div style={{ position: "absolute", bottom: 0, width: "100%" }}>
+              <LinearProgress />
+            </div>
+          )}
           <ErrorSnackbar />
         </AppBar>
 

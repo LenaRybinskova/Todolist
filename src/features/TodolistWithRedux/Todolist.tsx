@@ -41,7 +41,7 @@ export const Todolist = React.memo(({ todolist, demo }: PropsType) => {
           <TaskWithRedux key={t.id} task={t} todolistId={id} />
         ))}
       </div>
-      <div>
+      <div style={{ position: "absolute", bottom: "15px", left: "20px" }}>
         <ButtonContainer variant={filter === "all" ? "outlined" : "text"} onClick={onAllClickHandler} color={"inherit"}>
           All
         </ButtonContainer>
