@@ -18,14 +18,14 @@ const TodolistList: React.FC<TodolistListType> = ({ demo = false }): ReactElemen
   }
   return (
     <>
-      <Grid container style={{ padding: "20px" }}>
+      <Grid container style={{ margin: "20px" }}>
         <AddItemForm addItem={addTodolist} disabled={status === "loading"} />
       </Grid>
       <Grid container spacing={3}>
         {todolists.map((tl) => {
           return (
-            <Grid key={tl.id} item>
-              <Paper style={{ padding: "10px" }}>
+            <Grid key={tl.id} item xs={12} sm={6} md={4}>
+              <Paper style={{ padding: "10px", minHeight: "400px"} }>
                 <Todolist todolist={tl} demo={demo} />
               </Paper>
             </Grid>

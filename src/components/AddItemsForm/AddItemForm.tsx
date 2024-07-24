@@ -13,7 +13,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
   const { title, onChangeHandler, onKeyPressHandler, error, addItem } = useAddItemForm(props.addItem);
 
   return (
-    <div>
+    <div style={{ display:"flex", marginBottom:"10px"}}>
       <TextField
         variant="outlined"
         disabled={props.disabled}
@@ -21,7 +21,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
         value={title}
         onChange={onChangeHandler}
         onKeyPress={onKeyPressHandler}
-        label="Title"
+/*        label="title"*/
         helperText={error}
       />
       <IconButton color="primary" onClick={addItem} disabled={props.disabled}>
