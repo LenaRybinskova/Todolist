@@ -1,24 +1,38 @@
-# 17: prettier, оптим импортов
+## В проекте использовались библиотеки:
+   - React
+   - Redux
+   - React-Redux
+   - Redux-thunk
+   - Redux Toolkit
+   - React-router-dom
+   - Axios
+   - Formik
+   - Jest
+   - Material-UI
+   - Storybook
 
-# 17: redux toolkit (без изм в ТС)
 
-# 16: formik, иниц прил со старта
 
-# 15 axios
 
-библиотека axios - удобный вариант чтобы делать ajax запросы.
+### 17: redux toolkit (без изм в ТС)
+
+### 16: formik, иниц прил со старта
+
+### 15: axios
+
+библиотека axios
 
 Создаем уровень DAL c объектом TodolistAPI с методами CRUD(det, post, put, delete),типизируем то что они возвращают
 
-Создаем instanse c baseURL и настройками
+Создаем instance c baseURL и настройками
 
 Обращаемся к уровню DAL на UI
 
-# 14 кастомные хуки
+### 14: кастомные хуки
 
-Код компоненты дб легко читаем, поэтому логику переносим в каст хуки. Импорт кастхук в компоненту и получается она более читаема.
+Код компоненты дб легко читаем, логику переносим в каст хуки. Импорт кастхук в компоненту и получается она более читаема.
 
-# 12 Storybook + snapshot
+### 12: Storybook + snapshot
 
 ```
 npx storybook@latest init
@@ -28,7 +42,6 @@ npx sb init не ставила, выдает ошибку babelOption
 
 storybook запускает отдельный свой сервер
 
-если ошибка установки, почистить кэш npm (-- force значит принудительно)
 
 ```
 npx cache clear -- force
@@ -40,7 +53,7 @@ npx cache clear -- force
 yarn install
 ```
 
-переоткрыть webshtorm.
+перезап webshtorm.
 
 поменять порт на 9009 "storybook": "storybook dev -p 9009"
 
@@ -91,7 +104,7 @@ expect.extend({ toMatchImageSnapshot });
 yarn run jest:integration --updateSnapshot  обновить эталонный вид
 ```
 
-# 11: среда 3 занятие React.memo() , useCallback(), useMemo()
+### 11: среда 3 занятие React.memo() , useCallback(), useMemo()
 
 Исп в связки, все коллбеки передаваемые в компоненты, оборач в useCallback().
 
@@ -99,4 +112,4 @@ yarn run jest:integration --updateSnapshot  обновить эталонный 
 
 Мат расчеты оборачиваем в useMemo()
 
-# 10: среда 2 занятие react-redux, TodolistWithRedux
+### 10: среда 2 занятие react-redux, TodolistWithRedux

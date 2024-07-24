@@ -8,44 +8,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppRootStateType, AppThunk } from "AppWithRedux/store";
 
 // isDone заменили на status, у новых тасок по умолчанию priority: TaskPriorities.Low
-const initialState = {
-  /*  [todolistId1]: [
-              {
-                id: v1(),
-                  title: 'CSS',
-
-              },
-              {
-                  id: v1(),
-                  title: 'JS',
-
-              },
-              {
-                  id: v1(),
-                  title: 'React',
-
-              },
-              {
-                  id: v1(),
-                  title: 'Redux',
-
-              }
-          ],
-          [todolistId2]: [
-              {
-                  id: v1(),
-                  title: 'milk',
-              },
-              {
-                  id: v1(),
-                  title: 'bread',
-              },
-              {
-                  id: v1(),
-                  title: 'cheese
-              }
-          ]*/
-};
+const initialState = {};
 
 export const sliceTasks = createSlice({
   name: "tasks",
