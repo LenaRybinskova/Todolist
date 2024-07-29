@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import { AppBar, Button, Container, LinearProgress, Toolbar } from "@mui/material";
 import IconButton from "@mui/material/IconButton/IconButton";
 import { Menu } from "@mui/icons-material";
 import TodolistList from "../features/TodolistList/TodolistList";
@@ -12,6 +11,11 @@ import { selectIsInitialize, selectStatus } from "./app-selectors";
 import { authMeTC, logoutTC } from "features/login/authSlice";
 import { selectIsLoggedIn } from "features/login/login-selectors";
 import { useDispatch } from "react-redux";
+import Button from "@material-ui/core/Button";
+import AppBar from "@material-ui/core/AppBar";
+import Container from "@material-ui/core/Container";
+import Toolbar from "@material-ui/core/Toolbar";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 type AppPropsType = {
   demo?: boolean;

@@ -6,9 +6,22 @@ import { handleServerAppError } from "utils/error-utils";
 import { AxiosError } from "axios";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppRootStateType, AppThunk } from "AppWithRedux/store";
+import { clearState } from "common/actions/common.actions";
 
 // isDone заменили на status, у новых тасок по умолчанию priority: TaskPriorities.Low
 const initialState = {};
+
+/*/!*  [todolistId1]: [
+          {id: v1(),title: 'CSS',status: TaskStatuses.New},
+          {id: v1(),title: 'JS',status: TaskStatuses.Completed,},
+          {id: v1(),title: 'React', status: TaskStatuses.New, }
+      ],
+       [todolistId2]: [
+          {id: v1(),title: 'CSS',status: TaskStatuses.New},
+          {id: v1(),title: 'JS',status: TaskStatuses.Completed,},
+          {id: v1(),title: 'React', status: TaskStatuses.New, }
+]
+*!/*/
 
 export const sliceTasks = createSlice({
   name: "tasks",
@@ -47,7 +60,7 @@ export const sliceTasks = createSlice({
       .addCase(todolistsActions.createTodolist, (state, action) => {
         state[action.payload.todolist.id] = [];
       })
-      .addCase(todolistsActions.clearState, (state, action) => {
+      .addCase(clearState, () => {
         return {};
       });
   },

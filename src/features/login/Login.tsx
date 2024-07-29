@@ -1,11 +1,14 @@
 import { useFormik } from "formik";
-import { Button, Checkbox, FormControlLabel, FormGroup, FormLabel, Grid, TextField } from "@mui/material";
-import { FormControl } from "@material-ui/core";
+import { Checkbox, FormControl, FormControlLabel, TextField } from "@material-ui/core";
 import { loginTC } from "features/login/authSlice";
 import { useAppSelector } from "AppWithRedux/store";
 import { Navigate } from "react-router-dom";
 import { selectIsLoggedIn } from "./login-selectors";
 import { useDispatch } from "react-redux";
+import Grid from "@mui/material/Grid/Grid";
+import FormGroup from "@mui/material/FormGroup/FormGroup";
+import { FormLabel } from "@mui/material";
+import Button from "@material-ui/core/Button";
 
 type ErrorType = {
   email?: string;
@@ -56,22 +59,20 @@ export const Login = () => {
         <form onSubmit={formik.handleSubmit}>
           <FormControl>
             <FormLabel>
-
               <p>lenarybinskova@gmail.com</p>
               <p>lenarybinskova</p>
-
             </FormLabel>
             <FormGroup>
-              <TextField label="email" margin="normal" {...formik.getFieldProps("email")} />
+              <TextField label="email" margin="normal" style={{ width: "300px" }} {...formik.getFieldProps("email")} />
               {formik.touched.email && formik.errors.email && <div style={{ color: "red" }}>{formik.errors.email}</div>}
               <TextField
                 type="password"
                 label="Password"
                 margin="normal"
                 /* name="password"
-                                                 onBlur={formik.handleBlur}
-                                                 onChange={formik.handleChange}
-                                                 value={formik.values.password}*/
+                                                                 onBlur={formik.handleBlur}
+                                                                 onChange={formik.handleChange}
+                                                                 value={formik.values.password}*/
                 {...formik.getFieldProps("password")}
               />
               {formik.touched.password && formik.errors.password && (

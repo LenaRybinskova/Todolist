@@ -2,9 +2,8 @@ import { authAPI, LoginParamType } from "api/todolists-api";
 import { handleServerAppError, handleServerNetworkError } from "utils/error-utils";
 import { appActions } from "AppWithRedux/appSlice";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Dispatch } from "redux";
 import { AppThunk } from "AppWithRedux/store";
-import { todolistsActions } from "features/todolistSlice";
+import { clearState } from "common/actions/common.actions";
 
 export const authSlice = createSlice({
   name: "auth",
@@ -12,8 +11,8 @@ export const authSlice = createSlice({
     isLoggedIn: false,
   },
   reducers: {
-    setLogin: (state, action: PayloadAction<{ value: boolean }>) => {
-      state.isLoggedIn = action.payload.value;
+    setLogin: (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
+      state.isLoggedIn = action.payload.isLoggedIn;
     },
   },
   selectors: {
@@ -27,13 +26,13 @@ export type authInitialState = ReturnType<typeof authSlice.getInitialState>;
 export const selectIsLoggedIn = authSlice.selectors;
 
 //TC
-export const authMeTC = () => async (dispatch: Dispatch) => {
+export const authMeTC = (): AppThunk => async (dispatch) => {
   dispatch(appActions.setAppStatus({ status: "loading" }));
   try {
     const res = await authAPI.authMe();
     //если 0, значит кука есть и значит делвем isLoggedIn = true
     if (res.data.resultCode === 0) {
-      dispatch(authActions.setLogin({ value: true }));
+      dispatch(authActions.setLogin({ isLoggedIn: true }));
       dispatch(appActions.setAppStatus({ status: "succeeded" }));
     } else {
       handleServerAppError(res.data, dispatch);
@@ -52,7 +51,7 @@ export const loginTC =
     try {
       const res = await authAPI.login(data);
       if (res.data.resultCode === 0) {
-        dispatch(authActions.setLogin({ value: true }));
+        dispatch(authActions.setLogin({ isLoggedIn: true }));
         dispatch(appActions.setAppStatus({ status: "succeeded" }));
       } else {
         handleServerAppError(res.data, dispatch);
@@ -67,8 +66,8 @@ export const logoutTC = (): AppThunk => async (dispatch) => {
   try {
     const res = await authAPI.logout();
     if (res.data.resultCode === 0) {
-      dispatch(authActions.setLogin({ value: false }));
-      dispatch(todolistsActions.clearState());
+      dispatch(authActions.setLogin({ isLoggedIn: false }));
+      dispatch(clearState());
       dispatch(appActions.setAppStatus({ status: "succeeded" }));
     } else {
       handleServerAppError(res.data, dispatch);

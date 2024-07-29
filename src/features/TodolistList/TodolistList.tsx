@@ -1,9 +1,10 @@
 import React, { ReactElement } from "react";
 import { useTodolisList } from "AppWithRedux/hooks/useTodolisList";
 import { AddItemForm } from "components/AddItemsForm/AddItemForm";
-import { Grid, Paper } from "@mui/material";
 import { Todolist } from "../TodolistWithRedux/Todolist";
 import { Navigate } from "react-router-dom";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 
 type TodolistListType = {
   demo?: boolean;

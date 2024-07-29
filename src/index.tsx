@@ -5,7 +5,7 @@ import * as serviceWorker from "./serviceWorker";
 import App from "./AppWithRedux/App";
 import { Provider } from "react-redux";
 import { store } from "./AppWithRedux/store";
-import { BrowserRouter, HashRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
 const container = document.getElementById("root") as HTMLElement;
 const root = createRoot(container);

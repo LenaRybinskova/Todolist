@@ -4,6 +4,7 @@ import { appActions, RequestStatusType } from "AppWithRedux/appSlice";
 import { handleServerAppError, handleServerNetworkError } from "utils/error-utils";
 import { AxiosError } from "axios";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { clearState } from "common/actions/common.actions";
 
 /* [
     /!*    {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: ''},
@@ -34,11 +35,14 @@ export const todolistsSlice = createSlice({
     createTodolist: (state, action: PayloadAction<{ todolist: TodolistType }>) => {
       state.unshift({ ...action.payload.todolist, filter: "all", entityStatus: "idle" });
     },
-    clearState: (state) => {
+  },
+  extraReducers: (builder) => {
+    builder.addCase(clearState, () => {
       return [];
-    },
+    });
   },
 });
+
 export const todolistSlice = todolistsSlice.reducer;
 export const todolistsActions = todolistsSlice.actions;
 export type todolistsInitialState = ReturnType<typeof todolistsSlice.getInitialState>;
