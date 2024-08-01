@@ -1,4 +1,4 @@
-import { tasksSlice } from "features/tasksSlice";
+import { tasksReducer } from "features/tasksReducer";
 import { todolistSlice } from "features/todolistSlice";
 import { ThunkAction } from "redux-thunk";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
@@ -8,7 +8,7 @@ import { configureStore, UnknownAction } from "@reduxjs/toolkit";
 
 export const store = configureStore({
   reducer: {
-    tasks: tasksSlice,
+    tasks: tasksReducer,
     todolists: todolistSlice,
     app: appReducer,
     auth: authReducer,

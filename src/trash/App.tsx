@@ -6,7 +6,7 @@ import { AddItemForm } from "components/AddItemsForm/AddItemForm";
 import { AppBar, Button, Container, Grid, Paper, Toolbar, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton/IconButton";
 import { Menu } from "@mui/icons-material";
-import { TasksStateType } from "features/tasksSlice";
+import { TasksStateType } from "features/tasksReducer";
 import { FilterValuesType, TodolistDomainType } from "features/todolistSlice";
 import { TaskPriorities, TaskStatuses } from "api/todolists-api";
 import { todolistId1, todolistId2 } from "AppWithRedux/id-utils";

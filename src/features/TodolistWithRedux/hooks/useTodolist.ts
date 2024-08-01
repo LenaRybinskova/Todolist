@@ -1,6 +1,6 @@
 import { useAppSelector } from "AppWithRedux/store";
 import { useCallback, useEffect, useMemo } from "react";
-import { addTaskTC, getTaskTC } from "features/tasksSlice";
+import { addTaskTC, getTaskTC } from "features/tasksReducer";
 import { changeTitleTodolistTC, removeTodolistTC, TodolistDomainType, todolistsActions } from "features/todolistSlice";
 import { TaskStatuses, TaskType } from "api/todolists-api";
 import { useDispatch } from "react-redux";

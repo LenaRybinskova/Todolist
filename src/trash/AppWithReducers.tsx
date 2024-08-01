@@ -7,7 +7,7 @@ import { AppBar, Button, Container, Grid, Paper, Toolbar, Typography } from "@mu
 import IconButton from "@mui/material/IconButton/IconButton";
 import { Menu } from "@mui/icons-material";
 import { FilterValuesType, todolistsActions, todolistSlice } from "features/todolistSlice";
-import { tasksActions, tasksSlice } from "features/tasksSlice";
+import { tasksActions, tasksReducer } from "features/tasksReducer";
 import { TaskPriorities, TaskStatuses } from "api/todolists-api";
 import { todolistId1, todolistId2 } from "AppWithRedux/id-utils";
 
@@ -17,7 +17,7 @@ function AppWithReducers() {
     { id: todolistId2, title: "What to buy", filter: "all", order: 0, addedDate: "", entityStatus: "idle" },
   ]);
 
-  let [tasks, dispatchToTasks] = useReducer(tasksSlice, {
+  let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
     [todolistId1]: [
       {
         id: v1(),
