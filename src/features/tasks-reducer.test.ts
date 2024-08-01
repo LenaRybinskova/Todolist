@@ -1,7 +1,8 @@
-import { tasksActions, tasksReducer, TasksStateType } from "features/tasksReducer";
+import { getTaskTC, tasksActions, tasksReducer, TasksStateType } from "features/tasksReducer";
 import { TaskPriorities, TaskStatuses, TaskType, TodolistType } from "api/todolists-api";
 import { todolistId1, todolistId2 } from "AppWithRedux/id-utils";
 import { todolistsActions } from "features/todolistSlice";
+import { string } from "prop-types";
 
 let startState: TasksStateType;
 
@@ -87,7 +88,9 @@ beforeEach(() => {
 });
 
 test("correct set tasks to todolist", () => {
-  const action = {
+  type ActionType = Omit<ReturnType<typeof getTaskTC.fulfilled>, "meta">;
+
+  const action: ActionType = {
     type: "tasks/getTasks/fulfilled",
     payload: { tasks: startState["todolistId1"], todolistId: "todolistId1" },
   };
