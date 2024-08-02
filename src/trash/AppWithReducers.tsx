@@ -109,7 +109,7 @@ function AppWithReducers() {
   });
 
   function removeTask(id: string, todolistId: string) {
-    dispatchToTasks(tasksActions.removeTask({ taskId: id, todolistId }));
+    /* dispatchToTasks(tasksActions.removeTask({ taskId: id, todolistId }));*/
   }
 
   function addTask(title: string, todolistId: string) {

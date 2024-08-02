@@ -59,6 +59,11 @@ export type UpdateTask = {
   model: UpdateTaskModelType;
 };
 
+export type RemoveTask = {
+  todolistId: string;
+  taskId: string;
+};
+
 export enum TaskStatuses {
   New = 0,
   InProgress = 1,
@@ -99,7 +104,8 @@ export const todolistAPI = {
   createTask(todolistId: string, title: string) {
     return instanse.post<ResponseType<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks`, { title });
   },
-  deleteTask(todolistId: string, taskId: string) {
+  deleteTask(arg: RemoveTask) {
+    const { todolistId, taskId } = arg;
     return instanse.delete<ResponseType>(`/todo-lists/${todolistId}/tasks/${taskId}`);
   },
   updateTask(arg: UpdateTask) {

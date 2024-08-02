@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { removeTaskTC, updateTask } from "features/tasksReducer";
+import { removeTask, updateTask } from "features/tasksReducer";
 import { TaskWithReduxType } from "../TaskWithRedux";
 import { TaskStatuses } from "api/todolists-api";
 import { useDispatch } from "react-redux";
@@ -16,7 +16,7 @@ export const useTasksWithRedux = ({ task, todolistId }: TaskWithReduxType) => {
     dispatch(updateTask({ todolistId, taskId: task.id, model: { title: newValue } }));
   };
 
-  const onClickHandler = () => dispatch(removeTaskTC(task.id, todolistId));
+  const onClickHandler = () => dispatch(removeTask({ taskId: task.id, todolistId }));
 
   return { onChangeHandler, onTitleChangeHandler, onClickHandler };
 };
