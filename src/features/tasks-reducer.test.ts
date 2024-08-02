@@ -1,8 +1,7 @@
-import { getTaskTC, tasksActions, tasksReducer, TasksStateType } from "features/tasksReducer";
+import { addTask, getTaskTC, tasksActions, tasksReducer, TasksStateType } from "features/tasksReducer";
 import { TaskPriorities, TaskStatuses, TaskType, TodolistType } from "api/todolists-api";
 import { todolistId1, todolistId2 } from "AppWithRedux/id-utils";
 import { todolistsActions } from "features/todolistSlice";
-import { string } from "prop-types";
 
 let startState: TasksStateType;
 
@@ -94,12 +93,12 @@ test("correct set tasks to todolist", () => {
     type: "tasks/getTasks/fulfilled",
     payload: { tasks: startState["todolistId1"], todolistId: "todolistId1" },
   };
-
+  // еще вариант написания экшен
   /*  const action = getTaskTC.fulfilled(
-        { tasks: startState["todolistId1"], todolistId: "todolistId1" },
-        "requestId",
-        "todolistId1",
-      );*/
+          { tasks: startState["todolistId1"], todolistId: "todolistId1" },
+          "requestId",
+          "todolistId1",
+        );*/
 
   const endState = tasksReducer(
     {
@@ -137,7 +136,12 @@ test("correct task should be added to correct array", () => {
     deadline: "",
     addedDate: "",
   };
-  const action = tasksActions.addTask({ task: newTask });
+  type Action = Omit<ReturnType<typeof addTask.fulfilled>, "meta">;
+  const action: Action = {
+    type: addTask.fulfilled.type,
+    payload: { task: newTask },
+  };
+
   const endState = tasksReducer(startState, action);
 
   expect(endState["todolistId1"].length).toBe(3);

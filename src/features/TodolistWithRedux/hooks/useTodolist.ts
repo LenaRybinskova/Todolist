@@ -1,6 +1,6 @@
 import { useAppSelector } from "AppWithRedux/store";
 import { useCallback, useEffect, useMemo } from "react";
-import { addTaskTC, getTaskTC } from "features/tasksReducer";
+import { addTask, getTaskTC } from "features/tasksReducer";
 import { changeTitleTodolistTC, removeTodolistTC, TodolistDomainType, todolistsActions } from "features/todolistSlice";
 import { TaskStatuses, TaskType } from "api/todolists-api";
 import { useDispatch } from "react-redux";
@@ -18,9 +18,9 @@ export const UseTodolist = ({ id, filter, title }: TodolistDomainType, demo?: bo
     }
   }, []);
 
-  const addTask = useCallback(
+  const addTaskCallback = useCallback(
     (title: string) => {
-      dispatch(addTaskTC(title, id));
+      dispatch(addTask({ title, todolistId: id }));
     },
     [dispatch],
   );
@@ -82,7 +82,7 @@ export const UseTodolist = ({ id, filter, title }: TodolistDomainType, demo?: bo
     title,
     changeTodolistTitle,
     removeTodolist,
-    addTask,
+    addTaskCallback,
     tasks,
     onAllClickHandler,
     onActiveClickHandler,

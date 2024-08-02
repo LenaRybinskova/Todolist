@@ -113,7 +113,7 @@ function AppWithReducers() {
   }
 
   function addTask(title: string, todolistId: string) {
-    dispatchToTasks(
+    /* dispatchToTasks(
       tasksActions.addTask({
         task: {
           id: "id-exist",
@@ -128,7 +128,7 @@ function AppWithReducers() {
           todoListId: todolistId,
         },
       }),
-    );
+    );*/
   }
 
   function changeStatus(id: string, status: number, todolistId: string) {

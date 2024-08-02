@@ -49,6 +49,10 @@ export type AuthMeResponseType = {
   email: string;
   login: string;
 };
+export type AddTask = {
+  title: string;
+  todolistId: string;
+};
 
 export enum TaskStatuses {
   New = 0,

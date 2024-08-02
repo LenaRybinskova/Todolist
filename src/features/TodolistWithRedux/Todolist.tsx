@@ -18,7 +18,7 @@ export const Todolist = React.memo(({ todolist, demo }: PropsType) => {
     title,
     changeTodolistTitle,
     removeTodolist,
-    addTask,
+    addTaskCallback,
     tasks,
     onAllClickHandler,
     onActiveClickHandler,
@@ -35,7 +35,7 @@ export const Todolist = React.memo(({ todolist, demo }: PropsType) => {
           <Delete />
         </IconButton>
       </h3>
-      <AddItemForm addItem={addTask} disabled={todolist.entityStatus === "loading"} />
+      <AddItemForm addItem={addTaskCallback} disabled={todolist.entityStatus === "loading"} />
       <div>
         {tasks.map((t) => (
           <TaskWithRedux key={t.id} task={t} todolistId={id} />
