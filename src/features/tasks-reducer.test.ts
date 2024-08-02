@@ -2,6 +2,7 @@ import { addTask, getTask, removeTask, tasksReducer, TasksStateType, updateTask 
 import { TaskPriorities, TaskStatuses, TaskType, TodolistType } from "api/todolists-api";
 import { todolistId1, todolistId2 } from "AppWithRedux/id-utils";
 import { todolistsActions } from "features/todolistSlice";
+import { TestAction } from "common/types/types";
 
 let startState: TasksStateType;
 
@@ -86,10 +87,12 @@ beforeEach(() => {
   };
 });
 
-test("correct set tasks to todolist", () => {
-  type ActionType = Omit<ReturnType<typeof getTask.fulfilled>, "meta">;
+/*type ActionType_ = Omit<ReturnType<typeof getTask.fulfilled>, "meta">;
+type Action__ = Omit<ReturnType<typeof removeTask.fulfilled>, "meta">;
+type Action_ = Omit<ReturnType<typeof addTask.fulfilled>, "meta">;*/
 
-  const action: ActionType = {
+test("correct set tasks to todolist", () => {
+  const action: TestAction<typeof getTask.fulfilled> = {
     type: "tasks/getTasks/fulfilled",
     payload: { tasks: startState["todolistId1"], todolistId: "todolistId1" },
   };
@@ -113,8 +116,10 @@ test("correct set tasks to todolist", () => {
 });
 
 test("correct task should be deleted from correct array", () => {
-  type Action = Omit<ReturnType<typeof removeTask.fulfilled>, "meta">;
-  const action: Action = { type: removeTask.fulfilled.type, payload: { taskId: "2", todolistId: "todolistId2" } };
+  const action: TestAction<typeof removeTask.fulfilled> = {
+    type: removeTask.fulfilled.type,
+    payload: { taskId: "2", todolistId: "todolistId2" },
+  };
   const endState = tasksReducer(startState, action);
 
   expect(endState["todolistId1"].length).toBe(3);
@@ -137,8 +142,8 @@ test("correct task should be added to correct array", () => {
     deadline: "",
     addedDate: "",
   };
-  type Action = Omit<ReturnType<typeof addTask.fulfilled>, "meta">;
-  const action: Action = {
+
+  const action: TestAction<typeof addTask.fulfilled> = {
     type: addTask.fulfilled.type,
     payload: { task: newTask },
   };

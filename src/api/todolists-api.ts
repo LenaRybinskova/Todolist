@@ -49,17 +49,17 @@ export type AuthMeResponseType = {
   email: string;
   login: string;
 };
-export type AddTask = {
+export type AddTaskArgs = {
   title: string;
   todolistId: string;
 };
-export type UpdateTask = {
+export type UpdateTaskArgs = {
   todolistId: string;
   taskId: string;
   model: UpdateTaskModelType;
 };
 
-export type RemoveTask = {
+export type RemoveTaskArgs = {
   todolistId: string;
   taskId: string;
 };
@@ -104,11 +104,11 @@ export const todolistAPI = {
   createTask(todolistId: string, title: string) {
     return instanse.post<ResponseType<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks`, { title });
   },
-  deleteTask(arg: RemoveTask) {
+  deleteTask(arg: RemoveTaskArgs) {
     const { todolistId, taskId } = arg;
     return instanse.delete<ResponseType>(`/todo-lists/${todolistId}/tasks/${taskId}`);
   },
-  updateTask(arg: UpdateTask) {
+  updateTask(arg: UpdateTaskArgs) {
     const { taskId, todolistId, model } = arg;
     return instanse.put<ResponseType<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks/${taskId}`, model);
   },
