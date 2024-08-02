@@ -81,7 +81,7 @@ export const UpdateTasks = () => {
       startDate: "",
       deadline: "",
     };
-    todolistAPI.updateTask(todolistId, taskId, model).then((res) => setState(res.data));
+    todolistAPI.updateTask({ todolistId, taskId, model }).then((res) => setState(res.data));
   }, []);
   return <div>{JSON.stringify(state)}</div>;
 };

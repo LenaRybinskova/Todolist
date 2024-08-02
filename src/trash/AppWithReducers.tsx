@@ -132,11 +132,11 @@ function AppWithReducers() {
   }
 
   function changeStatus(id: string, status: number, todolistId: string) {
-    dispatchToTasks(tasksActions.updateTask({ todolistId, taskId: id, model: { status: status } }));
+    /* dispatchToTasks(tasksActions.updateTask({ todolistId, taskId: id, model: { status: status } }));*/
   }
 
   function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
-    dispatchToTasks(tasksActions.updateTask({ todolistId: todolistId, taskId: id, model: { title: newTitle } }));
+    /* dispatchToTasks(tasksActions.updateTask({ todolistId: todolistId, taskId: id, model: { title: newTitle } }));*/
   }
 
   function changeFilter(value: FilterValuesType, todolistId: string) {
