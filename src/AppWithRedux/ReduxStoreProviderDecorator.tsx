@@ -7,8 +7,8 @@ import { AppRootStateType } from "./store";
 import { TaskPriorities, TaskStatuses } from "api/todolists-api";
 import { todolistId1, todolistId2 } from "./id-utils";
 import { thunk } from "redux-thunk";
-import { appReducer } from "AppWithRedux/appSlice";
 import { authReducer } from "features/login/authSlice";
+import { appReducer } from "AppWithRedux/appSlice";
 
 // заново как бы создаем стор, конкретно для сторибук
 const rootReducer = combineReducers({

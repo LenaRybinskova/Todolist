@@ -79,6 +79,12 @@ export enum TaskPriorities {
   Later = 4,
 }
 
+export enum ResultCode {
+  Success = 0,
+  Error = 1,
+  Captcha = 10,
+}
+
 const instanse = axios.create({
   baseURL: "https://social-network.samuraijs.com/api/1.1",
   withCredentials: true,

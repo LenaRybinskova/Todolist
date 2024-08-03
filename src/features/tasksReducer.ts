@@ -2,6 +2,7 @@ import { todolistsActions } from "features/todolistSlice";
 import {
   AddTaskArgs,
   RemoveTaskArgs,
+  ResultCode,
   TaskPriorities,
   TaskStatuses,
   TaskType,
@@ -9,10 +10,11 @@ import {
   UpdateTaskModelType,
 } from "api/todolists-api";
 import { appActions } from "AppWithRedux/appSlice";
-import { handleServerAppError, handleServerNetworkError } from "utils/error-utils";
+import { handleServerNetworkError } from "utils/handleServerNetworkError";
 import { createSlice } from "@reduxjs/toolkit";
 import { clearState } from "common/actions/common.actions";
 import { createAppAsyncThunks } from "utils/create-app-async.thunks";
+import { handleServerAppError } from "utils/handleServerAppError";
 
 // isDone заменили на status, у новых тасок по умолчанию priority: TaskPriorities.Low
 
@@ -36,22 +38,7 @@ import { createAppAsyncThunks } from "utils/create-app-async.thunks";
 export const sliceTasks = createSlice({
   name: "tasks",
   initialState: {} as TasksStateType,
-  reducers: {
-    /*    removeTask: (state, action: PayloadAction<{ taskId: string; todolistId: string }>) => {
-              const tasks = state[action.payload.todolistId];
-              const index = tasks.findIndex((t) => t.id === action.payload.taskId);
-              if (index !== -1) {
-                tasks.splice(index, 1);
-              }
-            },*/
-    /*    updateTask: (state, action: PayloadAction<{ todolistId: string; taskId: string; model: UpdateTaskDomainType }>) => {
-                              const tasks = state[action.payload.todolistId];
-                              const index = tasks.findIndex((t) => t.id === action.payload.taskId);
-                              if (index > -1) {
-                                tasks[index] = { ...tasks[index], ...action.payload.model };
-                              }
-                            },*/
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getTask.fulfilled, (state, action) => {
@@ -113,7 +100,7 @@ export const addTask = createAppAsyncThunks<{ task: TaskType }, AddTaskArgs>(
     try {
       dispatch(appActions.setAppStatus({ status: "loading" }));
       const res = await todolistAPI.createTask(todolistId, title);
-      if (res.data.resultCode === 0) {
+      if (res.data.resultCode === ResultCode.Success) {
         dispatch(appActions.setAppStatus({ status: "succeeded" }));
         return { task: res.data.data.item };
       } else {
@@ -150,7 +137,7 @@ export const updateTask = createAppAsyncThunks<UpdateTaskDomain, UpdateTaskDomai
     };
     dispatch(appActions.setAppStatus({ status: "loading" }));
     const res = await todolistAPI.updateTask({ todolistId, taskId, model: apiModel });
-    if (res.data.resultCode === 0) {
+    if (res.data.resultCode === ResultCode.Success) {
       dispatch(appActions.setAppStatus({ status: "succeeded" }));
       return arg;
     } else {
@@ -180,46 +167,6 @@ export const tasksReducer = sliceTasks.reducer;
 export const tasksActions = sliceTasks.actions;
 export type TasksReducerType = ReturnType<typeof sliceTasks.getInitialState>;
 
-/*export const removeTaskTC = (taskId: string, todolistId: string) => {
-  return (dispatch: Dispatch) => {
-    dispatch(appActions.setAppStatus({ status: "loading" }));
-    todolistAPI.deleteTask(todolistId, taskId).then((res) =>
-      dispatch(
-        tasksActions.removeTask({
-          taskId,
-          todolistId,
-        }),
-      ),
-    );
-    dispatch(appActions.setAppStatus({ status: "succeeded" }));
-  };
-};*/
-/*export const updateTaskTC = (todolistId: string, taskId: string, model: UpdateTaskDomainType): AppThunk => {
-  return (dispatch: Dispatch, getState: () => AppRootStateType) => {
-    const state = getState();
-    const task = state.tasks[todolistId].find((t) => t.id === taskId);
-    if (!task) {
-      return;
-    }
-
-    const apiModel: UpdateTaskModelType = {
-      title: task.title,
-      status: task.status,
-      deadline: task.deadline,
-      description: task.description,
-      priority: task.priority,
-      startDate: task.startDate,
-      order: task.order,
-      ...model,
-    };
-    dispatch(appActions.setAppStatus({ status: "loading" }));
-    todolistAPI.updateTask(todolistId, taskId, apiModel).then((res) => {
-      dispatch(tasksActions.updateTask({ todolistId, taskId, model }));
-      dispatch(appActions.setAppStatus({ status: "succeeded" }));
-    });
-  };
-};*/
-
 //types
 export type TasksStateType = {
   [key: string]: Array<TaskType>;
@@ -238,6 +185,7 @@ export type UpdateTaskDomain = {
   taskId: string;
   model: UpdateTaskDomainType;
 };
+
 /* REDUX
 import {
     changeTodolistEntityStatusAC,
@@ -247,8 +195,8 @@ import {
 } from './todolists-reducer';
 import {TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType} from '../api/todolists-api';
 import {Dispatch} from 'redux';
-import {AppActionsType, AppRootStateType, AppThunk} from '../AppWithRedux/store';
-import {RequestStatusType, setAppErrorAC, setAppStatusAC} from '../AppWithRedux/app-reducer';
+import {AppActionsType, AppRootStateType, AppThunk} from '../app/store';
+import {RequestStatusType, setAppErrorAC, setAppStatusAC} from '../app/app-reducer';
 import {handleServerAppError} from '../utils/error-utils';
 import {AxiosError} from 'axios';
 

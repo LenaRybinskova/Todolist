@@ -1,9 +1,10 @@
 import { authAPI, LoginParamType } from "api/todolists-api";
-import { handleServerAppError, handleServerNetworkError } from "utils/error-utils";
+import { handleServerNetworkError } from "utils/handleServerNetworkError";
 import { appActions } from "AppWithRedux/appSlice";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk } from "AppWithRedux/store";
 import { clearState } from "common/actions/common.actions";
+import { handleServerAppError } from "utils/handleServerAppError";
 
 export const authSlice = createSlice({
   name: "auth",
@@ -80,9 +81,9 @@ export const logoutTC = (): AppThunk => async (dispatch) => {
 /*
 //REDUX
 import {authAPI, LoginParamType} from '../../api/todolists-api';
-import {AppThunk} from '../../AppWithRedux/store';
+import {AppThunk} from '../../app/store';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
-import {setAppStatusAC, setInitializedAC} from '../../AppWithRedux/app-reducer';
+import {setAppStatusAC, setInitializedAC} from '../../app/app-reducer';
 
 const InitialState = {
     isLoggedIn: false

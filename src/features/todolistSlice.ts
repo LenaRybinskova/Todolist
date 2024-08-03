@@ -1,10 +1,11 @@
 import { todolistAPI, TodolistType } from "api/todolists-api";
 import { AppRootStateType, AppThunk } from "AppWithRedux/store";
 import { appActions, RequestStatusType } from "AppWithRedux/appSlice";
-import { handleServerAppError, handleServerNetworkError } from "utils/error-utils";
+import { handleServerNetworkError } from "utils/handleServerNetworkError";
 import { AxiosError } from "axios";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { clearState } from "common/actions/common.actions";
+import { handleServerAppError } from "utils/handleServerAppError";
 
 /* [
     /!*    {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: ''},
@@ -152,9 +153,9 @@ export type ResponseErrorType = {
 //REDUX
 import {todolistAPI, TodolistType} from '../api/todolists-api';
 import {AnyAction, Dispatch} from 'redux';
-import {AppActionsType, AppRootStateType, AppThunk} from '../AppWithRedux/store';
+import {AppActionsType, AppRootStateType, AppThunk} from '../app/store';
 import {ThunkAction} from 'redux-thunk';
-import {RequestStatusType, setAppErrorAC, setAppStatusAC, SetStatusACType} from '../AppWithRedux/app-reducer';
+import {RequestStatusType, setAppErrorAC, setAppStatusAC, SetStatusACType} from '../app/app-reducer';
 import {debug} from 'util';
 import {handleServerAppError, handleServerNetworkError} from '../utils/error-utils';
 import {number} from 'prop-types';
