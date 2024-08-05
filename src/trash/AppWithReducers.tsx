@@ -7,9 +7,10 @@ import { AppBar, Button, Container, Grid, Paper, Toolbar, Typography } from "@mu
 import IconButton from "@mui/material/IconButton/IconButton";
 import { Menu } from "@mui/icons-material";
 import { FilterValuesType, todolistsActions, todolistSlice } from "features/todolistSlice";
-import { tasksActions, tasksReducer } from "features/tasksReducer";
-import { TaskPriorities, TaskStatuses } from "api/todolists-api";
-import { todolistId1, todolistId2 } from "AppWithRedux/id-utils";
+import { tasksReducer } from "features/tasksReducer";
+
+import { todolistId1, todolistId2 } from "app/id-utils";
+import { TaskPriorities, TaskStatuses } from "common/enums/enums";
 
 function AppWithReducers() {
   let [todolists, dispatchToTodolists] = useReducer(todolistSlice, [

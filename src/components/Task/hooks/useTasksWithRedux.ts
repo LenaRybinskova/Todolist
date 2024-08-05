@@ -1,8 +1,8 @@
 import { ChangeEvent } from "react";
 import { removeTask, updateTask } from "features/tasksReducer";
 import { TaskWithReduxType } from "../TaskWithRedux";
-import { TaskStatuses } from "api/todolists-api";
 import { useDispatch } from "react-redux";
+import { TaskStatuses } from "common/enums/enums";
 
 export const useTasksWithRedux = ({ task, todolistId }: TaskWithReduxType) => {
   const dispatch = useDispatch(); // useAppDispatch() не работает

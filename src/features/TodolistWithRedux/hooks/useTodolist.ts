@@ -1,9 +1,10 @@
-import { useAppSelector } from "AppWithRedux/store";
+import { useAppSelector } from "app/store";
 import { useCallback, useEffect, useMemo } from "react";
 import { addTask, getTask } from "features/tasksReducer";
 import { changeTitleTodolistTC, removeTodolistTC, TodolistDomainType, todolistsActions } from "features/todolistSlice";
-import { TaskStatuses, TaskType } from "api/todolists-api";
+import { TaskType } from "api/todolists-api";
 import { useDispatch } from "react-redux";
+import { TaskStatuses } from "common/enums/enums";
 
 export const UseTodolist = ({ id, filter, title }: TodolistDomainType, demo?: boolean) => {
   let tasks = useAppSelector<Array<TaskType>>((state) => state.tasks[id]);

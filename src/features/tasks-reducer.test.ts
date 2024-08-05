@@ -1,8 +1,9 @@
 import { addTask, getTask, removeTask, tasksReducer, TasksStateType, updateTask } from "features/tasksReducer";
-import { TaskPriorities, TaskStatuses, TaskType, TodolistType } from "api/todolists-api";
-import { todolistId1, todolistId2 } from "AppWithRedux/id-utils";
+import { TaskType, TodolistType } from "api/todolists-api";
+import { todolistId1, todolistId2 } from "app/id-utils";
 import { todolistsActions } from "features/todolistSlice";
 import { TestAction } from "common/types/types";
+import { TaskPriorities, TaskStatuses } from "common/enums/enums";
 
 let startState: TasksStateType;
 

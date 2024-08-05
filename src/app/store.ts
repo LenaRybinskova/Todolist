@@ -2,7 +2,7 @@ import { tasksReducer } from "features/tasksReducer";
 import { todolistSlice } from "features/todolistSlice";
 import { ThunkAction } from "redux-thunk";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { appReducer } from "AppWithRedux/appSlice";
+import { appReducer } from "app/appSlice";
 import { authReducer, authSlice } from "features/login/authSlice";
 import { configureStore, UnknownAction } from "@reduxjs/toolkit";
 

@@ -4,11 +4,12 @@ import { tasksReducer } from "features/tasksReducer";
 import { todolistSlice } from "features/todolistSlice";
 import { v1 } from "uuid";
 import { AppRootStateType } from "./store";
-import { TaskPriorities, TaskStatuses } from "api/todolists-api";
+import {} from "api/todolists-api";
 import { todolistId1, todolistId2 } from "./id-utils";
 import { thunk } from "redux-thunk";
 import { authReducer } from "features/login/authSlice";
-import { appReducer } from "AppWithRedux/appSlice";
+import { appReducer } from "app/appSlice";
+import { TaskPriorities, TaskStatuses } from "common/enums/enums";
 
 // заново как бы создаем стор, конкретно для сторибук
 const rootReducer = combineReducers({

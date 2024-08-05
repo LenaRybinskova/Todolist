@@ -1,4 +1,6 @@
 import axios, { AxiosResponse } from "axios";
+import { TaskPriorities, TaskStatuses } from "common/enums/enums";
+import { instanse } from "common/instance/instance";
 
 export type TodolistType = {
   id: string;
@@ -18,12 +20,7 @@ export type TaskType = {
   deadline: string | null;
   addedDate: string;
 };
-type ResponseType<T = {}> = {
-  data: T;
-  resultCode: number;
-  fieldsErrors: string[];
-  messages: string[];
-};
+
 type GetTaskResponseType = {
   error: string | null;
   totalCount: number;
@@ -64,32 +61,12 @@ export type RemoveTaskArgs = {
   taskId: string;
 };
 
-export enum TaskStatuses {
-  New = 0,
-  InProgress = 1,
-  Completed,
-  Draft,
-}
-
-export enum TaskPriorities {
-  Low = 0,
-  Middle = 1,
-  Hi,
-  Ungently,
-  Later = 4,
-}
-
-export enum ResultCode {
-  Success = 0,
-  Error = 1,
-  Captcha = 10,
-}
-
-const instanse = axios.create({
-  baseURL: "https://social-network.samuraijs.com/api/1.1",
-  withCredentials: true,
-  headers: { "API-KEY": "2c45728a-68be-4862-8b0c-8cd42989c7e6" },
-});
+export type ResponseType<T = {}> = {
+  data: T;
+  resultCode: number;
+  fieldsErrors: string[];
+  messages: string[];
+};
 
 export const todolistAPI = {
   getTodolists() {

@@ -1,6 +1,6 @@
 import { todolistAPI, TodolistType } from "api/todolists-api";
-import { AppRootStateType, AppThunk } from "AppWithRedux/store";
-import { appActions, RequestStatusType } from "AppWithRedux/appSlice";
+import { AppRootStateType, AppThunk } from "app/store";
+import { appActions, RequestStatusType } from "app/appSlice";
 import { handleServerNetworkError } from "utils/handleServerNetworkError";
 import { AxiosError } from "axios";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";

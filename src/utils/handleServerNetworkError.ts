@@ -1,5 +1,5 @@
-import { appActions } from "AppWithRedux/appSlice";
-import { AppDispatch } from "AppWithRedux/store";
+import { appActions } from "app/appSlice";
+import { AppDispatch } from "app/store";
 import axios from "axios";
 
 export const handleServerNetworkError = (err: unknown, dispatch: AppDispatch): void => {

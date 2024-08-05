@@ -8,8 +8,8 @@ import IconButton from "@mui/material/IconButton/IconButton";
 import { Menu } from "@mui/icons-material";
 import { TasksStateType } from "features/tasksReducer";
 import { FilterValuesType, TodolistDomainType } from "features/todolistSlice";
-import { TaskPriorities, TaskStatuses } from "api/todolists-api";
-import { todolistId1, todolistId2 } from "AppWithRedux/id-utils";
+import { todolistId1, todolistId2 } from "app/id-utils";
+import { TaskPriorities, TaskStatuses } from "common/enums/enums";
 
 function App() {
   let [todolists, setTodolists] = useState<Array<TodolistDomainType>>([
