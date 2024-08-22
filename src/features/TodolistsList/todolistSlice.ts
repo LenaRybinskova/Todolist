@@ -1,11 +1,11 @@
 import { todolistAPI, TodolistType } from "api/todolists-api";
 import { AppRootStateType, AppThunk } from "app/store";
 import { appActions, RequestStatusType } from "app/appSlice";
-import { handleServerNetworkError } from "utils/handleServerNetworkError";
+import { handleServerNetworkError } from "common/utils/handleServerNetworkError";
 import { AxiosError } from "axios";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { clearState } from "common/actions/common.actions";
-import { handleServerAppError } from "utils/handleServerAppError";
+import { handleServerAppError } from "common/utils/handleServerAppError";
 
 /* [
     /!*    {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: ''},

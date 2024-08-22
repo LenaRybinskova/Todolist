@@ -1,11 +1,11 @@
-import { todolistsActions } from "features/todolistSlice";
+import { todolistsActions } from "features/TodolistsList/todolistSlice";
 import { AddTaskArgs, RemoveTaskArgs, TaskType, todolistAPI, UpdateTaskModelType } from "api/todolists-api";
 import { appActions } from "app/appSlice";
-import { handleServerNetworkError } from "utils/handleServerNetworkError";
+import { handleServerNetworkError } from "common/utils/handleServerNetworkError";
 import { createSlice } from "@reduxjs/toolkit";
 import { clearState } from "common/actions/common.actions";
-import { createAppAsyncThunks } from "utils/create-app-async.thunks";
-import { handleServerAppError } from "utils/handleServerAppError";
+import { createAppAsyncThunks } from "common/utils/createAppAsyncThunks";
+import { handleServerAppError } from "common/utils/handleServerAppError";
 import { ResultCode, TaskPriorities, TaskStatuses } from "common/enums/enums";
 
 // isDone заменили на status, у новых тасок по умолчанию priority: TaskPriorities.Low

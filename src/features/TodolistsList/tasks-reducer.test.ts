@@ -1,7 +1,7 @@
-import { addTask, getTask, removeTask, tasksReducer, TasksStateType, updateTask } from "features/tasksReducer";
+import { addTask, getTask, removeTask, tasksReducer, TasksStateType, updateTask } from "features/TodolistsList/tasksReducer";
 import { TaskType, TodolistType } from "api/todolists-api";
 import { todolistId1, todolistId2 } from "app/id-utils";
-import { todolistsActions } from "features/todolistSlice";
+import { todolistsActions } from "features/TodolistsList/todolistSlice";
 import { TestAction } from "common/types/types";
 import { TaskPriorities, TaskStatuses } from "common/enums/enums";
 

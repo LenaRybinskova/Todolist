@@ -1,13 +1,13 @@
 import { Provider } from "react-redux";
 import { applyMiddleware, combineReducers, createStore } from "redux";
-import { tasksReducer } from "features/tasksReducer";
-import { todolistSlice } from "features/todolistSlice";
+import { tasksReducer } from "features/TodolistsList/tasksReducer";
+import { todolistSlice } from "features/TodolistsList/todolistSlice";
 import { v1 } from "uuid";
 import { AppRootStateType } from "./store";
 import {} from "api/todolists-api";
 import { todolistId1, todolistId2 } from "./id-utils";
 import { thunk } from "redux-thunk";
-import { authReducer } from "features/login/authSlice";
+import { authReducer } from "features/auth/authSlice";
 import { appReducer } from "app/appSlice";
 import { TaskPriorities, TaskStatuses } from "common/enums/enums";
 

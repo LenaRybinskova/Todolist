@@ -1,10 +1,10 @@
 import { authAPI, LoginParamType } from "api/todolists-api";
-import { handleServerNetworkError } from "utils/handleServerNetworkError";
+import { handleServerNetworkError } from "common/utils/handleServerNetworkError";
 import { appActions } from "app/appSlice";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk } from "app/store";
 import { clearState } from "common/actions/common.actions";
-import { handleServerAppError } from "utils/handleServerAppError";
+import { handleServerAppError } from "common/utils/handleServerAppError";
 
 export const authSlice = createSlice({
   name: "auth",
@@ -125,7 +125,7 @@ export const authMeTC = (): AppThunk => async (dispatch) => {
 export const loginTC = (data: LoginParamType): AppThunk => async (dispatch) => {
     dispatch(setAppStatusAC('loading'))
     try {
-        const res = await authAPI.login(data)
+        const res = await authAPI.auth(data)
         if (res.data.resultCode === 0) {
             dispatch(setLoginAC(true))
             dispatch(setAppStatusAC('succeeded'))

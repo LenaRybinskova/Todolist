@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import "./App.css";
 import IconButton from "@mui/material/IconButton/IconButton";
 import { Menu } from "@mui/icons-material";
-import TodolistList from "../features/TodolistList/TodolistList";
+import TodolistList from "../features/TodolistsList/TodolistList";
 import { useAppSelector } from "./store";
-import { ErrorSnackbar } from "components/ErrorSnackbar/ErrorSnackbar";
-import { Login } from "features/login/Login";
+import { ErrorSnackbar } from "common/components/ErrorSnackbar/ErrorSnackbar";
+import { Login } from "features/auth/Login";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { selectIsInitialize, selectStatus } from "./app-selectors";
-import { authMeTC, logoutTC } from "features/login/authSlice";
-import { selectIsLoggedIn } from "features/login/login-selectors";
+import { authMeTC, logoutTC } from "features/auth/authSlice";
+import { selectIsLoggedIn } from "features/auth/auth.selectors";
 import { useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
@@ -66,7 +66,7 @@ function App({ demo = false }: AppPropsType) {
 
         <Routes>
           <Route path={"/"} element={<TodolistList demo={demo} />} />
-          <Route path={"/login"} element={<Login />} />
+          <Route path={"/auth"} element={<Login />} />
           <Route path={"/404"} element={<h1>PAGE NOT FOUND</h1>}></Route>
           <Route path={"*"} element={<Navigate to={"/404"} />} />
         </Routes>

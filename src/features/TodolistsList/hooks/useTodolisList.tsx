@@ -1,8 +1,8 @@
 import { useCallback, useEffect } from "react";
-import { createTodolistTC, getTodolistsTC, TodolistDomainType } from "features/todolistSlice";
+import { createTodolistTC, getTodolistsTC, TodolistDomainType } from "features/TodolistsList/todolistSlice";
 import { RequestStatusType } from "app/appSlice";
-import { selectStatusTodolist, selectTodolists } from "features/TodolistList/todolist-selectors";
-import { selectIsLoggedIn } from "features/login/login-selectors";
+import { selectStatusTodolist, selectTodolists } from "features/TodolistsList/todolist.selectors";
+import { selectIsLoggedIn } from "features/auth/auth.selectors";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "app/store";
 

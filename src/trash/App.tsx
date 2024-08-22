@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import "../AppWithRedux/App.css";
 import { Todolist } from "./Todolist";
 import { v1 } from "uuid";
-import { AddItemForm } from "components/AddItemsForm/AddItemForm";
+import { AddItemForm } from "common/components/AddItemsForm/AddItemForm";
 import { AppBar, Button, Container, Grid, Paper, Toolbar, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton/IconButton";
 import { Menu } from "@mui/icons-material";
-import { TasksStateType } from "features/tasksReducer";
-import { FilterValuesType, TodolistDomainType } from "features/todolistSlice";
+import { TasksStateType } from "features/TodolistsList/tasksReducer";
+import { FilterValuesType, TodolistDomainType } from "features/TodolistsList/todolistSlice";
 import { todolistId1, todolistId2 } from "app/id-utils";
 import { TaskPriorities, TaskStatuses } from "common/enums/enums";
 

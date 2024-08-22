@@ -1,7 +1,7 @@
 import { useAppSelector } from "app/store";
 import { useCallback, useEffect, useMemo } from "react";
-import { addTask, getTask } from "features/tasksReducer";
-import { changeTitleTodolistTC, removeTodolistTC, TodolistDomainType, todolistsActions } from "features/todolistSlice";
+import { addTask, getTask } from "features/TodolistsList/tasksReducer";
+import { changeTitleTodolistTC, removeTodolistTC, TodolistDomainType, todolistsActions } from "features/TodolistsList/todolistSlice";
 import { TaskType } from "api/todolists-api";
 import { useDispatch } from "react-redux";
 import { TaskStatuses } from "common/enums/enums";

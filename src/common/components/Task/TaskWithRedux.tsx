@@ -1,9 +1,9 @@
 import React, { memo } from "react";
 import { Checkbox } from "@mui/material";
-import { EditableSpan } from "../EditableSpan/EditableSpan";
+import { EditableSpan } from "common/components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton/IconButton";
 import { Delete } from "@mui/icons-material";
-import { useTasksWithRedux } from "./hooks/useTasksWithRedux";
+import { useTasksWithRedux } from "common/components/Task/hooks/useTasksWithRedux";
 import {} from "api/todolists-api";
 import { TaskPriorities, TaskStatuses } from "common/enums/enums";
 

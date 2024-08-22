@@ -1,12 +1,12 @@
 import React from "react";
-import { AddItemForm } from "components/AddItemsForm/AddItemForm";
-import { EditableSpan } from "components/EditableSpan/EditableSpan";
+import { AddItemForm } from "common/components/AddItemsForm/AddItemForm";
+import { EditableSpan } from "common/components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton/IconButton";
 import { Delete } from "@mui/icons-material";
-import ButtonContainer from "../../components/ButtonWithRedux/ButtonContainer";
-import TaskWithRedux from "../../components/Task/TaskWithRedux";
-import { UseTodolist } from "./hooks/useTodolist";
-import { TodolistDomainType } from "features/todolistSlice";
+import ButtonContainer from "common/components/ButtonWithRedux/ButtonContainer";
+import TaskWithRedux from "common/components/Task/TaskWithRedux";
+import { UseTodolist } from "features/TodolistsList/Todolist/hooks/useTodolist";
+import { TodolistDomainType } from "features/TodolistsList/todolistSlice";
 
 type PropsType = {
   todolist: TodolistDomainType;

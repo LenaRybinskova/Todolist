@@ -1,10 +1,10 @@
 import React, { ReactElement } from "react";
-import { AddItemForm } from "components/AddItemsForm/AddItemForm";
-import { Todolist } from "../TodolistWithRedux/Todolist";
+import { AddItemForm } from "common/components/AddItemsForm/AddItemForm";
+import { Todolist } from "./Todolist/Todolist";
 import { Navigate } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import { useTodolisList } from "features/TodolistList/hooks/useTodolisList";
+import { useTodolisList } from "features/TodolistsList/hooks/useTodolisList";
 
 type TodolistListType = {
   demo?: boolean;
@@ -13,9 +13,9 @@ const TodolistList: React.FC<TodolistListType> = ({ demo = false }): ReactElemen
   const { addTodolist, todolists, status, isLoggedIn } = useTodolisList(demo);
   //ВОПРОС, Navigate в кастомном хуке нельзя исп?
 
-  //если не залогиненты - редирект на login
+  //если не залогиненты - редирект на auth
   if (!isLoggedIn) {
-    return <Navigate to={"/login"} />;
+    return <Navigate to={"/auth"} />;
   }
   return (
     <>
