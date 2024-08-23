@@ -4,7 +4,7 @@ import { EditableSpan } from "common/components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton/IconButton";
 import { Delete } from "@mui/icons-material";
 import { useTasksWithRedux } from "common/components/Task/hooks/useTasksWithRedux";
-import {} from "api/todolists-api";
+import {} from "features/TodolistsList/todolists-api";
 import { TaskPriorities, TaskStatuses } from "common/enums/enums";
 
 type TaskType = {
@@ -24,7 +24,7 @@ export type TaskWithReduxType = {
   todolistId: string;
 };
 
-const TaskWithRedux = memo((props: TaskWithReduxType) => {
+const Task = memo((props: TaskWithReduxType) => {
   const { onChangeHandler, onTitleChangeHandler, onClickHandler } = useTasksWithRedux({ ...props });
 
   return (
@@ -39,4 +39,4 @@ const TaskWithRedux = memo((props: TaskWithReduxType) => {
   );
 });
 
-export default TaskWithRedux;
+export default Task;

@@ -1,5 +1,5 @@
 import { addTask, getTask, removeTask, tasksReducer, TasksStateType, updateTask } from "features/TodolistsList/tasksReducer";
-import { TaskType, TodolistType } from "api/todolists-api";
+import { TaskType, TodolistType } from "features/TodolistsList/todolists-api";
 import { todolistId1, todolistId2 } from "app/id-utils";
 import { todolistsActions } from "features/TodolistsList/todolistSlice";
 import { TestAction } from "common/types/types";

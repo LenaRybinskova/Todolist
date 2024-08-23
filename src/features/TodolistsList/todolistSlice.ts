@@ -1,4 +1,4 @@
-import { todolistAPI, TodolistType } from "api/todolists-api";
+import { todolistAPI, TodolistType } from "features/TodolistsList/todolists-api";
 import { AppRootStateType, AppThunk } from "app/store";
 import { appActions, RequestStatusType } from "app/appSlice";
 import { handleServerNetworkError } from "common/utils/handleServerNetworkError";

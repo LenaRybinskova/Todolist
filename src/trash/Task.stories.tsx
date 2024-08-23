@@ -8,7 +8,7 @@ import { TaskPriorities, TaskStatuses } from "common/enums/enums";
 
 // TOGGLE НЕ РАБОТАЕТ
 const meta: Meta<typeof Task> = {
-  title: "TODOLISTS/TaskWithRedux",
+  title: "TODOLISTS/Task",
   component: Task,
   parameters: { layout: "centered" },
   tags: ["autodocs"],
