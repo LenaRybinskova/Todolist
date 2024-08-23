@@ -4,7 +4,6 @@ import { EditableSpan } from "common/components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton/IconButton";
 import { Delete } from "@mui/icons-material";
 import { useTasksWithRedux } from "common/components/Task/hooks/useTasksWithRedux";
-import {} from "features/TodolistsList/todolists-api";
 import { TaskPriorities, TaskStatuses } from "common/enums/enums";
 
 type TaskType = {

@@ -4,7 +4,6 @@ import { tasksReducer } from "features/TodolistsList/tasksReducer";
 import { todolistSlice } from "features/TodolistsList/todolistSlice";
 import { v1 } from "uuid";
 import { AppRootStateType } from "./store";
-import {} from "features/TodolistsList/todolists-api";
 import { todolistId1, todolistId2 } from "./id-utils";
 import { thunk } from "redux-thunk";
 import { authReducer } from "features/auth/model/authSlice";
