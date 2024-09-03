@@ -1,6 +1,6 @@
 import {useFormik} from 'formik';
 import {Checkbox, FormControl, FormControlLabel, TextField} from '@material-ui/core';
-import {loginTC, selectIsLoggedIn} from 'features/auth/model/authSlice';
+import {login, selectIsLoggedIn} from 'features/auth/model/authSlice';
 import {useAppSelector} from 'app/store';
 import {Navigate} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
@@ -42,7 +42,7 @@ export const Login = () => {
         // onSubmit не сраб, если в объекте error что то есть
         // onSubmit когда сработает, все поля инпутов запишет в объект touched и выведутся все ошибки если они есть
         onSubmit: (values) => {
-            dispatch(loginTC(values));
+            dispatch(login(values));
             formik.resetForm(); //зачистка формы после сабмит до initialValues
         },
     });

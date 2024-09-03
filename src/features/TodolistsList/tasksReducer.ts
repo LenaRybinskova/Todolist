@@ -37,7 +37,7 @@ export const sliceTasks = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getTask.fulfilled, (state, action) => {
+            .addCase(setTasks.fulfilled, (state, action) => {
                 state[action.payload.todolistId] = action.payload.tasks;
             })
             .addCase(addTask.fulfilled, (state, action) => {
@@ -73,7 +73,7 @@ export const sliceTasks = createSlice({
     },
 });
 
-export const getTask = createAppAsyncThunks<{ tasks: TaskType[]; todolistId: string }, string>(
+export const setTasks = createAppAsyncThunks<{ tasks: TaskType[]; todolistId: string }, string>(
     `${sliceTasks.name}/getTasks`,
     async (todolistId, thunkAPI) => {
         try {

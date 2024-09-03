@@ -1,6 +1,6 @@
 import { useAppSelector } from "app/store";
 import { useCallback, useEffect, useMemo } from "react";
-import { addTask, getTask } from "features/TodolistsList/tasksReducer";
+import { addTask, setTasks } from "features/TodolistsList/tasksReducer";
 import { changeTitleTodolistTC, removeTodolistTC, TodolistDomainType, todolistsActions } from "features/TodolistsList/todolistSlice";
 import { TaskType } from "features/TodolistsList/todolists-api";
 import { useDispatch } from "react-redux";
@@ -13,7 +13,7 @@ export const UseTodolist = ({ id, filter, title }: TodolistDomainType, demo?: bo
 
   useEffect(() => {
     if (!demo) {
-      dispatch(getTask(id));
+      dispatch(setTasks(id));
     } else {
       return;
     }

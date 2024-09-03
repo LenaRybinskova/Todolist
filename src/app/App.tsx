@@ -8,8 +8,7 @@ import {ErrorSnackbar} from 'common/components/ErrorSnackbar/ErrorSnackbar';
 import {Login} from 'features/auth/ui/Login';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {selectIsInitialize, selectStatus} from './app-selectors';
-import {authMeTC, logoutTC, selectIsLoggedIn} from 'features/auth/model/authSlice';
-
+import {authMe, logout, selectIsLoggedIn} from 'features/auth/model/authSlice';
 import {useDispatch} from 'react-redux';
 import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
@@ -29,7 +28,7 @@ function App({demo = false}: AppPropsType) {
 
     // после CircularProgress сработает юзЭффект
     useEffect(() => {
-        dispatch(authMeTC());
+        dispatch(authMe(null));
     }, []);
 
     //если прил не проиниц =>крутилка и дальше useEffect с authMeTC() в кот проверка куки и тд
@@ -38,7 +37,7 @@ function App({demo = false}: AppPropsType) {
     }
 
     const logoutHandler = () => {
-        dispatch(logoutTC());
+        dispatch(logout(null));
     };
 
     return (

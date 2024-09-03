@@ -1,11 +1,11 @@
 import {authAPI} from 'features/auth/api/authApi';
 import {handleServerNetworkError} from 'common/utils/handleServerNetworkError';
 import {appActions} from 'app/appSlice';
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {AppThunk} from 'app/store';
+import {createSlice} from '@reduxjs/toolkit';
 import {clearState} from 'common/actions/common.actions';
 import {handleServerAppError} from 'common/utils/handleServerAppError';
-import {LoginParamType} from 'features/auth/api/authApi.types';
+import {createAppAsyncThunks} from 'common/utils';
+import {ResultCode} from 'common/enums';
 
 
 export const authSlice = createSlice({
@@ -14,9 +14,20 @@ export const authSlice = createSlice({
         isLoggedIn: false,
     },
     reducers: {
-        setLogin: (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
-            state.isLoggedIn = action.payload.isLoggedIn;
-        },
+        /*        setLogin: (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
+                    state.isLoggedIn = action.payload.isLoggedIn;
+                },*/
+    },
+    extraReducers: (builder) => {
+        builder.addCase(authMe.fulfilled, (state, action) => {
+            state.isLoggedIn = action.payload.isLoggedIn
+        })
+        builder.addCase(login.fulfilled, (state, action) => {
+            state.isLoggedIn = true
+        })
+        builder.addCase(logout.fulfilled, (state, action) => {
+            state.isLoggedIn = false
+        })
     },
     selectors: {
         selectIsLoggedIn: (sliceState) => sliceState.isLoggedIn,
@@ -24,12 +35,66 @@ export const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
-export const authActions = authSlice.actions;
 export type authInitialState = ReturnType<typeof authSlice.getInitialState>;
 export const {selectIsLoggedIn} = authSlice.selectors;
 
 //TC
-export const authMeTC = (): AppThunk => async (dispatch) => {
+
+export const authMe = createAppAsyncThunks<any, null>(`${authSlice.name}/authMe`, async (args, thunkAPI) => {
+    thunkAPI.dispatch(appActions.setAppStatus({status: 'loading'}));
+    try {
+        const res = await authAPI.authMe();
+        if (res.data.resultCode === ResultCode.Success) {//если 0, значит кука есть и значит делвем isLoggedIn = true
+            thunkAPI.dispatch(appActions.setAppStatus({status: 'succeeded'}));
+            return {isLoggedIn: true}
+        } else {
+            handleServerAppError(res.data, thunkAPI.dispatch);
+        }
+    } catch (e) {
+        handleServerNetworkError(e as { message: string }, thunkAPI.dispatch);
+    } finally {
+        thunkAPI.dispatch(appActions.setInitialized({isInitialized: true}));
+        /*/!* чтобы мы проиниц приложение в любом случае*!/*/
+    }
+})
+
+export const login = createAppAsyncThunks<any, any>(`${authSlice.name}/login`, async (args, thunkAPI) => {
+    thunkAPI.dispatch(appActions.setAppStatus({status: 'loading'}))
+    try {
+        const res = await authAPI.login(args);
+        if (res.data.resultCode === ResultCode.Success) {
+            thunkAPI.dispatch(appActions.setAppStatus({status: 'succeeded'}))
+            return
+            /*return {isLoggedIn: true}*/
+        } else {
+            handleServerAppError(res.data, thunkAPI.dispatch);
+            thunkAPI.rejectWithValue(null)
+        }
+    } catch (e) {
+        handleServerNetworkError(e, thunkAPI.dispatch);
+        return thunkAPI.rejectWithValue(null); // просто загрушка, тк вернуть что то надообязательно
+
+    }
+})
+
+export const logout = createAppAsyncThunks<any, null>(`${authSlice.name}/logout`, async (args, thunkAPI) => {
+    thunkAPI.dispatch(appActions.setAppStatus({status: 'loading'}));
+    try {
+        const res = await authAPI.logout();
+        if (res.data.resultCode === ResultCode.Success) {
+            thunkAPI.dispatch(clearState());
+            thunkAPI.dispatch(appActions.setAppStatus({status: 'succeeded'}));
+            /*return {isLoggedIn: false}*/
+            return
+        } else {
+            handleServerAppError(res.data, thunkAPI.dispatch);
+        }
+    } catch (e) {
+        handleServerNetworkError(e as { message: string }, thunkAPI.dispatch);
+    }
+})
+
+/*export const authMeTC = (): AppThunk => async (dispatch) => {
     dispatch(appActions.setAppStatus({status: 'loading'}));
     try {
         const res = await authAPI.authMe();
@@ -43,11 +108,11 @@ export const authMeTC = (): AppThunk => async (dispatch) => {
     } catch (e) {
         handleServerNetworkError(e as { message: string }, dispatch);
     } finally {
-        dispatch(appActions.setInitialized({isInitialized: true})); /* чтобы мы проиниц приложение в любом случае*/
+        dispatch(appActions.setInitialized({isInitialized: true})); /!* чтобы мы проиниц приложение в любом случае*!/
     }
-};
+};*/
 
-export const loginTC =
+/*export const loginTC =
     (data: LoginParamType): AppThunk =>
         async (dispatch) => {
             dispatch(appActions.setAppStatus({status: 'loading'}));
@@ -62,9 +127,9 @@ export const loginTC =
             } catch (e) {
                 handleServerNetworkError(e as { message: string }, dispatch);
             }
-        };
+        };*/
 
-export const logoutTC = (): AppThunk => async (dispatch) => {
+/*export const logoutTC = (): AppThunk => async (dispatch) => {
     dispatch(appActions.setAppStatus({status: 'loading'}));
     try {
         const res = await authAPI.logout();
@@ -78,7 +143,7 @@ export const logoutTC = (): AppThunk => async (dispatch) => {
     } catch (e) {
         handleServerNetworkError(e as { message: string }, dispatch);
     }
-};
+};*/
 
 /*
 //REDUX
