@@ -1,10 +1,10 @@
 import React, { ReactElement } from "react";
 import { AddItemForm } from "common/components/AddItemsForm/AddItemForm";
-import { Todolist } from "./Todolist/Todolist";
+import { Todolist } from "features/TodolistsList/ui/Todolist";
 import { Navigate } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import { useTodolisList } from "features/TodolistsList/hooks/useTodolisList";
+import { useTodolisList } from "features/TodolistsList/lib/todolistsList/useTodolisList";
 
 type TodolistListType = {
   demo?: boolean;

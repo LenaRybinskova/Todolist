@@ -6,8 +6,8 @@ import { AddItemForm } from "common/components/AddItemsForm/AddItemForm";
 import { AppBar, Button, Container, Grid, Paper, Toolbar, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton/IconButton";
 import { Menu } from "@mui/icons-material";
-import { FilterValuesType, todolistsActions, todolistSlice } from "features/TodolistsList/todolistSlice";
-import { tasksReducer } from "features/TodolistsList/tasksReducer";
+import { FilterValuesType, todolistsActions, todolistSlice } from "features/TodolistsList/model/todolists/todolistSlice";
+import { tasksSlice } from "features/TodolistsList/model/tasks/tasksSlice";
 
 import { todolistId1, todolistId2 } from "app/id-utils";
 import { TaskPriorities, TaskStatuses } from "common/enums/enums";
@@ -18,7 +18,7 @@ function AppWithReducers() {
     { id: todolistId2, title: "What to buy", filter: "all", order: 0, addedDate: "", entityStatus: "idle" },
   ]);
 
-  let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
+  let [tasks, dispatchToTasks] = useReducer(tasksSlice, {
     [todolistId1]: [
       {
         id: v1(),

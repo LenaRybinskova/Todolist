@@ -5,8 +5,8 @@ import IconButton from '@mui/material/IconButton/IconButton';
 import {Delete} from '@mui/icons-material';
 import ButtonContainer from 'common/components/ButtonWithRedux/ButtonContainer';
 import Task from 'common/components/Task/Task';
-import {UseTodolist} from 'features/TodolistsList/Todolist/hooks/useTodolist';
-import {TodolistDomainType} from 'features/TodolistsList/todolistSlice';
+import {UseTodolist} from 'features/TodolistsList/lib/todolist/useTodolist';
+import {TodolistDomainType} from 'features/TodolistsList/model/todolists/todolistSlice';
 
 type PropsType = {
     todolist: TodolistDomainType;

@@ -1,4 +1,4 @@
-import { todolistAPI, TodolistType } from "features/TodolistsList/todolists-api";
+import { todolistAPI, TodolistType } from "features/TodolistsList/api/todolists/todolists-api";
 import { AppRootStateType, AppThunk } from "app/store";
 import { appActions, RequestStatusType } from "app/appSlice";
 import { handleServerNetworkError } from "common/utils/handleServerNetworkError";
@@ -151,7 +151,7 @@ export type ResponseErrorType = {
 
 /*
 //REDUX
-import {todolistAPI, TodolistType} from '../api/todolists-api';
+import {todolistAPI, TodolistType} from '../api/todolistsList-api';
 import {AnyAction, Dispatch} from 'redux';
 import {AppActionsType, AppRootStateType, AppThunk} from '../app/store';
 import {ThunkAction} from 'redux-thunk';
@@ -169,7 +169,7 @@ const initialState: TodolistDomainType[] = [
 export const todolistSlice = (state = initialState, action: TodolistsActionsType): Array<TodolistDomainType> => {
     switch (action.type) {
         case 'SET-TODOLISTS':
-            return action.todolists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
+            return action.todolistsList.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
         case 'REMOVE-TODOLIST':
             return (state.filter((tl) => tl.id != action.id))
         case 'UPDATE-TODOLIST':
@@ -184,10 +184,10 @@ export const todolistSlice = (state = initialState, action: TodolistsActionsType
 }
 
 //action
-export const getTodolistAC = (todolists: TodolistType[]) => {
+export const getTodolistAC = (todolistsList: TodolistType[]) => {
     return {
         type: 'SET-TODOLISTS',
-        todolists
+        todolistsList
     } as const
 }
 export const createTodolistAC = (todolist: TodolistType) => {
@@ -246,7 +246,7 @@ export const removeTodolistTC = (todolistId: string): AppThunk => {
 }
 export const updateTodolistTC = (todolistId: string, model: TodolistDomainModelType): AppThunk => {
     return (dispatch, getState: () => AppRootStateType) => {
-        const todolist = getState().todolists.find(tl => tl.id === todolistId)
+        const todolist = getState().todolistsList.find(tl => tl.id === todolistId)
         if (!todolist) {
             console.log('todolist is not exist')
             return

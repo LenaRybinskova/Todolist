@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import './App.css';
 import IconButton from '@mui/material/IconButton/IconButton';
 import {Menu} from '@mui/icons-material';
-import TodolistList from '../features/TodolistsList/TodolistList';
+import TodolistList from 'features/TodolistsList/ui/TodolistList';
 import {useAppSelector} from './store';
 import {ErrorSnackbar} from 'common/components/ErrorSnackbar/ErrorSnackbar';
 import {Login} from 'features/auth/ui/Login';

@@ -1,11 +1,11 @@
-import {todolistsActions} from 'features/TodolistsList/todolistSlice';
+import {todolistsActions} from 'features/TodolistsList/model/todolists/todolistSlice';
 import {
     AddTaskArgs,
     RemoveTaskArgs,
     TaskType,
     todolistAPI,
     UpdateTaskModelType
-} from 'features/TodolistsList/todolists-api';
+} from 'features/TodolistsList/api/todolists/todolists-api';
 import {appActions} from 'app/appSlice';
 import {createSlice} from '@reduxjs/toolkit';
 import {clearState} from 'common/actions/common.actions';
@@ -159,7 +159,7 @@ export const removeTask = createAppAsyncThunks<RemoveTaskArgs, RemoveTaskArgs>(
     },
 );
 
-export const tasksReducer = sliceTasks.reducer;
+export const tasksSlice = sliceTasks.reducer;
 export const tasksActions = sliceTasks.actions;
 export type TasksReducerType = ReturnType<typeof sliceTasks.getInitialState>;
 
@@ -188,8 +188,8 @@ import {
     CreateTodolistACType,
     GetTodolistACType,
     RemoveTodolistActionType, ResponseErrorType
-} from './todolists-reducer';
-import {TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType} from '../api/todolists-api';
+} from './todolistsList-reducer';
+import {TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType} from '../api/todolistsList-api';
 import {Dispatch} from 'redux';
 import {AppActionsType, AppRootStateType, AppThunk} from '../app/store';
 import {RequestStatusType, setAppErrorAC, setAppStatusAC} from '../app/app-reducer';
@@ -293,7 +293,7 @@ export const tasksSlice = (state: TasksStateType = initialState, action: TasksAc
     switch (action.type) {
         case 'SET-TODOLISTS':
             const copyState = {...state};
-            action.todolists.forEach(tl => {
+            action.todolistsList.forEach(tl => {
                 copyState[tl.id] = []
             })
             return copyState;

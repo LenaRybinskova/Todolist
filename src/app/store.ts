@@ -1,5 +1,5 @@
-import { tasksReducer } from "features/TodolistsList/tasksReducer";
-import { todolistSlice } from "features/TodolistsList/todolistSlice";
+import { tasksSlice } from "features/TodolistsList/model/tasks/tasksSlice";
+import { todolistSlice } from "features/TodolistsList/model/todolists/todolistSlice";
 import { ThunkAction } from "redux-thunk";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { appReducer } from "app/appSlice";
@@ -8,7 +8,7 @@ import { configureStore, UnknownAction } from "@reduxjs/toolkit";
 
 export const store = configureStore({
   reducer: {
-    tasks: tasksReducer,
+    tasks: tasksSlice,
     todolists: todolistSlice,
     app: appReducer,
     auth: authReducer,
@@ -28,7 +28,7 @@ window.store = store;
 
 /*//REDUX
 import {TasksActionsType, tasksSlice} from '../features/tasks-reducer';
-import {TodolistsActionsType, todolistSlice} from '../features/todolists-reducer';
+import {TodolistsActionsType, todolistSlice} from '../features/todolistsList-reducer';
 import {applyMiddleware, combineReducers, legacy_createStore} from 'redux';
 import {thunk, ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
@@ -37,7 +37,7 @@ import {LoginActionType, authSlice} from '../features/auth/auth-reducer';
 
 const rootReducer = combineReducers({
     tasks: tasksSlice,
-    todolists: todolistSlice,
+    todolistsList: todolistSlice,
     app:appSlice,
     auth:authSlice
 })

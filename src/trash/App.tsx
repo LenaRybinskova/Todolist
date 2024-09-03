@@ -6,8 +6,8 @@ import { AddItemForm } from "common/components/AddItemsForm/AddItemForm";
 import { AppBar, Button, Container, Grid, Paper, Toolbar, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton/IconButton";
 import { Menu } from "@mui/icons-material";
-import { TasksStateType } from "features/TodolistsList/tasksReducer";
-import { FilterValuesType, TodolistDomainType } from "features/TodolistsList/todolistSlice";
+import { TasksStateType } from "features/TodolistsList/model/tasks/tasksSlice";
+import { FilterValuesType, TodolistDomainType } from "features/TodolistsList/model/todolists/todolistSlice";
 import { todolistId1, todolistId2 } from "app/id-utils";
 import { TaskPriorities, TaskStatuses } from "common/enums/enums";
 

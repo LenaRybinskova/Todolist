@@ -4,8 +4,8 @@ import { EditableSpan } from "common/components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton/IconButton";
 import { Delete } from "@mui/icons-material";
 import { Button, Checkbox } from "@mui/material";
-import { TaskType } from "features/TodolistsList/todolists-api";
-import { FilterValuesType } from "features/TodolistsList/todolistSlice";
+import { TaskType } from "features/TodolistsList/api/todolists/todolists-api";
+import { FilterValuesType } from "features/TodolistsList/model/todolists/todolistSlice";
 import { TaskStatuses } from "common/enums/enums";
 
 type PropsType = {

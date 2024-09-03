@@ -147,7 +147,7 @@ export const logout = createAppAsyncThunks<any, null>(`${authSlice.name}/logout`
 
 /*
 //REDUX
-import {authAPI, LoginParamType} from '../../api/todolists-api';
+import {authAPI, LoginParamType} from '../../api/todolistsList-api';
 import {AppThunk} from '../../app/store';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 import {setAppStatusAC, setInitializedAC} from '../../app/app-reducer';
