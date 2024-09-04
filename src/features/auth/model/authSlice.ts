@@ -39,7 +39,6 @@ export type authInitialState = ReturnType<typeof authSlice.getInitialState>;
 export const {selectIsLoggedIn} = authSlice.selectors;
 
 //TC
-
 export const authMe = createAppAsyncThunks<any, null>(`${authSlice.name}/authMe`, async (args, thunkAPI) => {
     thunkAPI.dispatch(appActions.setAppStatus({status: 'loading'}));
     try {
@@ -94,56 +93,6 @@ export const logout = createAppAsyncThunks<any, null>(`${authSlice.name}/logout`
     }
 })
 
-/*export const authMeTC = (): AppThunk => async (dispatch) => {
-    dispatch(appActions.setAppStatus({status: 'loading'}));
-    try {
-        const res = await authAPI.authMe();
-        //если 0, значит кука есть и значит делвем isLoggedIn = true
-        if (res.data.resultCode === 0) {
-            dispatch(authActions.setLogin({isLoggedIn: true}));
-            dispatch(appActions.setAppStatus({status: 'succeeded'}));
-        } else {
-            handleServerAppError(res.data, dispatch);
-        }
-    } catch (e) {
-        handleServerNetworkError(e as { message: string }, dispatch);
-    } finally {
-        dispatch(appActions.setInitialized({isInitialized: true})); /!* чтобы мы проиниц приложение в любом случае*!/
-    }
-};*/
-
-/*export const loginTC =
-    (data: LoginParamType): AppThunk =>
-        async (dispatch) => {
-            dispatch(appActions.setAppStatus({status: 'loading'}));
-            try {
-                const res = await authAPI.login(data);
-                if (res.data.resultCode === 0) {
-                    dispatch(authActions.setLogin({isLoggedIn: true}));
-                    dispatch(appActions.setAppStatus({status: 'succeeded'}));
-                } else {
-                    handleServerAppError(res.data, dispatch);
-                }
-            } catch (e) {
-                handleServerNetworkError(e as { message: string }, dispatch);
-            }
-        };*/
-
-/*export const logoutTC = (): AppThunk => async (dispatch) => {
-    dispatch(appActions.setAppStatus({status: 'loading'}));
-    try {
-        const res = await authAPI.logout();
-        if (res.data.resultCode === 0) {
-            dispatch(authActions.setLogin({isLoggedIn: false}));
-            dispatch(clearState());
-            dispatch(appActions.setAppStatus({status: 'succeeded'}));
-        } else {
-            handleServerAppError(res.data, dispatch);
-        }
-    } catch (e) {
-        handleServerNetworkError(e as { message: string }, dispatch);
-    }
-};*/
 
 /*
 //REDUX

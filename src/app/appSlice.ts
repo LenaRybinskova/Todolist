@@ -1,5 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+
+
+export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed";
+
 export const appSlice = createSlice({
   name: "app",
   initialState: {
@@ -30,8 +34,6 @@ export const appActions = appSlice.actions;
 export const { selectError, selectStatus, selectIsInitialized } = appSlice.selectors;
 export type appInitialState = ReturnType<typeof appSlice.getInitialState>;
 
-//types
-export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed";
 
 /*
 // REDUX

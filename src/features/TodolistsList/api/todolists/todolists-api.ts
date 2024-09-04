@@ -9,6 +9,7 @@ export type TodolistType = {
     order: number;
     title: string;
 };
+
 export type TaskType = {
     id: string;
     title: string;
@@ -21,11 +22,13 @@ export type TaskType = {
     deadline: string | null;
     addedDate: string;
 };
+
 type GetTaskResponseType = {
     error: string | null;
     totalCount: number;
     items: TaskType[];
 };
+
 export type UpdateTaskModelType = {
     title: string | null;
     description: string | null;
@@ -35,20 +38,24 @@ export type UpdateTaskModelType = {
     deadline: string | null;
     order: number | null;
 };
+
 export type AuthMeResponseType = {
     id: number;
     email: string;
     login: string;
 };
+
 export type AddTaskArgs = {
     title: string;
     todolistId: string;
 };
+
 export type UpdateTaskArgs = {
     todolistId: string;
     taskId: string;
     model: UpdateTaskModelType;
 };
+
 export type RemoveTaskArgs = {
     todolistId: string;
     taskId: string;

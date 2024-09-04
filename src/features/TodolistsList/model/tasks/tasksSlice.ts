@@ -25,11 +25,27 @@ import {ResultCode, TaskPriorities, TaskStatuses} from 'common/enums';
           {id: v1(),title: 'React', status: TaskStatuses.New, }
 ]
 *!/*/
-/*export type AsyncThunkConfig = {
-  state?: AppRootStateType;
-  dispatch?: AppDispatch;
-  rejectValue?: null;
-};*/
+/*;*/
+
+export type TasksStateType = {
+    [key: string]: Array<TaskType>;
+};
+
+export type UpdateTaskDomainType = {
+    title?: string;
+    description?: string;
+    status?: TaskStatuses;
+    priority?: TaskPriorities;
+    startDate?: string;
+    deadline?: string;
+};
+
+export type UpdateTaskDomain = {
+    todolistId: string;
+    taskId: string;
+    model: UpdateTaskDomainType;
+};
+
 
 export const sliceTasks = createSlice({
     name: 'tasks',
@@ -163,24 +179,6 @@ export const tasksSlice = sliceTasks.reducer;
 export const tasksActions = sliceTasks.actions;
 export type TasksReducerType = ReturnType<typeof sliceTasks.getInitialState>;
 
-//types
-export type TasksStateType = {
-    [key: string]: Array<TaskType>;
-};
-export type UpdateTaskDomainType = {
-    title?: string;
-    description?: string;
-    status?: TaskStatuses;
-    priority?: TaskPriorities;
-    startDate?: string;
-    deadline?: string;
-};
-
-export type UpdateTaskDomain = {
-    todolistId: string;
-    taskId: string;
-    model: UpdateTaskDomainType;
-};
 
 /* REDUX
 import {

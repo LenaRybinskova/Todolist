@@ -1,8 +1,8 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 
 export const useAddItemForm = (onAddItem: (title: string) => void) => {
-  let [title, setTitle] = useState("");
-  let [error, setError] = useState<string | null>(null);
+  const [title, setTitle] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const addItem = () => {
     if (title.trim() !== "") {
@@ -13,15 +13,15 @@ export const useAddItemForm = (onAddItem: (title: string) => void) => {
     }
   };
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.currentTarget.value);
+  const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.currentTarget.value);
   };
 
-  const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+  const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
     if (error !== null) {
       setError(null);
     }
-    if (e.charCode === 13) {
+    if (event.charCode === 13) {
       addItem();
     }
   };

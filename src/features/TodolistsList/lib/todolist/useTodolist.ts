@@ -6,9 +6,9 @@ import { TaskType } from "features/TodolistsList/api/todolists/todolists-api";
 import { useDispatch } from "react-redux";
 import { TaskStatuses } from "common/enums/enums";
 
-export const UseTodolist = ({ id, filter, title }: TodolistDomainType, demo?: boolean) => {
-  let tasks = useAppSelector<Array<TaskType>>((state) => state.tasks[id]);
-  console.log("filter", filter);
+export const useTodolist = ({ id, filter, title }: TodolistDomainType, demo?: boolean) => {
+  let tasks = useAppSelector<TaskType[]>((state) => state.tasks[id]);
+
   const dispatch = useDispatch(); // useAppDispatch не работает
 
   useEffect(() => {
@@ -70,15 +70,15 @@ export const UseTodolist = ({ id, filter, title }: TodolistDomainType, demo?: bo
   // это у нас как бы расчет математический, его надо обернуть в useMemo()
   tasks = useMemo(() => {
     if (filter === "active") {
-      tasks = tasks.filter((t) => t.status === TaskStatuses.New);
+      tasks = tasks.filter((task) => task.status === TaskStatuses.New);
     }
     if (filter === "completed") {
-      tasks = tasks.filter((t) => t.status === TaskStatuses.Completed);
+      tasks = tasks.filter((task) => task.status === TaskStatuses.Completed);
     }
     return tasks;
   }, [tasks, filter]);
 
-  console.log("tasksForFilter", tasks);
+
   return {
     title,
     changeTodolistTitle,

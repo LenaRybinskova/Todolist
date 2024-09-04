@@ -1,20 +1,20 @@
 export enum TaskStatuses {
-    New = 0,
-    InProgress = 1,
+    New,
+    InProgress,
     Completed,
     Draft,
 }
 
 export enum TaskPriorities {
-    Low = 0,
-    Middle = 1,
+    Low ,
+    Middle,
     Hi,
     Ungently,
-    Later = 4,
+    Later,
 }
 
 export enum ResultCode {
-    Success = 0,
-    Error = 1,
+    Success ,
+    Error ,
     Captcha = 10,
 }

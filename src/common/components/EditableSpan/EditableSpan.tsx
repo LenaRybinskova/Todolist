@@ -13,6 +13,7 @@ export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
     props.onChange,
   );
 
+
   return editMode ? (
     <TextField variant="outlined" value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode} />
   ) : (

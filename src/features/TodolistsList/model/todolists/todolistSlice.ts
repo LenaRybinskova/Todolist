@@ -7,9 +7,32 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { clearState } from "common/actions/common.actions";
 import { handleServerAppError } from "common/utils/handleServerAppError";
 
+export type FilterValuesType = "all" | "active" | "completed";
+
+export type TodolistDomainType = TodolistType & {
+  filter: FilterValuesType;
+  entityStatus: RequestStatusType;
+};
+
+type TodolistDomainModelType = {
+  id?: string;
+  addedDate?: string;
+  order?: number;
+  title?: string;
+  filter?: FilterValuesType;
+  entityStatus?: RequestStatusType;
+};
+
+export type ResponseErrorType = {
+  resultCode: number;
+  messages: string[];
+  data: {};
+};
+
+//state
 /* [
-    /!*    {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: ''},
-        {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, addedDate: ''}*!/
+      {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: ''},
+        {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, addedDate: ''}
 ]*/
 
 export const todolistsSlice = createSlice({
@@ -48,7 +71,7 @@ export const todolistSlice = todolistsSlice.reducer;
 export const todolistsActions = todolistsSlice.actions;
 export type todolistsInitialState = ReturnType<typeof todolistsSlice.getInitialState>;
 
-//thunk
+//TC
 export const getTodolistsTC = (): AppThunk => {
   return (dispatch) => {
     dispatch(appActions.setAppStatus({ status: "loading" }));
@@ -59,6 +82,7 @@ export const getTodolistsTC = (): AppThunk => {
     dispatch(appActions.setAppStatus({ status: "succeeded" }));
   };
 };
+
 export const createTodolistTC =
   (title: string): AppThunk =>
   async (dispatch) => {
@@ -76,6 +100,7 @@ export const createTodolistTC =
       handleServerNetworkError(e as { message: string }, dispatch);
     }
   };
+
 export const removeTodolistTC = (id: string): AppThunk => {
   return (dispatch) => {
     dispatch(appActions.setAppStatus({ status: "loading" }));
@@ -95,6 +120,7 @@ export const removeTodolistTC = (id: string): AppThunk => {
       });
   };
 };
+
 export const changeTitleTodolistTC = (todolistId: string, model: TodolistDomainModelType): AppThunk => {
   return (dispatch, getState: () => AppRootStateType) => {
     const todolist = getState().todolists.find((tl) => tl.id === todolistId);
@@ -129,25 +155,7 @@ export const changeTitleTodolistTC = (todolistId: string, model: TodolistDomainM
   };
 };
 
-//types
-export type FilterValuesType = "all" | "active" | "completed";
-export type TodolistDomainType = TodolistType & {
-  filter: FilterValuesType;
-  entityStatus: RequestStatusType;
-};
-type TodolistDomainModelType = {
-  id?: string;
-  addedDate?: string;
-  order?: number;
-  title?: string;
-  filter?: FilterValuesType;
-  entityStatus?: RequestStatusType;
-};
-export type ResponseErrorType = {
-  resultCode: number;
-  messages: string[];
-  data: {};
-};
+
 
 /*
 //REDUX

@@ -4,11 +4,11 @@ import { TaskWithReduxType } from "common/components/Task/Task";
 import { useDispatch } from "react-redux";
 import { TaskStatuses } from "common/enums/enums";
 
-export const useTasksWithRedux = ({ task, todolistId }: TaskWithReduxType) => {
+export const useTasks = ({ task, todolistId }: TaskWithReduxType) => {
   const dispatch = useDispatch(); // useAppDispatch() не работает
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    let newIsDoneValue = e.currentTarget.checked;
+  const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    let newIsDoneValue = event.currentTarget.checked;
     let status = newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New;
     dispatch(updateTask({ todolistId, taskId: task.id, model: { status: status } }));
   };

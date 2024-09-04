@@ -9,9 +9,9 @@ import { useTodolisList } from "features/TodolistsList/lib/todolistsList/useTodo
 type TodolistListType = {
   demo?: boolean;
 };
+
 const TodolistList: React.FC<TodolistListType> = ({ demo = false }): ReactElement => {
   const { addTodolist, todolists, status, isLoggedIn } = useTodolisList(demo);
-  //ВОПРОС, Navigate в кастомном хуке нельзя исп?
 
   //если не залогиненты - редирект на auth
   if (!isLoggedIn) {

@@ -1,8 +1,8 @@
 import { ChangeEvent, useState } from "react";
 
 export const useEditableSpan = (value: string, onChange: (newValue: string) => void) => {
-  let [editMode, setEditMode] = useState(false);
-  let [title, setTitle] = useState(value);
+  const [editMode, setEditMode] = useState(false);
+  const [title, setTitle] = useState(value);
 
   const activateEditMode = () => {
     setEditMode(true);

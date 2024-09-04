@@ -3,9 +3,9 @@ import {AddItemForm} from 'common/components/AddItemsForm/AddItemForm';
 import {EditableSpan} from 'common/components/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton/IconButton';
 import {Delete} from '@mui/icons-material';
-import ButtonContainer from 'common/components/ButtonWithRedux/ButtonContainer';
+import ButtonContainer from 'common/components/Button/ButtonContainer';
 import Task from 'common/components/Task/Task';
-import {UseTodolist} from 'features/TodolistsList/lib/todolist/useTodolist';
+import {useTodolist} from 'features/TodolistsList/lib/todolist/useTodolist';
 import {TodolistDomainType} from 'features/TodolistsList/model/todolists/todolistSlice';
 
 type PropsType = {
@@ -13,7 +13,7 @@ type PropsType = {
     demo?: boolean;
 };
 
-export const Todolist = React.memo(({todolist, demo}: PropsType) => {
+export const Todolist:React.FC<PropsType> = React.memo(({todolist, demo}) => {
     const {
         title,
         changeTodolistTitle,
@@ -25,7 +25,7 @@ export const Todolist = React.memo(({todolist, demo}: PropsType) => {
         onCompletedClickHandler,
         id,
         filter,
-    } = UseTodolist({...todolist}, demo);
+    } = useTodolist({...todolist}, demo);
 
     return (
         <div>
@@ -37,8 +37,8 @@ export const Todolist = React.memo(({todolist, demo}: PropsType) => {
             </h3>
             <AddItemForm addItem={addTaskCallback} disabled={todolist.entityStatus === 'loading'}/>
             <div>
-                {tasks.map((t) => (
-                    <Task key={t.id} task={t} todolistId={id}/>
+                {tasks.map((task) => (
+                    <Task key={task.id} task={task} todolistId={id}/>
                 ))}
             </div>
             <div style={{position: 'absolute', bottom: '15px', left: '20px'}}>
