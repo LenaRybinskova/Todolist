@@ -22,10 +22,10 @@ export const authSlice = createSlice({
         builder.addCase(authMe.fulfilled, (state, action) => {
             state.isLoggedIn = action.payload.isLoggedIn
         })
-        builder.addCase(login.fulfilled, (state, action) => {
+        builder.addCase(login.fulfilled, (state) => {
             state.isLoggedIn = true
         })
-        builder.addCase(logout.fulfilled, (state, action) => {
+        builder.addCase(logout.fulfilled, (state) => {
             state.isLoggedIn = false
         })
     },
