@@ -1,6 +1,6 @@
 import {
     addTask,
-    setTasks,
+    fetchTasks,
     removeTask,
     tasksSlice,
     TasksStateType,
@@ -100,7 +100,7 @@ type Action__ = Omit<ReturnType<typeof removeTask.fulfilled>, "meta">;
 type Action_ = Omit<ReturnType<typeof addTask.fulfilled>, "meta">;*/
 
 test('correct set tasks to todolist', () => {
-    const action: TestAction<typeof setTasks.fulfilled> = {
+    const action: TestAction<typeof fetchTasks.fulfilled> = {
         type: 'tasks/getTasks/fulfilled',
         payload: {tasks: startState['todolistId1'], todolistId: 'todolistId1'},
     };

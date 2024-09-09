@@ -1,9 +1,10 @@
-import {todolistsActions} from 'features/TodolistsList/model/todolists/todolistSlice';
+import {FilterValuesType, todolistsThunks} from 'features/TodolistsList/model/todolists/todolistSlice';
 import {
     AddTaskArgs,
     RemoveTaskArgs,
     TaskType,
     todolistAPI,
+    TodolistType,
     UpdateTaskModelType
 } from 'features/TodolistsList/api/todolists/todolists-api';
 import {appActions} from 'app/appSlice';
@@ -11,6 +12,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {clearState} from 'common/actions/common.actions';
 import {createAppAsyncThunks, handleServerAppError, handleServerNetworkError} from 'common/utils'
 import {ResultCode, TaskPriorities, TaskStatuses} from 'common/enums';
+
 
 // isDone заменили на status, у новых тасок по умолчанию priority: TaskPriorities.Low
 
@@ -27,9 +29,7 @@ import {ResultCode, TaskPriorities, TaskStatuses} from 'common/enums';
 *!/*/
 /*;*/
 
-export type TasksStateType = {
-    [key: string]: Array<TaskType>;
-};
+export type TasksStateType = Record<string, TaskType[]>
 
 export type UpdateTaskDomainType = {
     title?: string;
@@ -53,7 +53,7 @@ export const sliceTasks = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(setTasks.fulfilled, (state, action) => {
+            .addCase(fetchTasks.fulfilled, (state, action) => {
                 state[action.payload.todolistId] = action.payload.tasks;
             })
             .addCase(addTask.fulfilled, (state, action) => {
@@ -74,22 +74,34 @@ export const sliceTasks = createSlice({
                     tasks.splice(index, 1);
                 }
             })
-            .addCase(todolistsActions.getTodolist, (state, action) => {
-                action.payload.todolists.forEach((tl) => (state[tl.id] = []));
+            .addCase(todolistsThunks.fetchTodolists.fulfilled, (state, action) => {
+                action.payload.todolists.forEach((tl: TodolistType) => (state[tl.id] = []));
             })
-            .addCase(todolistsActions.removeTodolist, (state, action) => {
+            .addCase(todolistsThunks.removeTodolist.fulfilled, (state, action) => {
                 delete state[action.payload.todolistId];
             })
-            .addCase(todolistsActions.createTodolist, (state, action) => {
+            .addCase(todolistsThunks.createTodolist.fulfilled, (state, action) => {
                 state[action.payload.todolist.id] = [];
             })
             .addCase(clearState, () => {
                 return {};
             });
     },
+    selectors: {
+        selectTasksByFilter: (state, filter: FilterValuesType, todolistID: string) => {
+            let tasks:TaskType[] = state[todolistID]
+            if (filter === 'active') {
+                tasks = tasks.filter((task) => task.status === TaskStatuses.New);
+            }
+            if (filter === 'completed') {
+                tasks = tasks.filter((task) => task.status === TaskStatuses.Completed);
+            }
+            return tasks;
+        }
+    }
 });
 
-export const setTasks = createAppAsyncThunks<{ tasks: TaskType[]; todolistId: string }, string>(
+export const fetchTasks = createAppAsyncThunks<{ tasks: TaskType[]; todolistId: string }, string>(
     `${sliceTasks.name}/getTasks`,
     async (todolistId, thunkAPI) => {
         try {
@@ -176,7 +188,7 @@ export const removeTask = createAppAsyncThunks<RemoveTaskArgs, RemoveTaskArgs>(
 );
 
 export const tasksSlice = sliceTasks.reducer;
-export const tasksActions = sliceTasks.actions;
+export const {selectTasksByFilter} = sliceTasks.selectors;
 export type TasksReducerType = ReturnType<typeof sliceTasks.getInitialState>;
 
 

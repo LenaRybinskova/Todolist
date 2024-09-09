@@ -39,7 +39,7 @@ export type authInitialState = ReturnType<typeof authSlice.getInitialState>;
 export const {selectIsLoggedIn} = authSlice.selectors;
 
 //TC
-export const authMe = createAppAsyncThunks<any, null>(`${authSlice.name}/authMe`, async (args, thunkAPI) => {
+export const authMe = createAppAsyncThunks<any, undefined>(`${authSlice.name}/authMe`, async (_, thunkAPI) => {
     thunkAPI.dispatch(appActions.setAppStatus({status: 'loading'}));
     try {
         const res = await authAPI.authMe();
@@ -47,13 +47,16 @@ export const authMe = createAppAsyncThunks<any, null>(`${authSlice.name}/authMe`
             thunkAPI.dispatch(appActions.setAppStatus({status: 'succeeded'}));
             return {isLoggedIn: true}
         } else {
-            handleServerAppError(res.data, thunkAPI.dispatch);
+           handleServerAppError(res.data, thunkAPI.dispatch);
+            return thunkAPI.rejectWithValue(null)
         }
     } catch (e) {
         handleServerNetworkError(e as { message: string }, thunkAPI.dispatch);
+        return thunkAPI.rejectWithValue(null)
     } finally {
         thunkAPI.dispatch(appActions.setInitialized({isInitialized: true}));
         /*/!* чтобы мы проиниц приложение в любом случае*!/*/
+
     }
 })
 
@@ -76,7 +79,7 @@ export const login = createAppAsyncThunks<any, any>(`${authSlice.name}/login`, a
     }
 })
 
-export const logout = createAppAsyncThunks<any, null>(`${authSlice.name}/logout`, async (args, thunkAPI) => {
+export const logout = createAppAsyncThunks<any, undefined>(`${authSlice.name}/logout`, async (_, thunkAPI) => {
     thunkAPI.dispatch(appActions.setAppStatus({status: 'loading'}));
     try {
         const res = await authAPI.logout();

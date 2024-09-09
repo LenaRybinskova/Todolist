@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { createTodolistTC, getTodolistsTC, TodolistDomainType } from "features/TodolistsList/model/todolists/todolistSlice";
+import { createTodolist, fetchTodolists, TodolistDomainType } from "features/TodolistsList/model/todolists/todolistSlice";
 import { RequestStatusType } from "app/appSlice";
 import { selectStatusTodolist, selectTodolists } from "features/TodolistsList/model/todolists/todolist.selectors";
 import { useDispatch } from "react-redux";
@@ -14,7 +14,7 @@ export const useTodolisList = (demo: boolean) => {
 
   const addTodolist = useCallback(
     (title: string) => {
-      dispatch(createTodolistTC(title));
+      dispatch(createTodolist(title));
     },
     [dispatch],
   );
@@ -22,7 +22,7 @@ export const useTodolisList = (demo: boolean) => {
   useEffect(() => {
     // запрос за ТЛ пойдет только если залогинены
     if (!demo && isLoggedIn) {
-      dispatch(getTodolistsTC());
+      dispatch(fetchTodolists());
     } else {
       return;
     }

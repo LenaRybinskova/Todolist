@@ -7,7 +7,6 @@ import {useAppSelector} from './store';
 import {ErrorSnackbar} from 'common/components/ErrorSnackbar/ErrorSnackbar';
 import {Login} from 'features/auth/ui/Login';
 import {Navigate, Route, Routes} from 'react-router-dom';
-import {selectIsInitialize, selectStatus} from './app-selectors';
 import {authMe, logout, selectIsLoggedIn} from 'features/auth/model/authSlice';
 import {useDispatch} from 'react-redux';
 import Button from '@material-ui/core/Button';
@@ -15,6 +14,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import {selectIsInitialized, selectStatus} from 'app/appSlice';
 
 type AppPropsType = {
     demo?: boolean;
@@ -23,12 +23,12 @@ type AppPropsType = {
 function App({demo = false}: AppPropsType) {
     const dispatch = useDispatch(); //useAppDispatch() не работает
     const status = useAppSelector<string | null>(selectStatus);
-    const isInitialized = useAppSelector<boolean>(selectIsInitialize);
+    const isInitialized = useAppSelector<boolean>(selectIsInitialized);
     const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
     // после CircularProgress сработает юзЭффект
     useEffect(() => {
-        dispatch(authMe(null));
+        dispatch(authMe());
     }, []);
 
     //если прил не проиниц =>крутилка и дальше useEffect с authMeTC() в кот проверка куки и тд
@@ -37,7 +37,7 @@ function App({demo = false}: AppPropsType) {
     }
 
     const logoutHandler = () => {
-        dispatch(logout(null));
+        dispatch(logout());
     };
 
     return (

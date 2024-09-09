@@ -17,7 +17,7 @@ export const Todolist:React.FC<PropsType> = React.memo(({todolist, demo}) => {
     const {
         title,
         changeTodolistTitle,
-        removeTodolist,
+        deleteTodolist,
         addTaskCallback,
         tasks,
         onAllClickHandler,
@@ -26,12 +26,11 @@ export const Todolist:React.FC<PropsType> = React.memo(({todolist, demo}) => {
         id,
         filter,
     } = useTodolist({...todolist}, demo);
-
     return (
         <div>
             <h3>
                 <EditableSpan value={title} onChange={changeTodolistTitle}/>
-                <IconButton onClick={removeTodolist}>
+                <IconButton onClick={deleteTodolist}>
                     <Delete/>
                 </IconButton>
             </h3>

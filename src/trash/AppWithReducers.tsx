@@ -145,9 +145,9 @@ function AppWithReducers() {
   }
 
   function removeTodolist(id: string) {
-    let action = todolistsActions.removeTodolist({ todolistId: id });
+    /*let action = todolistsActions.removeTodolist({ todolistId: id });
     dispatchToTodolists(action);
-    dispatchToTasks(action);
+    dispatchToTasks(action);*/
   }
 
   function changeTodolistTitle(id: string, title: string) {
@@ -155,9 +155,9 @@ function AppWithReducers() {
   }
 
   function addTodolist(title: string) {
-    const action = todolistsActions.createTodolist({ todolist: { id: v1(), title: title, addedDate: "", order: 0 } });
+    /*const action = todolistsActions.createTodolist({ todolist: { id: v1(), title: title, addedDate: "", order: 0 } });
     dispatchToTasks(action);
-    dispatchToTodolists(action);
+    dispatchToTodolists(action);*/
   }
 
   return (
