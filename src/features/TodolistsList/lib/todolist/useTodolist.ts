@@ -8,20 +8,22 @@ import {
     todolistsThunks
 } from 'features/TodolistsList/model/todolists/todolistSlice';
 import {useDispatch} from 'react-redux';
+import {selectIsLoggedIn} from 'features/auth/model/authSlice';
 
 export const useTodolist = ({id, filter, title}: TodolistDomainType, demo?: boolean) => {
     /*  let tasks = useAppSelector<TaskType[]>((state) => state.tasks[id]);*/
 
     const dispatch = useDispatch(); // useAppDispatch не работает
     const tasks = useAppSelector((state) => selectTasksByFilter(state, filter, id))
+    const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
     useEffect(() => {
-        if (!demo) {
+        if (!demo && isLoggedIn) {
             dispatch(fetchTasks(id));
         } else {
             return;
         }
-    }, []);
+    }, [dispatch]);
 
     const addTaskCallback = useCallback(
         (title: string) => {

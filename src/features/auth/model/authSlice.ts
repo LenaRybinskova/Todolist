@@ -65,17 +65,18 @@ export const login = createAppAsyncThunks<any, any>(`${authSlice.name}/login`, a
     try {
         const res = await authAPI.login(args);
         if (res.data.resultCode === ResultCode.Success) {
+            console.log('login if')
             thunkAPI.dispatch(appActions.setAppStatus({status: 'succeeded'}))
             return
             /*return {isLoggedIn: true}*/
         } else {
-            handleServerAppError(res.data, thunkAPI.dispatch);
-            thunkAPI.rejectWithValue(null)
+            const isShowAppGlobal = !res.data.fieldsErrors.length
+            handleServerAppError(res.data, thunkAPI.dispatch, isShowAppGlobal);
+            return thunkAPI.rejectWithValue(null)
         }
     } catch (e) {
         handleServerNetworkError(e, thunkAPI.dispatch);
         return thunkAPI.rejectWithValue(null); // просто загрушка, тк вернуть что то надообязательно
-
     }
 })
 
