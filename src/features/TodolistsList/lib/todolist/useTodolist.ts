@@ -1,11 +1,11 @@
 import {useAppSelector} from 'app/store';
 import {useCallback, useEffect} from 'react';
-import {addTask, selectTasksByFilter, fetchTasks} from 'features/TodolistsList/model/tasks/tasksSlice';
+import {addTask, fetchTasks, selectTasksByFilter} from 'features/TodolistsList/model/tasks/tasksSlice';
 import {
-    changeTitleTodolistTC,
     removeTodolist,
     TodolistDomainType,
-    todolistsActions, todolistsThunks
+    todolistsActions,
+    todolistsThunks
 } from 'features/TodolistsList/model/todolists/todolistSlice';
 import {useDispatch} from 'react-redux';
 

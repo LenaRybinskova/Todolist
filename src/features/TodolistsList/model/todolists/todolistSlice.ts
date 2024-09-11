@@ -3,12 +3,11 @@ import {AppRootStateType, AppThunk} from 'app/store';
 import {appActions, RequestStatusType} from 'app/appSlice';
 import {handleServerNetworkError} from 'common/utils/handleServerNetworkError';
 import {AxiosError} from 'axios';
-import {createSlice, isRejectedWithValue, PayloadAction} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {clearState} from 'common/actions/common.actions';
 import {handleServerAppError} from 'common/utils/handleServerAppError';
 import {createAppAsyncThunks} from 'common/utils';
 import {ResultCode} from 'common/enums';
-import {getSearchParamsForLocation} from 'react-router-dom/dist/dom';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 
