@@ -5,7 +5,7 @@ import {
     changeTitleTodolistTC,
     removeTodolist,
     TodolistDomainType,
-    todolistsActions
+    todolistsActions, todolistsThunks
 } from 'features/TodolistsList/model/todolists/todolistSlice';
 import {useDispatch} from 'react-redux';
 
@@ -35,7 +35,7 @@ export const useTodolist = ({id, filter, title}: TodolistDomainType, demo?: bool
     };
     const changeTodolistTitle = useCallback(
         (title: string) => {
-            dispatch(changeTitleTodolistTC(id, {title: title}));
+            dispatch(todolistsThunks.changeTitleTodolistTC(id, {title: title}));
         },
         [dispatch, id, title],
     );

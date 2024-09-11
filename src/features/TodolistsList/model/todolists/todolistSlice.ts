@@ -3,11 +3,12 @@ import {AppRootStateType, AppThunk} from 'app/store';
 import {appActions, RequestStatusType} from 'app/appSlice';
 import {handleServerNetworkError} from 'common/utils/handleServerNetworkError';
 import {AxiosError} from 'axios';
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createSlice, isRejectedWithValue, PayloadAction} from '@reduxjs/toolkit';
 import {clearState} from 'common/actions/common.actions';
 import {handleServerAppError} from 'common/utils/handleServerAppError';
 import {createAppAsyncThunks} from 'common/utils';
 import {ResultCode} from 'common/enums';
+import {getSearchParamsForLocation} from 'react-router-dom/dist/dom';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 
@@ -58,7 +59,7 @@ export const todolistsSlice = createSlice({
             const todolist = state.find((tl) => tl.id === action.payload.id);
             if (todolist) todolist.entityStatus = action.payload.entityStatus;
         },
-        /*        createTodolist: (state, action: PayloadAction<{ todolist: TodolistType }>) => {
+        /*  createTodolist: (state, action: PayloadAction<{ todolist: TodolistType }>) => {
                     state.unshift({...action.payload.todolist, filter: 'all', entityStatus: 'idle'});
                 },*/
     },
@@ -80,6 +81,10 @@ export const todolistsSlice = createSlice({
             const index = state.findIndex((todo) => todo.id === action.payload.todolistId);
             if (index !== -1) state.splice(index, 1);
         });
+        /*builder.addCase(changeTitleTodolistTC.fulfilled, (state, action) => {
+            const index = state.findIndex(tl => tl.id === action.payload.todolistId);
+            if(index != -1) state[index]={...state[index], title: action.payload.title};
+        });*/
     },
 });
 
@@ -145,26 +150,6 @@ export const removeTodolist = createAppAsyncThunks<{
     }
 })
 
-/*export const removeTodolistTC = (id: string): AppThunk => {
-    return (dispatch) => {
-        dispatch(appActions.setAppStatus({status: 'loading'}));
-        dispatch(todolistsActions.changeTodolistEntityStatus({id, entityStatus: 'loading'}));
-        todolistAPI
-            .deleteTodolist(id)
-            .then((res) => {
-                if (res.data.resultCode === 0) {
-                    dispatch(todolistsActions.removeTodolist({todolistId: id}));
-                    dispatch(appActions.setAppStatus({status: 'succeeded'})); // закончили крутилку
-                } else {
-                    handleServerAppError(res.data, dispatch);
-                }
-            })
-            .catch((error: AxiosError<ResponseErrorType>) => {
-                handleServerNetworkError(error, dispatch);
-            });
-    };
-};*/
-
 export const changeTitleTodolistTC = (todolistId: string, model: TodolistDomainModelType): AppThunk => {
     return (dispatch, getState: () => AppRootStateType) => {
         const todolist = getState().todolists.find((tl) => tl.id === todolistId);
@@ -199,7 +184,7 @@ export const changeTitleTodolistTC = (todolistId: string, model: TodolistDomainM
     };
 };
 
-export const todolistsThunks = {fetchTodolists, createTodolist, removeTodolist};
+export const todolistsThunks = {fetchTodolists, createTodolist, removeTodolist, changeTitleTodolistTC};
 
 /*
 //REDUX
