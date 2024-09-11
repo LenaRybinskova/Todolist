@@ -8,7 +8,7 @@ import {
 } from 'features/TodolistsList/model/tasks/tasksSlice';
 import {TaskType, TodolistType} from 'features/TodolistsList/api/todolists/todolists-api';
 import {todolistId1} from 'app/id-utils';
-import {todolistsActions} from 'features/TodolistsList/model/todolists/todolistSlice';
+import {createTodolist, removeTodolist, todolistsActions} from 'features/TodolistsList/model/todolists/todolistSlice';
 import {TestAction} from 'common/types/types';
 import {TaskPriorities, TaskStatuses} from 'common/enums/enums';
 
@@ -132,7 +132,7 @@ test('correct task should be deleted from correct array', () => {
 
     expect(endState['todolistId1'].length).toBe(3);
     expect(endState['todolistId2'].length).toBe(2);
-    expect(endState['todolistId2'].every((t) => t.id != '2')).toBeTruthy();
+    expect(endState['todolistId2'].every((t) => t.id !== '2')).toBeTruthy();
     //expect(endState["todolistId2"][0].id).toBe("1");
     //expect(endState["todolistId2"][1].id).toBe("3");
 });
@@ -192,6 +192,8 @@ test('status of specified task should be changed', () => {
 });*/
 
 test('new property with new array should be added when new todolist is added', () => {
+    type Action = Omit<ReturnType<typeof createTodolist.fulfilled>, 'meta'>;
+
     const newTodolist: TodolistType = {
         id: 'newTodolistId',
         addedDate: '',
@@ -199,11 +201,16 @@ test('new property with new array should be added when new todolist is added', (
         title: 'newTodolistTitle',
     };
 
-    const action = todolistsActions.createTodolist({todolist: newTodolist});
+    const action:Action={
+        type: createTodolist.fulfilled.type,
+        payload:{
+            todolist:newTodolist
+        }
+    }
     const endState = tasksSlice(startState, action);
 
     const keys = Object.keys(endState);
-    const newKey = keys.find((k) => k != 'todolistId1' && k != 'todolistId2');
+    const newKey = keys.find((k) => k !== 'todolistId1' && k !== 'todolistId2');
     if (!newKey) {
         throw Error('new key should be added');
     }
@@ -213,7 +220,15 @@ test('new property with new array should be added when new todolist is added', (
 });
 
 test('propertry with todolistId should be deleted', () => {
-    const action = todolistsActions.removeTodolist({todolistId: 'todolistId2'});
+    type Action = Omit<ReturnType<typeof removeTodolist.fulfilled>, 'meta'>;
+    const action:Action = {
+        type:removeTodolist.fulfilled.type,
+        payload:{
+            todolistId: 'todolistId2'
+        }
+
+    }
+
     const endState = tasksSlice(startState, action);
 
     const keys = Object.keys(endState);
