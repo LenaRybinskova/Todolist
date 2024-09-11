@@ -33,9 +33,11 @@ export const useTodolist = ({id, filter, title}: TodolistDomainType, demo?: bool
     const deleteTodolist = () => {
         dispatch(removeTodolist(id));
     };
+
     const changeTodolistTitle = useCallback(
         (title: string) => {
-            dispatch(todolistsThunks.changeTitleTodolistTC(id, {title: title}));
+            const data = {todolistId: id, title}
+            dispatch(todolistsThunks.changeTitleTodolistTC(data))
         },
         [dispatch, id, title],
     );

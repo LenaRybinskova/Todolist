@@ -1,16 +1,16 @@
-import React, { useReducer } from "react";
-import "../AppWithRedux/App.css";
-import { Todolist } from "./Todolist";
-import { v1 } from "uuid";
-import { AddItemForm } from "common/components/AddItemsForm/AddItemForm";
-import { AppBar, Button, Container, Grid, Paper, Toolbar, Typography } from "@mui/material";
-import IconButton from "@mui/material/IconButton/IconButton";
-import { Menu } from "@mui/icons-material";
-import { FilterValuesType, todolistsActions, todolistSlice } from "features/TodolistsList/model/todolists/todolistSlice";
-import { tasksSlice } from "features/TodolistsList/model/tasks/tasksSlice";
+import React, {useReducer} from 'react';
+import '../AppWithRedux/App.css';
+import {Todolist} from './Todolist';
+import {v1} from 'uuid';
+import {AddItemForm} from 'common/components/AddItemsForm/AddItemForm';
+import {AppBar, Button, Container, Grid, Paper, Toolbar, Typography} from '@mui/material';
+import IconButton from '@mui/material/IconButton/IconButton';
+import {Menu} from '@mui/icons-material';
+import {FilterValuesType, todolistSlice} from 'features/TodolistsList/model/todolists/todolistSlice';
+import {tasksSlice} from 'features/TodolistsList/model/tasks/tasksSlice';
 
-import { todolistId1, todolistId2 } from "app/id-utils";
-import { TaskPriorities, TaskStatuses } from "common/enums/enums";
+import {todolistId1, todolistId2} from 'app/id-utils';
+import {TaskPriorities, TaskStatuses} from 'common/enums/enums';
 
 function AppWithReducers() {
   let [todolists, dispatchToTodolists] = useReducer(todolistSlice, [
@@ -141,7 +141,7 @@ function AppWithReducers() {
   }
 
   function changeFilter(value: FilterValuesType, todolistId: string) {
-    dispatchToTodolists(todolistsActions.updateTodolist({ todolistId, model: { filter: value } }));
+/*    dispatchToTodolists(todolistsActions.updateTodolist({ todolistId, model: { filter: value } }));*/
   }
 
   function removeTodolist(id: string) {
@@ -151,7 +151,7 @@ function AppWithReducers() {
   }
 
   function changeTodolistTitle(id: string, title: string) {
-    dispatchToTodolists(todolistsActions.updateTodolist({ todolistId: id, model: { title: title } }));
+/*    dispatchToTodolists(todolistsActions.updateTodolist({ todolistId: id, model: { title: title } }));*/
   }
 
   function addTodolist(title: string) {

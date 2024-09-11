@@ -1,6 +1,6 @@
 import {TaskPriorities, TaskStatuses} from 'common/enums/enums';
 import {instanse} from 'common/instance/instance';
-import { BaseResponse } from 'common/types';
+import {BaseResponse} from 'common/types';
 
 
 export type TodolistType = {
@@ -60,6 +60,10 @@ export type RemoveTaskArgs = {
     todolistId: string;
     taskId: string;
 };
+export type UpdateTitleTodolistArgs = {
+    todolistId: string,
+    title: string
+}
 
 
 export const todolistAPI = {
@@ -72,7 +76,8 @@ export const todolistAPI = {
     deleteTodolist(todolistId: string) {
         return instanse.delete<BaseResponse>(`/todo-lists/${todolistId}`);
     },
-    updateTodolist(todolistId: string, title: string) {
+    updateTodolist(args: UpdateTitleTodolistArgs) {
+        const {todolistId, title} = args
         return instanse.put<BaseResponse>(`/todo-lists/${todolistId}`, {title});
     },
     getTasks(todolistId: string) {
