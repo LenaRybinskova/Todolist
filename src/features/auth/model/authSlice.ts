@@ -47,7 +47,7 @@ export const authMe = createAppAsyncThunks<any, undefined>(`${authSlice.name}/au
             thunkAPI.dispatch(appActions.setAppStatus({status: 'succeeded'}));
             return {isLoggedIn: true}
         } else {
-           handleServerAppError(res.data, thunkAPI.dispatch);
+            handleServerAppError(res.data, thunkAPI.dispatch, false); //false чтобы при аусМи юзеру не летела глоб ош что он не авторизовался
             return thunkAPI.rejectWithValue(null)
         }
     } catch (e) {
