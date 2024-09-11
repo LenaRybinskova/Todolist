@@ -8,7 +8,7 @@ import {
 } from 'features/TodolistsList/model/tasks/tasksSlice';
 import {TaskType, TodolistType} from 'features/TodolistsList/api/todolists/todolists-api';
 import {todolistId1} from 'app/id-utils';
-import {createTodolist, removeTodolist, todolistsActions} from 'features/TodolistsList/model/todolists/todolistSlice';
+import {createTodolist, removeTodolist} from 'features/TodolistsList/model/todolists/todolistSlice';
 import {TestAction} from 'common/types/types';
 import {TaskPriorities, TaskStatuses} from 'common/enums/enums';
 
@@ -201,10 +201,10 @@ test('new property with new array should be added when new todolist is added', (
         title: 'newTodolistTitle',
     };
 
-    const action:Action={
+    const action: Action = {
         type: createTodolist.fulfilled.type,
-        payload:{
-            todolist:newTodolist
+        payload: {
+            todolist: newTodolist
         }
     }
     const endState = tasksSlice(startState, action);
@@ -221,9 +221,9 @@ test('new property with new array should be added when new todolist is added', (
 
 test('propertry with todolistId should be deleted', () => {
     type Action = Omit<ReturnType<typeof removeTodolist.fulfilled>, 'meta'>;
-    const action:Action = {
-        type:removeTodolist.fulfilled.type,
-        payload:{
+    const action: Action = {
+        type: removeTodolist.fulfilled.type,
+        payload: {
             todolistId: 'todolistId2'
         }
 
