@@ -4,7 +4,7 @@ import {appActions} from 'app/appSlice';
 import {createSlice} from '@reduxjs/toolkit';
 import {clearState} from 'common/actions/common.actions';
 import {handleServerAppError} from 'common/utils/handleServerAppError';
-import {createAppAsyncThunks} from 'common/utils';
+import {createAppAsyncThunks, tryCatchThunk} from 'common/utils';
 import {ResultCode} from 'common/enums';
 
 
@@ -39,9 +39,8 @@ export type authInitialState = ReturnType<typeof authSlice.getInitialState>;
 export const {selectIsLoggedIn} = authSlice.selectors;
 
 //TC
-export const authMe = createAppAsyncThunks<any, undefined>(`${authSlice.name}/authMe`, async (_, thunkAPI) => {
-    thunkAPI.dispatch(appActions.setAppStatus({status: 'loading'}));
-    try {
+export const authMe = createAppAsyncThunks<{isLoggedIn: boolean}, undefined>(`${authSlice.name}/authMe`, async (_, thunkAPI) => {
+    return tryCatchThunk(thunkAPI, async () => {
         const res = await authAPI.authMe();
         if (res.data.resultCode === ResultCode.Success) {//если 0, значит кука есть и значит делвем isLoggedIn = true
             thunkAPI.dispatch(appActions.setAppStatus({status: 'succeeded'}));
@@ -50,14 +49,9 @@ export const authMe = createAppAsyncThunks<any, undefined>(`${authSlice.name}/au
             handleServerAppError(res.data, thunkAPI.dispatch, false); //false чтобы при аусМи юзеру не летела глоб ош что он не авторизовался
             return thunkAPI.rejectWithValue(null)
         }
-    } catch (e) {
-        handleServerNetworkError(e as { message: string }, thunkAPI.dispatch);
-        return thunkAPI.rejectWithValue(null)
-    } finally {
-        thunkAPI.dispatch(appActions.setInitialized({isInitialized: true}));
-        /*/!* чтобы мы проиниц приложение в любом случае*!/*/
-
-    }
+    }).finally(() => {
+        thunkAPI.dispatch(appActions.setInitialized({isInitialized: true}))
+    })
 })
 
 export const login = createAppAsyncThunks<any, any>(`${authSlice.name}/login`, async (args, thunkAPI) => {
