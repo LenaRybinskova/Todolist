@@ -15,6 +15,7 @@ import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import {selectIsInitialized, selectStatus} from 'app/appSlice';
+import {AppRoutes} from 'app/AppRoutes';
 
 type AppPropsType = {
     demo?: boolean;
@@ -62,13 +63,7 @@ function App({demo = false}: AppPropsType) {
                     )}
                     <ErrorSnackbar/>
                 </AppBar>
-
-                <Routes>
-                    <Route path={'/'} element={<TodolistList demo={demo}/>}/>
-                    <Route path={'/auth'} element={<Login/>}/>
-                    <Route path={'/404'} element={<h1>PAGE NOT FOUND</h1>}></Route>
-                    <Route path={'*'} element={<Navigate to={'/404'}/>}/>
-                </Routes>
+                <AppRoutes demo={demo}/>
             </div>
         </Container>
     );
