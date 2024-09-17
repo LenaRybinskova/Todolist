@@ -1,63 +1,48 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {AddItemForm} from 'common/components/AddItemsForm/AddItemForm';
-import {EditableSpan} from 'common/components/EditableSpan/EditableSpan';
-import IconButton from '@mui/material/IconButton/IconButton';
-import {Delete} from '@mui/icons-material';
-import ButtonContainer from 'common/components/Button/ButtonContainer';
-import Task from 'common/components/Task/Task';
-import {useTodolist} from 'features/TodolistsList/lib/todolist/useTodolist';
 import {TodolistDomainType} from 'features/TodolistsList/model/todolists/todolistSlice';
+import {TodolistTitle} from 'features/TodolistsList/ui/TodolistTitle';
+import {Tasks} from 'features/TodolistsList/ui/Tasks';
+import {TodolistFilerButtons} from 'features/TodolistsList/ui/TodolistFilerButtons';
+import {useAppSelector} from 'app/store';
+import {addTask, fetchTasks, selectTasksByFilter} from 'features/TodolistsList/model/tasks/tasksSlice';
+import {selectIsLoggedIn} from 'features/auth/model/authSlice';
+import {useDispatch} from 'react-redux';
 
-type PropsType = {
+type Props = {
     todolist: TodolistDomainType;
     demo?: boolean;
 };
 
-export const Todolist:React.FC<PropsType> = React.memo(({todolist, demo}) => {
-    const {
-        title,
-        changeTodolistTitle,
-        deleteTodolist,
-        addTaskCallback,
-        tasks,
-        onAllClickHandler,
-        onActiveClickHandler,
-        onCompletedClickHandler,
-        id,
-        filter,
-    } = useTodolist({...todolist}, demo);
+export const Todolist = ({todolist, demo}: Props) => {
+
+    const {id, filter} = todolist
+
+    const dispatch = useDispatch();
+    const tasks = useAppSelector((state) => selectTasksByFilter(state, filter, id))
+    const isLoggedIn = useAppSelector(selectIsLoggedIn);
+
+    useEffect(() => {
+        if (!demo && isLoggedIn) {
+            dispatch(fetchTasks(id));
+        } else {
+            return;
+        }
+    }, [dispatch]);
+
+    const addTaskCallback =
+        (title: string) => {
+            dispatch(addTask({title, todolistId: id}));
+        }
+
     return (
         <div>
-            <h3>
-                <EditableSpan value={title} onChange={changeTodolistTitle}/>
-                <IconButton onClick={deleteTodolist}>
-                    <Delete/>
-                </IconButton>
-            </h3>
+            <TodolistTitle todolist={todolist}/>
             <AddItemForm addItem={addTaskCallback} disabled={todolist.entityStatus === 'loading'}/>
-            <div>
-                {tasks.map((task) => (
-                    <Task key={task.id} task={task} todolistId={id}/>
-                ))}
-            </div>
+            <Tasks tasks={tasks} todolistId={id}/>
             <div style={{position: 'absolute', bottom: '15px', left: '20px'}}>
-                <ButtonContainer variant={filter === 'all' ? 'outlined' : 'text'} onClick={onAllClickHandler}
-                                 color={'inherit'}>
-                    All
-                </ButtonContainer>
-                <ButtonContainer
-                    variant={filter === 'active' ? 'outlined' : 'text'}
-                    onClick={onActiveClickHandler}
-                    color={'primary'}>
-                    Active
-                </ButtonContainer>
-                <ButtonContainer
-                    variant={filter === 'completed' ? 'outlined' : 'text'}
-                    onClick={onCompletedClickHandler}
-                    color={'secondary'}>
-                    Completed
-                </ButtonContainer>
+                <TodolistFilerButtons todolistId={id} filter={todolist.filter}/>
             </div>
         </div>
     );
-});
+}

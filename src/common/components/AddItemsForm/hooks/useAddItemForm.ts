@@ -4,7 +4,7 @@ export const useAddItemForm = (onAddItem: (title: string) => void) => {
   const [title, setTitle] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const addItem = () => {
+  const addItemHandler = () => {
     if (title.trim() !== "") {
       onAddItem(title);
       setTitle("");
@@ -13,7 +13,7 @@ export const useAddItemForm = (onAddItem: (title: string) => void) => {
     }
   };
 
-  const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event.currentTarget.value);
   };
 
@@ -22,9 +22,9 @@ export const useAddItemForm = (onAddItem: (title: string) => void) => {
       setError(null);
     }
     if (event.charCode === 13) {
-      addItem();
+      addItemHandler();
     }
   };
 
-  return { title, onChangeHandler, onKeyPressHandler, error, addItem };
+  return { title,  onChangeInputHandler, onKeyPressHandler, error, addItem: addItemHandler };
 };

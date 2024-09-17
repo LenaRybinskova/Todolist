@@ -6,7 +6,7 @@ import {
     TasksStateType,
     updateTask
 } from 'features/TodolistsList/model/tasks/tasksSlice';
-import {TaskType, TodolistType} from 'features/TodolistsList/api/todolists/todolists-api';
+import {TaskType, TodolistType} from 'features/TodolistsList/api/todolists/todolistsApi';
 import {todolistId1} from 'app/id-utils';
 import {createTodolist, removeTodolist} from 'features/TodolistsList/model/todolists/todolistSlice';
 import {TestAction} from 'common/types/types';

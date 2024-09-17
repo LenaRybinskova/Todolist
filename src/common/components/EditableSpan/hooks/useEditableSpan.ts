@@ -16,5 +16,5 @@ export const useEditableSpan = (value: string, onChange: (newValue: string) => v
     setTitle(e.currentTarget.value);
   };
 
-  return { editMode, title, changeTitle, activateViewMode, activateEditMode };
+  return { editMode, title, changeTitleHandler: changeTitle, activateViewModeHandler: activateViewMode, activateEditModeHandler: activateEditMode };
 };

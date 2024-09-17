@@ -2,11 +2,8 @@ import React, {useEffect} from 'react';
 import './App.css';
 import IconButton from '@mui/material/IconButton/IconButton';
 import {Menu} from '@mui/icons-material';
-import TodolistList from 'features/TodolistsList/ui/TodolistList';
 import {useAppSelector} from './store';
 import {ErrorSnackbar} from 'common/components/ErrorSnackbar/ErrorSnackbar';
-import {Login} from 'features/auth/ui/Login';
-import {Navigate, Route, Routes} from 'react-router-dom';
 import {authMe, logout, selectIsLoggedIn} from 'features/auth/model/authSlice';
 import {useDispatch} from 'react-redux';
 import Button from '@material-ui/core/Button';
@@ -17,17 +14,16 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import {selectIsInitialized, selectStatus} from 'app/appSlice';
 import {AppRoutes} from 'app/AppRoutes';
 
-type AppPropsType = {
+type Props = {
     demo?: boolean;
 };
 
-function App({demo = false}: AppPropsType) {
+function App({demo = false}: Props) {
     const dispatch = useDispatch(); //useAppDispatch() не работает
     const status = useAppSelector<string | null>(selectStatus);
     const isInitialized = useAppSelector<boolean>(selectIsInitialized);
     const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
-    // после CircularProgress сработает юзЭффект
     useEffect(() => {
         dispatch(authMe());
     }, []);
@@ -49,7 +45,6 @@ function App({demo = false}: AppPropsType) {
                         <IconButton edge="start" color="inherit" aria-label="menu">
                             <Menu/>
                         </IconButton>
-                        {/*          <Typography variant="h6">News</Typography>*/}
                         {isLoggedIn && (
                             <Button onClick={logoutHandler} color="inherit">
                                 Log out

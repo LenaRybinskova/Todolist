@@ -19,18 +19,20 @@ type TaskType = {
     addedDate: string;
 };
 
-export type TaskWithReduxType = {
+export type Props = {
     task: TaskType;
     todolistId: string;
 };
 
-const Task = memo((props: TaskWithReduxType) => {
-    const {onChangeHandler, onTitleChangeHandler, onClickHandler} = useTasks({...props});
-    const {task} = props
+const Task = memo(({task, todolistId}: Props) => {
+
+    const {onChangeHandler, onTitleChangeHandler, onClickHandler} = useTasks({task, todolistId});
+
+    const isTaskCompleted = task.status === TaskStatuses.Completed
 
     return (
-        <div className={task.status === TaskStatuses.Completed ? 'is-done' : ''}>
-            <Checkbox checked={task.status === TaskStatuses.Completed} color="primary" onChange={onChangeHandler}/>
+        <div className={isTaskCompleted ? 'is-done' : ''}>
+            <Checkbox checked={isTaskCompleted} color="primary" onChange={onChangeHandler}/>
 
             <EditableSpan value={task.title} onChange={onTitleChangeHandler}/>
             <IconButton onClick={onClickHandler}>

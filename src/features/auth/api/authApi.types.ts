@@ -4,3 +4,9 @@ export type LoginParamType = {
     rememberMe: boolean;
     captcha?: boolean;
 };
+
+export type AuthMeResponseType = {
+    id: number;
+    email: string;
+    login: string;
+};

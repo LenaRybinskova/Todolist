@@ -1,4 +1,3 @@
-import {todolistAPI, TodolistType, UpdateTitleTodolistArgs} from 'features/TodolistsList/api/todolists/todolists-api';
 import {appActions, RequestStatusType} from 'app/appSlice';
 import {handleServerNetworkError} from 'common/utils/handleServerNetworkError';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
@@ -6,6 +5,8 @@ import {clearState} from 'common/actions/common.actions';
 import {handleServerAppError} from 'common/utils/handleServerAppError';
 import {createAppAsyncThunks} from 'common/utils';
 import {ResultCode} from 'common/enums';
+import {TodolistType, UpdateTitleTodolistArgs} from 'features/TodolistsList/api/todolists/todolistsApi.types';
+import {todolistAPI} from 'features/TodolistsList/api/todolists/todolistsApi';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 

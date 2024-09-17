@@ -1,8 +1,8 @@
 import {instanse} from 'common/instance/instance';
 import {BaseResponse} from 'common/types';
 import {AxiosResponse} from 'axios';
-import {AuthMeResponseType} from 'features/TodolistsList/api/todolists/todolists-api';
-import {LoginParamType} from 'features/auth/api/authApi.types';
+import {AuthMeResponseType, LoginParamType} from 'features/auth/api/authApi.types';
+
 
 
 export const authAPI = {

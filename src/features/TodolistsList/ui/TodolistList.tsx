@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React from 'react';
 import {AddItemForm} from 'common/components/AddItemsForm/AddItemForm';
 import {Todolist} from 'features/TodolistsList/ui/Todolist';
 import {Navigate} from 'react-router-dom';
@@ -6,14 +6,13 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import {useTodolisList} from 'features/TodolistsList/lib/todolistsList/useTodolisList';
 
-type TodolistListType = {
+type Props = {
     demo?: boolean;
 };
 
-const TodolistList: React.FC<TodolistListType> = ({demo = false}): ReactElement => {
-    const {addTodolist, todolists, status, isLoggedIn} = useTodolisList(demo);
+const TodolistList = ({demo = false}: Props) => {
 
-    //если не залогиненты - редирект на
+    const {addTodolist, todolists, status, isLoggedIn} = useTodolisList(demo);
 
     if (!isLoggedIn) {
         return <Navigate to={'/auth'}/>;
