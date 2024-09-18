@@ -1,17 +1,49 @@
 import IconButton from '@mui/material/IconButton/IconButton';
 import TextField from '@mui/material/TextField/TextField';
-import React from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {AddBox} from '@mui/icons-material';
-import {useAddItemForm} from 'common/components/AddItemsForm/hooks/useAddItemForm';
+import {unwrapResult} from '@reduxjs/toolkit';
 
 export type AddItemFormPropsType = {
-    addItem: (title: string) => void;
-    disabled?: boolean;
+    addItem: (title: string) => Promise<any>,
+    disabled?: boolean
 };
 
 export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
 
-    const {title, onChangeInputHandler, onKeyPressHandler, error, addItem} = useAddItemForm(props.addItem);
+    const [title, setTitle] = useState('');
+    const [error, setError] = useState<string | null>(null);
+
+    const addItemHandler = () => {
+        if (title.trim() !== '') {
+      props.addItem(title)
+                .then(unwrapResult)
+                .then(() => {
+                    setTitle('');
+                })
+                .catch(err => {
+                    if(err?.resultCode){
+                        setError((err?.messages[0]))
+                    }
+                })
+
+        } else {
+            setError('Title is required');
+        }
+    };
+
+    const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setTitle(event.currentTarget.value);
+    };
+
+    const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (error !== null) {
+            setError(null);
+        }
+        if (event.charCode === 13) {
+            addItemHandler();
+        }
+    };
 
     return (
         <div style={{display: 'flex', marginBottom: '10px'}}>
@@ -25,7 +57,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
                 /*        label="title"*/
                 helperText={error}
             />
-            <IconButton color="primary" onClick={addItem} disabled={props.disabled}>
+            <IconButton color="primary" onClick={addItemHandler} disabled={props.disabled}>
                 <AddBox/>
             </IconButton>
         </div>

@@ -5,9 +5,10 @@ import {TodolistTitle} from 'features/TodolistsList/ui/TodolistTitle';
 import {Tasks} from 'features/TodolistsList/ui/Tasks';
 import {TodolistFilerButtons} from 'features/TodolistsList/ui/TodolistFilerButtons';
 import {useAppSelector} from 'app/store';
-import {addTask, fetchTasks, selectTasksByFilter} from 'features/TodolistsList/model/tasks/tasksSlice';
+import { fetchTasks, selectTasksByFilter, thunkTasks} from 'features/TodolistsList/model/tasks/tasksSlice';
 import {selectIsLoggedIn} from 'features/auth/model/authSlice';
 import {useDispatch} from 'react-redux';
+import {unwrapResult} from '@reduxjs/toolkit';
 
 type Props = {
     todolist: TodolistDomainType;
@@ -30,10 +31,9 @@ export const Todolist = ({todolist, demo}: Props) => {
         }
     }, [dispatch]);
 
-    const addTaskCallback =
-        (title: string) => {
-            dispatch(addTask({title, todolistId: id}));
-        }
+    const addTaskCallback = (title: string):any => {
+        return  dispatch(thunkTasks.addTask({ title, todolistId: todolist.id }))
+    }
 
     return (
         <div>

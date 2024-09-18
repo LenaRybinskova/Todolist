@@ -191,7 +191,7 @@ function App() {
     }
   }
 
-  function addTodolist(title: string) {
+  async function addTodolist(title: string) {
     let newTodolistId = v1();
     let newTodolist: TodolistDomainType = {
       id: newTodolistId,

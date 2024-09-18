@@ -11,8 +11,69 @@
    - Material-UI
    - Storybook
 
+### 20: 
+
+### 19: утилитная функция tryCatchThunk(thunkAPI, logic()=>Promise )
+
+```
+type ThunkAPI = BaseThunkAPI<AppRootStateType, unknown, AppDispatch, null | BaseResponse>
+
+export const tryCatchThunk = async <T>(thunkAPI: ThunkAPI, logic: () => 
+Promise<T | ReturnType<typeof thunkAPI.rejectWithValue>>): 
+Promise<T | ReturnType<typeof thunkAPI.rejectWithValue>> => {
+    try {
+        thunkAPI.dispatch(appActions.setAppStatus({status: 'loading'}));
+        return await logic()
+    } catch (e) {
+        handleServerAppError(e as { message: string }, thunkAPI.dispatch);
+        return thunkAPI.rejectWithValue(null)
+    }
+}
+
+export const authMe = createAppAsyncThunks<{isLoggedIn: boolean}, undefined>(`${authSlice.name}/authMe`, async (_, thunkAPI) => {
+    return tryCatchThunk(thunkAPI, async () => {
+        const res = await authAPI.authMe();
+        if (res.data.resultCode === ResultCode.Success) {
+            thunkAPI.dispatch(appActions.setAppStatus({status: 'succeeded'}));
+            return {isLoggedIn: true}
+        } else {
+            handleServerAppError(res.data, thunkAPI.dispatch, false)
+            return thunkAPI.rejectWithValue(null)
+        }
+    }).finally(() => {
+        thunkAPI.dispatch(appActions.setInitialized({isInitialized: true}))
+    })
+})
+```
+
+### 18: перевод ThunkCreation на createAppAsyncThunks
 
 
+```
+export const createAppAsyncThunks = createAsyncThunk.withTypes<{
+  state: AppRootStateType;
+  dispatch: AppDispatch;
+  rejectValue: null | BaseResponse;
+}>();
+
+export const login = createAppAsyncThunks<any, any>(`${authSlice.name}/login`, async (args, thunkAPI) => {
+    thunkAPI.dispatch(appActions.setAppStatus({status: 'loading'}))
+    try {
+        const res = await authAPI.login(args);
+        if (res.data.resultCode === ResultCode.Success) {
+            thunkAPI.dispatch(appActions.setAppStatus({status: 'succeeded'}))
+            return
+        } else {
+            const isShowAppGlobal = !res.data.fieldsErrors.length
+            handleServerAppError(res.data, thunkAPI.dispatch, isShowAppGlobal);
+            return thunkAPI.rejectWithValue(null)
+        }
+    } catch (e) {
+        handleServerNetworkError(e, thunkAPI.dispatch);
+        return thunkAPI.rejectWithValue(null);
+    }
+})
+```
 
 ### 17: redux toolkit (без изм в ТС)
 

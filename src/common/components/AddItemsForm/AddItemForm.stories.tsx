@@ -82,7 +82,7 @@ const ErrorAddItemForm = React.memo((props: AddItemFormPropsType) => {
 //ИСТОРИЯ с ошибкой
 export const ErrorAddItemFormStory: Story = {
     // ту тут хуки нельзя исп, пришлось пересоздавать целую компон с ошибкой
-    render: () => <ErrorAddItemForm addItem={action('Button clicked inside form')} disabled={false}/>,
+    /*render: () => <ErrorAddItemForm addItem={action('Button clicked inside form')} disabled={false}/>,*/
 };
 
 // ИСТОРИЯ с disabled

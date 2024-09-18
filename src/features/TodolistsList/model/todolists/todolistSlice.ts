@@ -105,7 +105,7 @@ export const createTodolist = createAppAsyncThunks<{
             return {todolist: res.data.data.item}
         } else {
             handleServerNetworkError(res.data, thunkAPI.dispatch);
-            return rejectWithValue(null)
+            return rejectWithValue(res.data)
         }
     } catch (e) {
         handleServerNetworkError(e, thunkAPI.dispatch);

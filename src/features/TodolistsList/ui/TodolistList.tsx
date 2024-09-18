@@ -14,6 +14,7 @@ const TodolistList = ({demo = false}: Props) => {
 
     const {addTodolist, todolists, status, isLoggedIn} = useTodolisList(demo);
 
+
     if (!isLoggedIn) {
         return <Navigate to={'/auth'}/>;
     }

@@ -154,7 +154,7 @@ function AppWithReducers() {
 /*    dispatchToTodolists(todolistsActions.updateTodolist({ todolistId: id, model: { title: title } }));*/
   }
 
-  function addTodolist(title: string) {
+ async function addTodolist(title: string) {
     /*const action = todolistsActions.createTodolist({ todolist: { id: v1(), title: title, addedDate: "", order: 0 } });
     dispatchToTasks(action);
     dispatchToTodolists(action);*/

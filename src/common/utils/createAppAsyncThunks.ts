@@ -6,8 +6,6 @@ export const createAppAsyncThunks = createAsyncThunk.withTypes<{
   state: AppRootStateType;
   dispatch: AppDispatch;
   rejectValue: null | BaseResponse;
-  extra?: unknown;
-
 }>();
 
 export type AppThunkApi = ReturnType<typeof createAppAsyncThunks>;

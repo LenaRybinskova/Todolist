@@ -24,8 +24,8 @@ type PropsType = {
 };
 
 export function Todolist(props: PropsType) {
-  const addTask = (title: string) => {
-    props.addTask(title, props.id);
+  const addTask = async (title: string) => {
+   /* props.addTask(title, props.id);*/
   };
 
   const removeTodolist = () => {

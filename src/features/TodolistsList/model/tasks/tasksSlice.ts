@@ -117,26 +117,22 @@ export const fetchTasks = createAppAsyncThunks<{ tasks: TaskType[]; todolistId: 
     },
 );
 
-export const addTask = createAppAsyncThunks<{ task: TaskType }, AddTaskArgs>(
-    `${sliceTasks.name}`,
-    async (arg, thunkAPI) => {
-        const {dispatch, rejectWithValue} = thunkAPI;
-        try {
-            dispatch(appActions.setAppStatus({status: 'loading'}));
-            const res = await tasksApi.createTask(arg);
-            if (res.data.resultCode === ResultCode.Success) {
-                dispatch(appActions.setAppStatus({status: 'succeeded'}));
-                return {task: res.data.data.item};
-            } else {
-                handleServerAppError(res.data, dispatch);
-                return rejectWithValue(null);
-            }
-        } catch (e) {
-            handleServerNetworkError(e, thunkAPI.dispatch);
-            return rejectWithValue(null);
-        }
-    },
-);
+const addTask = createAppAsyncThunks<{
+    task: TaskType
+}, AddTaskArgs>(`${sliceTasks.name}/addTask`, async (arg, thunkAPI):Promise<any> => {
+    const {dispatch, rejectWithValue} = thunkAPI
+
+    const res = await tasksApi.createTask(arg)
+    if (res.data.resultCode === ResultCode.Success) {
+        const task = res.data.data.item
+        return {task}
+    } else {
+        /*      handleServerAppError(res.data, dispatch)*/
+        return rejectWithValue(res.data)
+    }
+
+})
+
 
 export const updateTask = createAppAsyncThunks<UpdateTaskDomain, UpdateTaskDomain>(
     `${sliceTasks.name}/updateTask`,
@@ -189,6 +185,7 @@ export const removeTask = createAppAsyncThunks<RemoveTaskArgs, RemoveTaskArgs>(
 
 export const tasksSlice = sliceTasks.reducer;
 export const {selectTasksByFilter} = sliceTasks.selectors;
+export const thunkTasks = {addTask, updateTask, removeTask, fetchTasks}
 export type TasksReducerType = ReturnType<typeof sliceTasks.getInitialState>;
 
 
