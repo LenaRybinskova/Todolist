@@ -22,7 +22,7 @@ export const Login = () => {
                 <form onSubmit={formik.handleSubmit}>
                     <FormControl>
                         <FormLabel>
-                            {/*                            <p>lenarybinskova@gmail.com</p>
+                            {/*                            <p>lenarybinskova</p>
                             <p>lenarybinskova</p>*/}
                         </FormLabel>
                         <FormGroup>
