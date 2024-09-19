@@ -11,7 +11,29 @@
    - Material-UI
    - Storybook
 
-### 20: 
+### 20: обработка обшибок app в addMatcher
+
+```
+builder.addMatcher(
+                (action) => {
+                    return action.type.endsWith('/rejected')
+                },
+                (state, action: any) => {
+                    state.status = 'failed'
+
+                    if (action.payload) {
+                        if (action.type === thunkTasks.addTask.rejected.type
+                            || action.type === todolistsThunks.createTodolist.rejected.type
+                            || action.type === appThunks.authMe.rejected.type) {
+                            return
+                        }
+                        state.error = action.payload?.messages[0];
+                    } else {
+                        state.error = action.error.message ? action.error.message : 'произошла какая то ошибка'
+                    }
+                })
+```
+
 
 ### 19: утилитная функция tryCatchThunk(thunkAPI, logic()=>Promise )
 

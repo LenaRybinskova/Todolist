@@ -27,7 +27,7 @@ export const TodolistTitle = ({todolist}: Props) => {
     const changeTodolistTitleHandler =
         (title: string) => {
             const data = {todolistId: id, title}
-            dispatch(todolistsThunks.changeTitleTodolistTC(data))
+            dispatch(todolistsThunks.changeTitleTodolist(data))
         }
 
 

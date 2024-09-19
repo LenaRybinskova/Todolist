@@ -22,7 +22,8 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
                     setTitle('');
                 })
                 .catch(err => {
-                    if(err?.resultCode){
+                    console.log("AddItemForm catch",err )
+                    if(err?.resultCode){ // err не нативная
                         setError((err?.messages[0]))
                     }
                 })

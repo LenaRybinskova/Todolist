@@ -6,11 +6,12 @@ import {
     TasksStateType,
     updateTask
 } from 'features/TodolistsList/model/tasks/tasksSlice';
-import {TaskType, TodolistType} from 'features/TodolistsList/api/todolists/todolistsApi';
 import {todolistId1} from 'app/id-utils';
 import {createTodolist, removeTodolist} from 'features/TodolistsList/model/todolists/todolistSlice';
 import {TestAction} from 'common/types/types';
 import {TaskPriorities, TaskStatuses} from 'common/enums/enums';
+import {TaskType} from 'features/TodolistsList/api/tasks/tasksApi.types';
+import {TodolistType} from 'features/TodolistsList/api/todolists/todolistsApi.types';
 
 let startState: TasksStateType;
 

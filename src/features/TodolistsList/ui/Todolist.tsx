@@ -5,10 +5,9 @@ import {TodolistTitle} from 'features/TodolistsList/ui/TodolistTitle';
 import {Tasks} from 'features/TodolistsList/ui/Tasks';
 import {TodolistFilerButtons} from 'features/TodolistsList/ui/TodolistFilerButtons';
 import {useAppSelector} from 'app/store';
-import { fetchTasks, selectTasksByFilter, thunkTasks} from 'features/TodolistsList/model/tasks/tasksSlice';
+import {fetchTasks, selectTasksByFilter, thunkTasks} from 'features/TodolistsList/model/tasks/tasksSlice';
 import {selectIsLoggedIn} from 'features/auth/model/authSlice';
 import {useDispatch} from 'react-redux';
-import {unwrapResult} from '@reduxjs/toolkit';
 
 type Props = {
     todolist: TodolistDomainType;

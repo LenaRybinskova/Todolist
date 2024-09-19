@@ -13,7 +13,7 @@ export const useTodolisList = (demo: boolean) => {
     const dispatch = useDispatch(); //useAppDispatch() не работает
 
     const addTodolist = async (title: string) => {
-        return  dispatch(createTodolist(title));
+        return dispatch(createTodolist(title));
     }
 
     useEffect(() => {

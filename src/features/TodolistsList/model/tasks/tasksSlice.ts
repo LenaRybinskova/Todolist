@@ -1,9 +1,8 @@
 import {FilterValuesType, todolistsThunks} from 'features/TodolistsList/model/todolists/todolistSlice';
-
 import {appActions} from 'app/appSlice';
 import {createSlice} from '@reduxjs/toolkit';
 import {clearState} from 'common/actions/common.actions';
-import {createAppAsyncThunks, handleServerAppError, handleServerNetworkError} from 'common/utils'
+import {createAppAsyncThunks, handleServerNetworkError} from 'common/utils'
 import {ResultCode, TaskPriorities, TaskStatuses} from 'common/enums';
 import {tasksApi} from 'features/TodolistsList/api/tasks/tasksApi';
 import {
@@ -104,40 +103,30 @@ export const sliceTasks = createSlice({
 
 export const fetchTasks = createAppAsyncThunks<{ tasks: TaskType[]; todolistId: string }, string>(
     `${sliceTasks.name}/getTasks`,
-    async (todolistId, thunkAPI) => {
-        try {
-            thunkAPI.dispatch(appActions.setAppStatus({status: 'loading'}));
-            const res = await tasksApi.getTasks(todolistId);
-            thunkAPI.dispatch(appActions.setAppStatus({status: 'succeeded'}));
-            return {tasks: res.data.items, todolistId};
-        } catch (e) {
-            handleServerNetworkError(e, thunkAPI.dispatch);
-            return thunkAPI.rejectWithValue(null); // просто загрушка, тк вернуть что то надообязательно
-        }
+    async (todolistId) => {
+        const res = await tasksApi.getTasks(todolistId);
+        return {tasks: res.data.items, todolistId};
     },
 );
 
-const addTask = createAppAsyncThunks<{
+export const addTask = createAppAsyncThunks<{
     task: TaskType
-}, AddTaskArgs>(`${sliceTasks.name}/addTask`, async (arg, thunkAPI):Promise<any> => {
-    const {dispatch, rejectWithValue} = thunkAPI
-
+}, AddTaskArgs>(`${sliceTasks.name}/addTask`, async (arg, thunkAPI): Promise<any> => {
+    const {rejectWithValue} = thunkAPI
     const res = await tasksApi.createTask(arg)
     if (res.data.resultCode === ResultCode.Success) {
         const task = res.data.data.item
         return {task}
     } else {
-        /*      handleServerAppError(res.data, dispatch)*/
         return rejectWithValue(res.data)
     }
-
 })
 
 
 export const updateTask = createAppAsyncThunks<UpdateTaskDomain, UpdateTaskDomain>(
     `${sliceTasks.name}/updateTask`,
     async (arg, thunkAPI) => {
-        const {dispatch, rejectWithValue, getState} = thunkAPI;
+        const {rejectWithValue, getState} = thunkAPI;
         const {todolistId, taskId, model} = arg;
         const state = getState();
         const task = state.tasks[todolistId].find((t) => t.id === taskId);
@@ -155,13 +144,11 @@ export const updateTask = createAppAsyncThunks<UpdateTaskDomain, UpdateTaskDomai
             order: task.order,
             ...model,
         };
-        dispatch(appActions.setAppStatus({status: 'loading'}));
+
         const res = await tasksApi.updateTask({todolistId, taskId, model: apiModel});
         if (res.data.resultCode === ResultCode.Success) {
-            dispatch(appActions.setAppStatus({status: 'succeeded'}));
             return arg;
         } else {
-            handleServerAppError(res.data, dispatch);
             return rejectWithValue(null);
         }
     },
@@ -169,17 +156,9 @@ export const updateTask = createAppAsyncThunks<UpdateTaskDomain, UpdateTaskDomai
 
 export const removeTask = createAppAsyncThunks<RemoveTaskArgs, RemoveTaskArgs>(
     `${sliceTasks.name}/removeTask`,
-    async (arg, thunkAPI) => {
-        const {dispatch, rejectWithValue} = thunkAPI;
-        try {
-            dispatch(appActions.setAppStatus({status: 'loading'}));
-            await tasksApi.deleteTask(arg);
-            dispatch(appActions.setAppStatus({status: 'succeeded'}));
-            return arg;
-        } catch (e) {
-            handleServerNetworkError(e, thunkAPI.dispatch);
-            return rejectWithValue(null);
-        }
+    async (arg) => {
+        await tasksApi.deleteTask(arg);
+        return arg;
     },
 );
 
@@ -187,6 +166,23 @@ export const tasksSlice = sliceTasks.reducer;
 export const {selectTasksByFilter} = sliceTasks.selectors;
 export const thunkTasks = {addTask, updateTask, removeTask, fetchTasks}
 export type TasksReducerType = ReturnType<typeof sliceTasks.getInitialState>;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* REDUX

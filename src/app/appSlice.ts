@@ -1,37 +1,71 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {createSlice, isPending, PayloadAction} from '@reduxjs/toolkit';
+import {thunkTasks} from 'features/TodolistsList/model/tasks/tasksSlice';
+import {todolistsThunks} from 'features/TodolistsList/model/todolists/todolistSlice';
+import {appThunks} from 'features/auth/model/authSlice';
 
 
-
-export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed";
+export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
 
 export const appSlice = createSlice({
-  name: "app",
-  initialState: {
-    status: "idle" as RequestStatusType,
-    error: null as string | null,
-    isInitialized: false,
-  },
-  reducers: {
-    setAppStatus: (state, action: PayloadAction<{ status: RequestStatusType }>) => {
-      state.status = action.payload.status;
-    },
-    setAppError: (state, action: PayloadAction<{ error: string | null }>) => {
-      state.error = action.payload.error;
-    },
-    setInitialized: (state, action: PayloadAction<{ isInitialized: boolean }>) => {
-      state.isInitialized = action.payload.isInitialized;
-    },
-  },
-  selectors: {
-    selectError: (sliceState) => sliceState.error,
-    selectStatus: (sliceState) => sliceState.status,
-    selectIsInitialized: (sliceState) => sliceState.isInitialized,
-  },
-});
+        name: 'app',
+        initialState: {
+            status: 'idle' as RequestStatusType,
+            error: null as string | null,
+            isInitialized: false,
+        },
+        reducers: {
+            setAppStatus: (state, action: PayloadAction<{ status: RequestStatusType }>) => {
+                state.status = action.payload.status;
+            },
+            setAppError: (state, action: PayloadAction<{ error: string | null }>) => {
+                state.error = action.payload.error;
+            },
+            setInitialized: (state, action: PayloadAction<{ isInitialized: boolean }>) => {
+                state.isInitialized = action.payload.isInitialized;
+            },
+        }, extraReducers: (builder) => {
+            builder.addMatcher(
+                isPending,
+                (state) => {
+                    state.status = 'loading'
+                })
+            builder.addMatcher(
+                (action) => {
+                    return action.type.endsWith('/rejected')
+                },
+                (state, action: any) => {
+                    state.status = 'failed'
+
+                    if (action.payload) {
+                        if (action.type === thunkTasks.addTask.rejected.type
+                            || action.type === todolistsThunks.createTodolist.rejected.type
+                            || action.type === appThunks.authMe.rejected.type) {
+                            return
+                        }
+                        state.error = action.payload?.messages[0];
+                    } else {
+                        state.error = action.error.message ? action.error.message : 'произошла какая то ошибка'
+                    }
+                })
+            builder.addMatcher(
+                (action) => {
+                    return action.type.endsWith('/fulfilled')
+                },
+                (state) => {
+                    state.status = 'succeeded'
+                })
+        },
+        selectors: {
+            selectError: (sliceState) => sliceState.error,
+            selectStatus: (sliceState) => sliceState.status,
+            selectIsInitialized: (sliceState) => sliceState.isInitialized,
+        },
+    })
+;
 
 export const appReducer = appSlice.reducer;
 export const appActions = appSlice.actions;
-export const { selectError, selectStatus, selectIsInitialized } = appSlice.selectors;
+export const {selectError, selectStatus, selectIsInitialized} = appSlice.selectors;
 export type appInitialState = ReturnType<typeof appSlice.getInitialState>;
 
 
