@@ -25,10 +25,11 @@ function App({demo = false}: Props) {
     const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
     useEffect(() => {
-        dispatch(authMe());
+        if(!isInitialized){ //проверка для HMR, чтобы лишние запросы не летели
+            dispatch(authMe());
+        }
     }, []);
 
-    //если прил не проиниц =>крутилка и дальше useEffect с authMeTC() в кот проверка куки и тд
     if (!isInitialized) {
         return <div>Loading..</div>;
     }

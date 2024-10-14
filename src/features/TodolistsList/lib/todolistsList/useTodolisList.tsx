@@ -18,11 +18,13 @@ export const useTodolisList = (demo: boolean) => {
 
     useEffect(() => {
         // запрос за ТЛ пойдет только если залогинены
-        if (!demo && isLoggedIn) {
-            dispatch(fetchTodolists());
-        } else {
-            return;
+        if (demo && !isLoggedIn) {
+            return
         }
+        if(!todolists.length){
+            dispatch(fetchTodolists());
+        }
+
     }, []);
 
     return {addTodolist, todolists, status, isLoggedIn};

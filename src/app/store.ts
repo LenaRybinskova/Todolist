@@ -1,19 +1,19 @@
-import { tasksSlice } from "features/TodolistsList/model/tasks/tasksSlice";
-import { todolistSlice } from "features/TodolistsList/model/todolists/todolistSlice";
-import { ThunkAction } from "redux-thunk";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { appReducer } from "app/appSlice";
-import { authReducer } from "features/auth/model/authSlice";
-import { configureStore, UnknownAction } from "@reduxjs/toolkit";
+import {ThunkAction} from 'redux-thunk';
+import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
+import {configureStore, UnknownAction} from '@reduxjs/toolkit';
+import {rootReducer} from 'app/reducers';
+
 
 export const store = configureStore({
-  reducer: {
-    tasks: tasksSlice,
-    todolists: todolistSlice,
-    app: appReducer,
-    auth: authReducer,
-  },
+    reducer: rootReducer
 });
+
+if (process.env.NODE_ENV !== 'production' && module.hot){
+    module.hot.accept('./reducers', () => {
+        store.replaceReducer(rootReducer)
+    })
+}
+
 
 export type AppRootStateType = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
@@ -25,6 +25,7 @@ export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelecto
 // а это, чтобы можно было в консоли браузера обращаться к store в любой момент
 // @ts-ignore
 window.store = store;
+
 
 /*//REDUX
 import {TasksActionsType, tasksSlice} from '../features/tasks-reducer';

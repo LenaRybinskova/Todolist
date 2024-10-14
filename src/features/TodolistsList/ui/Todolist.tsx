@@ -23,12 +23,12 @@ export const Todolist = ({todolist, demo}: Props) => {
     const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
     useEffect(() => {
-        if (!demo && isLoggedIn) {
+        if (!demo && isLoggedIn && !tasks.length) {
             dispatch(fetchTasks(id));
         } else {
             return;
         }
-    }, [dispatch]);
+    }, []);
 
     const addTaskCallback = (title: string):any => {
         return  dispatch(thunkTasks.addTask({ title, todolistId: todolist.id }))
