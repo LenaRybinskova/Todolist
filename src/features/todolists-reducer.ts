@@ -16,11 +16,14 @@ export const todolistsReducer = (state = initialState, action: TodolistsActionsT
         case 'REMOVE-TODOLIST':
             return (state.filter((tl) => tl.id != action.id))
         case 'UPDATE-TODOLIST':
+            debugger
             return [...state.map(tl => tl.id === action.todolistId ? {...tl, ...action.model} : tl)]
         case 'CREATE-TODOLIST':
             return [{...action.todolist, filter: 'all', entityStatus: 'idle'}, ...state]
         case 'CHANGE-ENTITY-STATUS':
             return state.map(tl => tl.id === action.id ? {...tl, entityStatus: action.entityStatus} : tl)
+        case 'CHANGE-TODOLIST-FILTER':
+            return state.map(tl => tl.id === action.id ? {...tl, filter: action.filter} : tl)
         default:
             return state
     }
@@ -45,6 +48,10 @@ export const updateTodolistAC = (todolistId: string, model: TodolistDomainModelT
 export const changeTodolistEntityStatusAC = (id: string, entityStatus: RequestStatusType) => {
     return {type: 'CHANGE-ENTITY-STATUS', id, entityStatus} as const
 }
+export const changeTodolistFilterAC = (id: string, filter:FilterValuesType) => {
+    return {type: 'CHANGE-TODOLIST-FILTER', id, filter} as const
+}
+
 
 //thunk
 export const getTodolistsTC = (): AppThunk => {
@@ -86,6 +93,7 @@ export const removeTodolistTC = (todolistId: string): AppThunk => {
 }
 export const updateTodolistTC = (todolistId: string, model: TodolistDomainModelType): AppThunk => {
     return (dispatch, getState: () => AppRootStateType) => {
+
         const todolist = getState().todolists.find(tl => tl.id === todolistId)
         if (!todolist) {
             console.log('todolist is not exist')
@@ -99,6 +107,7 @@ export const updateTodolistTC = (todolistId: string, model: TodolistDomainModelT
             title: todolist.title,
             ...model
         }
+
         dispatch(setAppStatusAC('loading'))
         todolistAPI.updateTodolist(todolistId, modelApi.title).then(res => {
             if (res.data.resultCode === 0) {
@@ -123,6 +132,7 @@ export type TodolistDomainType = TodolistType & {
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
 export type GetTodolistACType = ReturnType<typeof getTodolistAC>
 export type CreateTodolistACType = ReturnType<typeof createTodolistAC>
+export type ChangeTodolistFilterACType = ReturnType<typeof changeTodolistFilterAC>
 
 export type TodolistsActionsType =
     RemoveTodolistActionType
@@ -130,6 +140,7 @@ export type TodolistsActionsType =
     | ReturnType<typeof updateTodolistAC>
     | CreateTodolistACType
     | ReturnType<typeof changeTodolistEntityStatusAC>
+| ChangeTodolistFilterACType
 
 type TodolistDomainModelType = {
     id?: string,

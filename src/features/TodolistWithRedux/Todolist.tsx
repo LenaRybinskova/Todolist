@@ -18,7 +18,6 @@ export const Todolist = React.memo(({todolist,demo}: PropsType) => {
 
     const {title,changeTodolistTitle,removeTodolist,addTask,tasks,onAllClickHandler,onActiveClickHandler, onCompletedClickHandler,id,filter}=UseTodolist({...todolist},demo)
 
-    console.log(todolist.entityStatus==="loading")
     return <div>
         <h3><EditableSpan value={title} onChange={changeTodolistTitle}/>
             <IconButton onClick={removeTodolist}>
