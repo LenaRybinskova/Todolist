@@ -1,11 +1,7 @@
 import {todolistAPI, TodolistType} from '../api/todolists-api';
-import {AnyAction, Dispatch} from 'redux';
-import {AppActionsType, AppRootStateType, AppThunk} from '../AppWithRedux/store';
-import {ThunkAction} from 'redux-thunk';
-import {RequestStatusType, setAppErrorAC, setAppStatusAC, SetStatusACType} from '../AppWithRedux/app-reducer';
-import {debug} from 'util';
+import {AppRootStateType, AppThunk} from '../AppWithRedux/store';
+import {RequestStatusType, setAppStatusAC} from '../AppWithRedux/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../utils/error-utils';
-import {number} from 'prop-types';
 import {AxiosError} from 'axios';
 
 
@@ -64,7 +60,7 @@ export const createTodolistTC = (title: string): AppThunk => dispatch => {
     try {
         dispatch(setAppStatusAC('loading'))
         todolistAPI.createTodolist(title)
-        dispatch(getTodolistsTC())
+            .then(res => dispatch(getTodolistsTC()))
         dispatch(setAppStatusAC('succeeded'))
     } catch (e) {
         throw new Error()
