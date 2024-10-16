@@ -56,11 +56,12 @@ export const getTodolistsTC = (): AppThunk => {
         dispatch(setAppStatusAC('succeeded'))
     }
 }
+
 export const createTodolistTC = (title: string): AppThunk => dispatch => {
     try {
         dispatch(setAppStatusAC('loading'))
         todolistAPI.createTodolist(title)
-            .then(res => dispatch(getTodolistsTC()))
+            .then(res => dispatch(createTodolistAC(res.data.data.item)))
         dispatch(setAppStatusAC('succeeded'))
     } catch (e) {
         throw new Error()
