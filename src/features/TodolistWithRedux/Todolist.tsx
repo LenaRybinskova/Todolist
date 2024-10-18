@@ -16,7 +16,7 @@ type PropsType = {
 
 export const Todolist = React.memo(({todolist,demo}: PropsType) => {
 
-    const {title,changeTodolistTitle,removeTodolist,addTask,tasks,onAllClickHandler,onActiveClickHandler, onCompletedClickHandler,id,filter}=UseTodolist({...todolist},demo)
+    const {title,changeTodolistTitle,removeTodolist,addTaskCB,tasks,onAllClickHandler,onActiveClickHandler, onCompletedClickHandler,id,filter}=UseTodolist({...todolist},demo)
 
     return <div>
         <h3><EditableSpan value={title} onChange={changeTodolistTitle}/>
@@ -24,7 +24,7 @@ export const Todolist = React.memo(({todolist,demo}: PropsType) => {
                 <Delete/>
             </IconButton>
         </h3>
-        <AddItemForm addItem={addTask} disabled={todolist.entityStatus==="loading"}/>
+        <AddItemForm addItem={addTaskCB} disabled={todolist.entityStatus==="loading"}/>
         <div>
             {tasks.map(t => <TaskWithRedux key={t.id} task={t} todolistId={id}/>)}
         </div>

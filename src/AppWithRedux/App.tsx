@@ -9,8 +9,9 @@ import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
 import {Login} from '../features/login/Login';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {selectIsInitialize, selectStatus} from './app-selectors';
-import {authMeTC, logoutTC} from '../features/login/auth-reducer';
+import { logoutTC} from '../features/login/auth-reducer';
 import {selectIsLoggedIn} from '../features/login/login-selectors';
+import {authMe} from "../features/login/auth-reducer"
 
 
 type AppPropsType = {
@@ -24,7 +25,7 @@ function App({demo = false}: AppPropsType) {
     const isLoggedIn=useAppSelector<boolean>(selectIsLoggedIn)
 
     useEffect(() => {
-        dispatch(authMeTC())
+        dispatch(authMe())
     }, [])
 
     //если прил не проиниц =>крутилка и дальше useEffect с authMeTC() в кот проверка куки и тд

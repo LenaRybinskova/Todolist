@@ -84,10 +84,10 @@ export const removeTodolistTC = (todolistId: string): AppThunk => {
                 dispatch(removeTodolistAC(todolistId))
                 dispatch(setAppStatusAC('succeeded')) // закончили крутилку
             } else {
-                handleServerAppError(res.data, dispatch)
+                handleServerAppError(res.data)
             }
         }).catch((error: AxiosError<ResponseErrorType>) => {
-            handleServerNetworkError(error, dispatch)
+            handleServerNetworkError(error)
         })
     }
 }
@@ -114,10 +114,10 @@ export const updateTodolistTC = (todolistId: string, model: TodolistDomainModelT
                 dispatch(removeTodolistAC(todolistId))
                 dispatch(setAppStatusAC('succeeded')) // закончили крутилку
             } else {
-                handleServerAppError(res.data, dispatch)
+                handleServerAppError(res.data)
             }
         }).catch((e: AxiosError<ResponseErrorType>) => {
-            handleServerNetworkError(e, dispatch)
+            handleServerNetworkError(e)
         })
 
     }

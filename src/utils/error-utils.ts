@@ -1,17 +1,31 @@
-import {Dispatch} from 'redux';
-import {setAppErrorAC, setAppStatusAC, SetErrorACType, SetStatusACType} from '../AppWithRedux/app-reducer';
+import { setAppErrorAC, setAppStatusAC } from "../AppWithRedux/app-reducer";
+import { put } from "redux-saga/effects";
 
-export const handleServerAppError = (data: any, dispatch: Dispatch<SetErrorACType | SetStatusACType>) => {
-    if (data.messages.length) {
-        dispatch(setAppErrorAC(data.messages[0])) // вывели в попап то что от сервера
-    } else {
-        dispatch(setAppErrorAC('some error occured')) // вывели в попап хоть что то
-    }
-    dispatch(setAppStatusAC('failed')) // закончили крутилку
+export function* handleServerAppError(data: any) {
+  if (data.messages.length) {
+    yield put(setAppErrorAC(data.messages[0]));
+  } else {
+    yield put(setAppErrorAC("some error occured"));
+  }
+  return put(setAppStatusAC("failed"));
 }
 
-
-export const handleServerNetworkError=(error:{message:string}, dispatch:Dispatch<SetErrorACType | SetStatusACType>)=>{
-    dispatch(setAppErrorAC('some error occured, CATCH')) // вывели в попап
-    dispatch(setAppStatusAC("failed")) // закончили крутилку
+export function* handleServerNetworkError(error: { message: string }) {
+  yield put(setAppErrorAC("some error occured, CATCH"));
+  return put(setAppStatusAC("failed"));
 }
+
+// для TS было
+// export const handleServerAppError = (data: any, dispatch: Dispatch<SetErrorACType | SetStatusACType>) => {
+//     if (data.messages.length) {
+//         dispatch(setAppErrorAC(data.messages[0]))
+//     } else {
+//         dispatch(setAppErrorAC('some error occured'))
+//     }
+//     dispatch(setAppStatusAC('failed'))
+// }
+
+// export const handleServerNetworkError=(error:{message:string}, dispatch:Dispatch<SetErrorACType | SetStatusACType>)=>{
+//     dispatch(setAppErrorAC('some error occured, CATCH')) // вывели в попап
+//     dispatch(setAppStatusAC("failed")) // закончили крутилку
+// }
