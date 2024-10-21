@@ -1,12 +1,10 @@
-import {AppRootStateType} from '../AppWithRedux/store';
 import {addTaskAC, getTasksAC, removeTaskAC, updateTaskAC, UpdateTaskDomainType} from './tasks-reducer';
 import {GetTaskResponseType, ResponseType, TaskType, todolistAPI, UpdateTaskModelType} from '../api/todolists-api';
 import {setAppStatusAC} from '../AppWithRedux/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../utils/error-utils';
 import {AxiosResponse} from 'axios';
 import {call, put, select, takeEvery} from 'redux-saga/effects';
-
-
+import {taskSelector} from '../../src/features/task-selector';
 
 
 export const getTask = (tlId: string) => ({
@@ -88,17 +86,10 @@ export const updateTask = (
     model: UpdateTaskDomainType
 ) => ({type: 'TASKS/UPDATE-TASK-SAGA', todolistId, taskId, model});
 
-export const getTaskSSS = (
-    state: AppRootStateType,
-    todolistId: string,
-    taslId: string
-) => {
-    return state.tasks[todolistId].find((t) => t.id === taslId);
-};
 
 export function* updateTaskSaga(action: ReturnType<typeof updateTask>) {
     const task: TaskType = yield select(
-        getTaskSSS,
+        taskSelector,
         action.todolistId,
         action.taskId
     );
@@ -138,8 +129,8 @@ export function* updateTaskSaga(action: ReturnType<typeof updateTask>) {
 }
 
 export function* tasksWatcherSaga() {
-  yield takeEvery('TASKS/FETCH-TASKS-SAGA', fetchTasksSaga);
-  yield takeEvery('TASKS/ADD-TASK-SAGA', addTaskSaga);
-  yield takeEvery('TASKS/REMOVE-TASK-SAGA', removeTaskSaga);
-  yield takeEvery('TASKS/UPDATE-TASK-SAGA', updateTaskSaga);
+    yield takeEvery('TASKS/FETCH-TASKS-SAGA', fetchTasksSaga);
+    yield takeEvery('TASKS/ADD-TASK-SAGA', addTaskSaga);
+    yield takeEvery('TASKS/REMOVE-TASK-SAGA', removeTaskSaga);
+    yield takeEvery('TASKS/UPDATE-TASK-SAGA', updateTaskSaga);
 }
