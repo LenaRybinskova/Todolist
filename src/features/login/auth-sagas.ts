@@ -1,7 +1,8 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
 import {setAppStatusAC, setInitializedAC} from '../../AppWithRedux/app-reducer';
 import {AxiosResponse} from 'axios';
-import {authAPI, AuthMeResponseType, LoginParamType, ResponseType} from '../../api/todolists-api';
+import { AuthMeResponseType, LoginParamType, ResponseType} from '../../api/todolists-api';
+import {authApi} from '../../../src/api/auth-api';
 import {handleServerAppError, handleServerNetworkError} from '../../../src/utils/error-utils';
 import {setLoginAC} from '../login/auth-reducer';
 
@@ -12,7 +13,7 @@ export function* authMeSaga() {
     yield put(setAppStatusAC('loading'));
     try {
         const res: AxiosResponse<ResponseType<AuthMeResponseType>> = yield call(
-            authAPI.authMe
+            authApi.authMe
         );
         if (res.data.resultCode === 0) {
             yield put(setLoginAC(true));
@@ -34,7 +35,7 @@ export const login = (data: LoginParamType) => {
 export function* loginSaga(action: ReturnType<typeof login>) {
     yield put(setAppStatusAC('loading'))
     try {
-        const res: AxiosResponse<ResponseType<{ userId: number }>> = yield call(authAPI.login, action.data)
+        const res: AxiosResponse<ResponseType<{ userId: number }>> = yield call(authApi.login, action.data)
         if (res.data.resultCode === 0) {
             yield put(setLoginAC(true));
             yield put(setAppStatusAC('succeeded'));
@@ -53,7 +54,7 @@ export const logout = () => {
 export function* logoutSaga() {
     yield put(setAppStatusAC('loading'));
     try {
-        const res: AxiosResponse<ResponseType> = yield call(authAPI.logout);
+        const res: AxiosResponse<ResponseType> = yield call(authApi.logout);
         if (res.data.resultCode === 0) {
             yield put(setLoginAC(false));
             yield put(setAppStatusAC('succeeded'));

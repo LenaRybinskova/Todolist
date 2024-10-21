@@ -1,7 +1,7 @@
 import {ChangeEvent} from 'react';
 import {removeTask, updateTask} from '../../../features/tasks-sagas';
 import {TaskWithReduxType} from '../TaskWithRedux';
-import {TaskStatuses} from '../../../api/todolists-api';
+import {TaskStatuses} from '../../../api/tasks-api';
 import {useAppDispatch} from '../../../AppWithRedux/store';
 
 

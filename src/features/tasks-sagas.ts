@@ -1,5 +1,6 @@
 import {addTaskAC, getTasksAC, removeTaskAC, updateTaskAC, UpdateTaskDomainType} from './tasks-reducer';
-import {GetTaskResponseType, ResponseType, TaskType, todolistAPI, UpdateTaskModelType} from '../api/todolists-api';
+import {GetTaskResponseType, taskAPI, TaskType, UpdateTaskModelType} from '../api/tasks-api';
+import {ResponseType} from "../../src/api/todolists-api"
 import {setAppStatusAC} from '../AppWithRedux/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../utils/error-utils';
 import {AxiosResponse} from 'axios';
@@ -16,7 +17,7 @@ export function* fetchTasksSaga(action: ReturnType<typeof getTask>) {
     try {
         yield put(setAppStatusAC('loading'));
         const res: AxiosResponse<GetTaskResponseType> = yield call(
-            todolistAPI.getTasks,
+            taskAPI.getTasks,
             action.tlId
         );
         if (!res.data.error) {
@@ -40,7 +41,7 @@ export function* addTaskSaga(action: ReturnType<typeof addTask>) {
     yield put(setAppStatusAC('loading'));
     try {
         const res: AxiosResponse<ResponseType<{ item: TaskType }>> = yield call(
-            todolistAPI.createTask,
+            taskAPI.createTask,
             action.todolistId,
             action.title
         );
@@ -65,7 +66,7 @@ export function* removeTaskSaga(action: ReturnType<typeof removeTask>) {
     yield put(setAppStatusAC('loading'));
     try {
         const res: AxiosResponse<ResponseType> = yield call(
-            todolistAPI.deleteTask,
+            taskAPI.deleteTask,
             action.todolistId,
             action.taskId
         );
@@ -111,7 +112,7 @@ export function* updateTaskSaga(action: ReturnType<typeof updateTask>) {
     yield put(setAppStatusAC('loading'));
     try {
         const res: AxiosResponse<ResponseType> = yield call(
-            todolistAPI.updateTask,
+            taskAPI.updateTask,
             action.todolistId,
             action.taskId,
             apiModel

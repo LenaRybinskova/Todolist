@@ -4,7 +4,7 @@ import {tasksReducer} from '../features/tasks-reducer';
 import {todolistsReducer} from '../features/todolists-reducer';
 import {v1} from 'uuid';
 import {AppRootStateType} from './store';
-import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
+import {TaskPriorities, TaskStatuses} from '../api/tasks-api';
 import {todolistId1, todolistId2} from './id-utils';
 import {thunk} from 'redux-thunk';
 import {appReducer} from './app-reducer';

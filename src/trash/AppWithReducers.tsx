@@ -14,7 +14,7 @@ import {
     updateTodolistAC
 } from '../features/todolists-reducer';
 import {addTaskAC, removeTaskAC, tasksReducer, updateTaskAC} from '../features/tasks-reducer';
-import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
+import {TaskPriorities, TaskStatuses} from '../api/tasks-api';
 import {todolistId1, todolistId2} from '../AppWithRedux/id-utils';
 
 

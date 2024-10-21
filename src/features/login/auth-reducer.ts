@@ -1,9 +1,3 @@
-import {AxiosResponse} from 'axios';
-import {authAPI, AuthMeResponseType, LoginParamType, ResponseType} from '../../api/todolists-api';
-import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
-import {setAppStatusAC, setInitializedAC} from '../../AppWithRedux/app-reducer';
-import {call, put, takeEvery} from 'redux-saga/effects';
-
 const InitialState = {
     isLoggedIn: false
 };
@@ -24,7 +18,6 @@ export const authReducer = (
 export const setLoginAC = (value: boolean) => {
     return {type: 'AUTH/SET-IS-LOGGED-IN' as const, value};
 };
-
 
 type InitialStateType = typeof InitialState;
 export type SetLoginACType = ReturnType<typeof setLoginAC>;

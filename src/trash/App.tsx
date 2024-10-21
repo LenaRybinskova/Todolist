@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton/IconButton';
 import {Menu} from '@mui/icons-material';
 import {TasksStateType} from '../features/tasks-reducer';
 import {FilterValuesType, TodolistDomainType} from '../features/todolists-reducer';
-import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
+import {TaskPriorities, TaskStatuses} from '../api/tasks-api';
 import {todolistId1, todolistId2} from '../AppWithRedux/id-utils';
 
 

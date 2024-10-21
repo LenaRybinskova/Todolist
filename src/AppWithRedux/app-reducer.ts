@@ -1,8 +1,3 @@
-import {authAPI} from '../api/todolists-api';
-import {AppThunk} from './store';
-import {handleServerAppError, handleServerNetworkError} from '../utils/error-utils';
-import {setLoginAC} from '../features/login/auth-reducer';
-
 const initialState: InitialStateType = {
     status: 'idle',
     error: null,
@@ -42,9 +37,6 @@ export const setInitializedAC = (value: boolean) => {
         value
     } as const
 }
-
-//TC
-
 
 //types
 export type  RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
