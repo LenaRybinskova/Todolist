@@ -9,9 +9,8 @@ import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
 import {Login} from '../features/login/Login';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {selectIsInitialize, selectStatus} from './app-selectors';
-import { logoutTC} from '../features/login/auth-reducer';
+import {authMe, logoutTC} from '../features/login/auth-reducer';
 import {selectIsLoggedIn} from '../features/login/login-selectors';
-import {authMe} from "../features/login/auth-reducer"
 
 
 type AppPropsType = {
@@ -22,7 +21,7 @@ function App({demo = false}: AppPropsType) {
     const dispatch = useAppDispatch()
     const status = useAppSelector<string | null>(selectStatus)
     const isInitialized = useAppSelector<boolean>(selectIsInitialize)
-    const isLoggedIn=useAppSelector<boolean>(selectIsLoggedIn)
+    const isLoggedIn = useAppSelector<boolean>(selectIsLoggedIn)
 
     useEffect(() => {
         dispatch(authMe())
@@ -30,10 +29,10 @@ function App({demo = false}: AppPropsType) {
 
     //если прил не проиниц =>крутилка и дальше useEffect с authMeTC() в кот проверка куки и тд
     if (!isInitialized) {
-        return <CircularProgress style={{justifyContent:"center"}}/>
+        return <CircularProgress style={{justifyContent: 'center'}}/>
     }
 
-    const logoutHandler=()=>{
+    const logoutHandler = () => {
         dispatch(logoutTC())
     }
 

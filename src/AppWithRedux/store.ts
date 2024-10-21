@@ -1,8 +1,12 @@
 import { takeEvery } from "redux-saga/effects";
 import { TasksActionsType, tasksReducer } from "../features/tasks-reducer";
 import {
+  createTodolistSaga,
+  fetchTodolistsSaga,
   TodolistsActionsType,
-  todolistsReducer
+  todolistsReducer,
+  removeTodolistSaga,
+  updateTodolistSaga
 } from "../features/todolists-reducer";
 import {
   AnyAction,
@@ -17,7 +21,11 @@ import { authReducer, AuthActionsType } from "../features/login/auth-reducer";
 import createSagaMiddleware from "redux-saga";
 import { authMeSaga } from "../features/login/auth-reducer";
 import { fetchTasksSaga } from "../features/tasks-reducer";
-import { addTaskSaga, removeTaskSaga, updateTaskSaga } from "../features/tasks-reducer";
+import {
+  addTaskSaga,
+  removeTaskSaga,
+  updateTaskSaga
+} from "../features/tasks-reducer";
 
 const rootReducer = combineReducers({
   tasks: tasksReducer,
@@ -39,11 +47,14 @@ function* rootWatcher() {
   yield takeEvery("TASKS/ADD-TASK-SAGA", addTaskSaga);
   yield takeEvery("TASKS/REMOVE-TASK-SAGA", removeTaskSaga);
   yield takeEvery("TASKS/UPDATE-TASK-SAGA", updateTaskSaga);
+  yield takeEvery("TODOLISTS/FETCH-TODOLISTS-SAGA", fetchTodolistsSaga);
+  yield takeEvery("TODOLISTS/CREATE-TODOLISTS-SAGA", createTodolistSaga);
+  yield takeEvery("TODOLISTS/DELETE-TODOLISTS-SAGA", removeTodolistSaga);
+  yield takeEvery("TODOLISTS/UPDATE-TODOLISTS-SAGA", updateTodolistSaga);
 }
 sagaMiddleware.run(rootWatcher);
 
 export type AppRootStateType = ReturnType<typeof rootReducer>;
-
 export type AppActionsType =
   | TodolistsActionsType
   | TasksActionsType
@@ -61,7 +72,6 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   AppActionsType
 >;
-
 export const useAppDispatch = useDispatch<AppDispatchType>;
 export const useAppSelector: TypedUseSelectorHook<AppRootStateType> =
   useSelector;

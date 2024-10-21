@@ -3,11 +3,11 @@ import { useCallback, useEffect, useMemo } from "react";
 import { addTask, getTask } from "../../tasks-reducer";
 import {
   changeTodolistFilterAC,
-  removeTodolistTC,
   TodolistDomainType,
-  updateTodolistTC
+  updateTodolist
 } from "../../todolists-reducer";
 import { TaskStatuses, TaskType } from "../../../api/todolists-api";
+import {removeTodolist} from "../../../../src/features/todolists-reducer"
 
 export const UseTodolist = (
   { id, filter, title }: TodolistDomainType,
@@ -31,12 +31,12 @@ export const UseTodolist = (
     [dispatch]
   );
 
-  const removeTodolist = () => {
-    dispatch(removeTodolistTC(id));
+  const removeTodolistCB = () => {
+    dispatch(removeTodolist(id));
   };
   const changeTodolistTitle = useCallback(
     (title: string) => {
-      dispatch(updateTodolistTC(id, { title: title }));
+      dispatch(updateTodolist(id, { title: title }));
     },
     [dispatch, id, title]
   );
@@ -67,7 +67,7 @@ export const UseTodolist = (
   return {
     title,
     changeTodolistTitle,
-    removeTodolist,
+    removeTodolistCB,
     addTaskCB,
     tasks,
     onAllClickHandler,

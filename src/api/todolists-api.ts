@@ -80,10 +80,10 @@ export const todolistAPI = {
       title
     });
   },
-  deleteTodolist(todolistId: string) {
+  deleteTodolist(todolistId: string): Promise<AxiosResponse<ResponseType>> {
     return instanse.delete<ResponseType>(`/todo-lists/${todolistId}`);
   },
-  updateTodolist(todolistId: string, title: string) {
+  updateTodolist(todolistId: string, title: string):Promise<AxiosResponse<ResponseType>> {
     return instanse.put<ResponseType>(`/todo-lists/${todolistId}`, { title });
   },
   getTasks(todolistId: string): Promise<AxiosResponse<GetTaskResponseType>> {
@@ -121,7 +121,6 @@ export const todolistAPI = {
 export const authAPI = {
   authMe(): Promise<AxiosResponse<ResponseType<AuthMeResponseType>>> {
     const res = instanse.get<ResponseType<AuthMeResponseType>>("/auth/me");
-    console.log("authAPI", res);
     return res;
   },
   login(data: LoginParamType) {

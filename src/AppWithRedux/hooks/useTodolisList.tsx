@@ -1,10 +1,9 @@
 import {useAppDispatch, useAppSelector} from '../store';
 import {useCallback, useEffect} from 'react';
-import {createTodolistTC, getTodolistsTC, TodolistDomainType} from '../../features/todolists-reducer';
+import {createTodolist, getTodolists, TodolistDomainType} from '../../features/todolists-reducer';
 import {RequestStatusType} from '../app-reducer';
 import {selectStatusTodolist, selectTodolists} from '../../features/TodolistList/todolist-selectors';
 import {selectIsLoggedIn} from '../../features/login/login-selectors';
-import {Navigate} from 'react-router-dom';
 
 
 export const useTodolisList = (demo: boolean) => {
@@ -15,14 +14,13 @@ export const useTodolisList = (demo: boolean) => {
 
 
     const addTodolist = useCallback((title: string) => {
-        dispatch(createTodolistTC(title))
+        dispatch(createTodolist(title))
     }, [dispatch])
 
 
     useEffect(() => {
-        // запрос за ТЛ пойдет только если залогинены
-        if (!demo  && isLoggedIn) {
-            dispatch(getTodolistsTC())
+        if (!demo && isLoggedIn) {
+            dispatch(getTodolists())
         } else {
             return
         }

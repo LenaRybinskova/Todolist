@@ -1,32 +1,19 @@
-import { AppRootStateType } from "./../AppWithRedux/store";
+import {AppRootStateType} from './../AppWithRedux/store';
+import {CreateTodolistACType, GetTodolistACType, RemoveTodolistActionType} from './todolists-reducer';
 import {
-  changeTodolistEntityStatusAC,
-  CreateTodolistACType,
-  GetTodolistACType,
-  RemoveTodolistActionType,
-  ResponseErrorType
-} from "./todolists-reducer";
-import {
+  GetTaskResponseType,
+  ResponseType,
   TaskPriorities,
   TaskStatuses,
   TaskType,
   todolistAPI,
   UpdateTaskModelType
-} from "../api/todolists-api";
-import { Dispatch } from "redux";
-import { AppActionsType, AppThunk } from "../AppWithRedux/store";
-import {
-  RequestStatusType,
-  setAppErrorAC,
-  setAppStatusAC
-} from "../AppWithRedux/app-reducer";
-import { handleServerAppError } from "../utils/error-utils";
-import { AxiosError } from "axios";
-import { call, put, select, takeEvery, takeLatest } from "redux-saga/effects";
-import { AxiosResponse } from "axios";
-import { GetTaskResponseType } from "../api/todolists-api";
-import { handleServerNetworkError } from "../../src/utils/error-utils";
-import { ResponseType } from "../api/todolists-api";
+} from '../api/todolists-api';
+import {setAppStatusAC} from '../AppWithRedux/app-reducer';
+import {handleServerAppError} from '../utils/error-utils';
+import {AxiosResponse} from 'axios';
+import {call, put, select} from 'redux-saga/effects';
+import {handleServerNetworkError} from '../../src/utils/error-utils';
 
 // isDone заменили на status, у новых тасок по умолчанию priority: TaskPriorities.Low
 const initialState = {
