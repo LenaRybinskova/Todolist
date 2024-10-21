@@ -3,6 +3,7 @@
    - Redux
    - React-Redux
    - Redux-thunk
+   - Redux-Saga (ветка redux-saga)
    - Redux Toolkit
    - React-router-dom
    - Axios
