@@ -1,13 +1,12 @@
 import { useAppDispatch, useAppSelector } from "../../../AppWithRedux/store";
 import { useCallback, useEffect, useMemo } from "react";
-import { addTask, getTask } from "../../tasks-reducer";
+import { addTask, getTask } from "../../tasks-sagas";
+import { updateTodolist, removeTodolist } from "../../todolists-sagas";
 import {
   changeTodolistFilterAC,
-  TodolistDomainType,
-  updateTodolist
+  TodolistDomainType
 } from "../../todolists-reducer";
 import { TaskStatuses, TaskType } from "../../../api/todolists-api";
-import {removeTodolist} from "../../../../src/features/todolists-reducer"
 
 export const UseTodolist = (
   { id, filter, title }: TodolistDomainType,

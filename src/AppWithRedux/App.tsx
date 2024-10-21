@@ -9,7 +9,7 @@ import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar';
 import {Login} from '../features/login/Login';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {selectIsInitialize, selectStatus} from './app-selectors';
-import {authMe, logoutTC} from '../features/login/auth-reducer';
+import {authMe, logout} from '../features/login/auth-sagas';
 import {selectIsLoggedIn} from '../features/login/login-selectors';
 
 
@@ -33,7 +33,7 @@ function App({demo = false}: AppPropsType) {
     }
 
     const logoutHandler = () => {
-        dispatch(logoutTC())
+        dispatch(logout())
     }
 
     return (
