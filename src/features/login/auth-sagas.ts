@@ -5,6 +5,7 @@ import { AuthMeResponseType, LoginParamType, ResponseType} from '../../api/todol
 import {authApi} from '../../../src/api/auth-api';
 import {handleServerAppError, handleServerNetworkError} from '../../../src/utils/error-utils';
 import {setLoginAC} from '../login/auth-reducer';
+import {MeResponseType} from "../../api/auth-api"
 
 
 export const authMe = () => ({type: 'APP/INITIALIZE_APP_SAGA'});
@@ -12,10 +13,10 @@ export const authMe = () => ({type: 'APP/INITIALIZE_APP_SAGA'});
 export function* authMeSaga() {
     yield put(setAppStatusAC('loading'));
     try {
-        const res: AxiosResponse<ResponseType<AuthMeResponseType>> = yield call(
+        const res: MeResponseType = yield call(
             authApi.authMe
         );
-        if (res.data.resultCode === 0) {
+        if (res.resultCode === 0) {
             yield put(setLoginAC(true));
             yield put(setAppStatusAC('succeeded'));
         } else {

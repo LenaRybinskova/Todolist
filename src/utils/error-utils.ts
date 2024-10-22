@@ -7,12 +7,13 @@ export function* handleServerAppError(data: any) {
   } else {
     yield put(setAppErrorAC("some error occured"));
   }
-  return put(setAppStatusAC("failed"));
+  yield put(setAppErrorAC("some error occured"));
+  yield put(setAppStatusAC("failed"));
 }
 
 export function* handleServerNetworkError(error: { message: string }) {
   yield put(setAppErrorAC("some error occured, CATCH"));
-  return put(setAppStatusAC("failed"));
+  yield put(setAppStatusAC("failed"));
 }
 
 // для TS было
