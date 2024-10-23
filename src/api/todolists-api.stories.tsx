@@ -47,7 +47,7 @@ export const GetTasks = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         const todolistId = 'b0823b25-723b-401c-852d-c5840b593c0a'
-        taskAPI.getTasks(todolistId).then(res => setState(res.data))
+        taskAPI.getTasks(todolistId).then(data => setState(data))
 
     }, [])
     return <div>{JSON.stringify(state)}</div>

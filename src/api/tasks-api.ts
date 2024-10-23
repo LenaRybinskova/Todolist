@@ -48,16 +48,10 @@ export type TaskType = {
 
 export const taskAPI = {
     getTasks(todolistId: string): Promise<AxiosResponse<GetTaskResponseType>> {
-        return instanse.get<GetTaskResponseType>(`/todo-lists/${todolistId}/tasks`);
+        return instanse.get(`/todo-lists/${todolistId}/tasks`)
     },
-    createTask(
-        todolistId: string,
-        title: string
-    ): Promise<AxiosResponse<ResponseType<{ item: TaskType }>>> {
-        return instanse.post<ResponseType<{ item: TaskType }>>(
-            `/todo-lists/${todolistId}/tasks`,
-            {title}
-        );
+    createTask(todolistId: string, title: string):Promise<ResponseType<{ item: TaskType }>>{
+        return instanse.post<ResponseType<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks`, {title}).then(res=>res.data);
     },
     deleteTask(
         todolistId: string,

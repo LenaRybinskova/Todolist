@@ -1,11 +1,11 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
 import {setAppStatusAC, setInitializedAC} from '../../AppWithRedux/app-reducer';
 import {AxiosResponse} from 'axios';
-import { AuthMeResponseType, LoginParamType, ResponseType} from '../../api/todolists-api';
+import {LoginParamType, ResponseType} from '../../api/todolists-api';
 import {authApi} from '../../../src/api/auth-api';
 import {handleServerAppError, handleServerNetworkError} from '../../../src/utils/error-utils';
 import {setLoginAC} from '../login/auth-reducer';
-import {MeResponseType} from "../../api/auth-api"
+import {MeResponseType} from '../../api/auth-api'
 
 
 export const authMe = () => ({type: 'APP/INITIALIZE_APP_SAGA'});
@@ -20,10 +20,11 @@ export function* authMeSaga() {
             yield put(setLoginAC(true));
             yield put(setAppStatusAC('succeeded'));
         } else {
-            yield handleServerAppError(res.data);
+            yield* handleServerAppError(res.data);
         }
     } catch (e) {
-        yield handleServerNetworkError(e as { message: string });
+        debugger
+        yield* handleServerNetworkError(e as { message: string });
     } finally {
         yield put(setInitializedAC(true));
     }

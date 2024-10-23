@@ -26,10 +26,7 @@ export const todolistsReducer = (
                 )
             ];
         case 'CREATE-TODOLIST':
-            return [
-                {...action.todolist, filter: 'all', entityStatus: 'idle'},
-                ...state
-            ];
+            return [{...action.todolist, filter: 'all', entityStatus: 'idle'}, ...state];
         case 'CHANGE-ENTITY-STATUS':
             return state.map((tl) =>
                 tl.id === action.id ? {...tl, entityStatus: action.entityStatus} : tl

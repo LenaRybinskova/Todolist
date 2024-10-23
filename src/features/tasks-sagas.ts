@@ -29,18 +29,15 @@ export const getTask = (tlId: string) => ({
 export function* fetchTasksSaga(action: ReturnType<typeof getTask>) {
   try {
     yield put(setAppStatusAC("loading"));
-    const res: AxiosResponse<GetTaskResponseType> = yield call(
-      taskAPI.getTasks,
-      action.tlId
-    );
-    if (!res.data.error) {
-      yield put(getTasksAC(res.data.items, action.tlId));
+    const data : AxiosResponse<GetTaskResponseType> = yield call(taskAPI.getTasks,action.tlId);
+    if (!data.data.error) {
+      yield put(getTasksAC(data.data.items, action.tlId));
       yield put(setAppStatusAC("succeeded"));
     } else {
-      yield handleServerAppError(res.data);
+      yield* handleServerAppError(data);
     }
   } catch (e) {
-    yield handleServerNetworkError(e as { message: string });
+    yield* handleServerNetworkError(e as { message: string });
   }
 }
 
@@ -53,19 +50,23 @@ export const addTask = (title: string, todolistId: string) => ({
 export function* addTaskSaga(action: ReturnType<typeof addTask>) {
   yield put(setAppStatusAC("loading"));
   try {
-    const res: AxiosResponse<ResponseType<{ item: TaskType }>> = yield call(
+    const data:ResponseType<{ item: TaskType }> = yield call(
       taskAPI.createTask,
       action.todolistId,
       action.title
     );
-    if (res.data.resultCode === 0) {
-      yield put(addTaskAC(res.data.data.item));
+    console.log("addTaskSaga res:", data)
+    if (data.resultCode === 0) {
+      console.log("data.data.resultCode === 0")
+      yield put(addTaskAC(data.data.item));
       yield put(setAppStatusAC("succeeded"));
     } else {
-      yield handleServerAppError(res.data);
+      console.log(" else data.data.resultCode === 1", data)
+      yield* handleServerAppError(data);
     }
   } catch (e) {
-    yield handleServerNetworkError(e as { message: string });
+    console.log("addTaskSaga catch:", e)
+    yield* handleServerNetworkError(e as { message: string });
   }
 }
 

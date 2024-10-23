@@ -48,7 +48,7 @@ export function* createTodolistSaga(action: ReturnType<typeof createTodolist>) {
       todolistAPI.createTodolist,
       action.title
     );
-    if (res.status === 200) {
+    if (res.data.resultCode  === 0) {
       yield put(createTodolistAC(res.data.data.item));
       yield put(setAppStatusAC("succeeded"));
     } else {

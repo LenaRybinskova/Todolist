@@ -1,13 +1,13 @@
 import { setAppErrorAC, setAppStatusAC } from "../AppWithRedux/app-reducer";
 import { put } from "redux-saga/effects";
 
+
 export function* handleServerAppError(data: any) {
   if (data.messages.length) {
     yield put(setAppErrorAC(data.messages[0]));
   } else {
-    yield put(setAppErrorAC("some error occured"));
+    yield put(setAppErrorAC("some error occured, else"));
   }
-  yield put(setAppErrorAC("some error occured"));
   yield put(setAppStatusAC("failed"));
 }
 
