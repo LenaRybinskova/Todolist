@@ -79,19 +79,19 @@ export const removeTask = (taskId: string, todolistId: string) => ({
 export function* removeTaskSaga(action: ReturnType<typeof removeTask>) {
   yield put(setAppStatusAC("loading"));
   try {
-    const res: AxiosResponse<ResponseType> = yield call(
+    const data: ResponseType = yield call(
       taskAPI.deleteTask,
       action.todolistId,
       action.taskId
     );
-    if (res.data.resultCode === 0) {
+    if (data.resultCode === 0) {
       yield put(removeTaskAC(action.taskId, action.todolistId));
       yield put(setAppStatusAC("succeeded"));
     } else {
-      yield handleServerAppError(res.data);
+      yield* handleServerAppError(data);
     }
   } catch (e) {
-    yield handleServerNetworkError(e as { message: string });
+    yield* handleServerNetworkError(e as { message: string });
   }
 }
 
@@ -135,10 +135,10 @@ export function* updateTaskSaga(action: ReturnType<typeof updateTask>) {
       yield put(updateTaskAC(action.todolistId, action.taskId, action.model));
       yield put(setAppStatusAC("succeeded"));
     } else {
-      yield handleServerAppError(res.data);
+      yield* handleServerAppError(res.data);
     }
   } catch (e) {
-    yield handleServerNetworkError(e as { message: string });
+    yield* handleServerNetworkError(e as { message: string });
   }
 }
 

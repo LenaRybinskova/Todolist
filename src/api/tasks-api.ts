@@ -56,10 +56,10 @@ export const taskAPI = {
     deleteTask(
         todolistId: string,
         taskId: string
-    ): Promise<AxiosResponse<ResponseType>> {
+    ): Promise<ResponseType> {
         return instanse.delete<ResponseType>(
             `/todo-lists/${todolistId}/tasks/${taskId}`
-        );
+        ).then(res =>res.data);
     },
     updateTask(
         todolistId: string,
