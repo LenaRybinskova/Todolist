@@ -1,19 +1,27 @@
 import { tasksSlice } from "features/tasksSlice";
-import { todolistSlice } from "features/todolistSlice";
+import {todolistSlice, todolistsSlice} from 'features/todolistSlice';
 import { ThunkAction } from "redux-thunk";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { appReducer } from "AppWithRedux/appSlice";
 import { authReducer, authSlice } from "features/login/authSlice";
 import { configureStore, UnknownAction } from "@reduxjs/toolkit";
+import { todolistsApi} from 'api/todolists-api';
+import {RootState, setupListeners} from '@reduxjs/toolkit/query';
+
+
 
 export const store = configureStore({
   reducer: {
     tasks: tasksSlice,
-    todolists: todolistSlice,
+    // todolists: todolistSlice,
+    [todolistsApi.reducerPath]: todolistsApi.reducer,
     app: appReducer,
     auth: authReducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(todolistsApi.middleware)
 });
+
+setupListeners(store.dispatch)
 
 export type AppRootStateType = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

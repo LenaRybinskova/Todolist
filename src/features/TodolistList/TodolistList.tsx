@@ -9,7 +9,7 @@ type TodolistListType = {
   demo?: boolean;
 };
 const TodolistList: React.FC<TodolistListType> = ({ demo = false }): ReactElement => {
-  const { addTodolist, todolists, status, isLoggedIn } = useTodolisList(demo);
+  const { addTodolistHandle,  status, isLoggedIn, getTodolists } = useTodolisList(demo);
   //ВОПРОС, Navigate в кастомном хуке нельзя исп?
 
   //если не залогиненты - редирект на login
@@ -19,10 +19,10 @@ const TodolistList: React.FC<TodolistListType> = ({ demo = false }): ReactElemen
   return (
     <>
       <Grid container style={{ margin: "20px" }}>
-        <AddItemForm addItem={addTodolist} disabled={status === "loading"} />
+        <AddItemForm addItem={addTodolistHandle} disabled={status === "loading"} />
       </Grid>
       <Grid container spacing={3}>
-        {todolists.map((tl) => {
+        {getTodolists?.map((tl) => {
           return (
             <Grid key={tl.id} item xs={12} sm={6} md={4}>
               <Paper style={{ padding: "10px", minHeight: "400px"} }>

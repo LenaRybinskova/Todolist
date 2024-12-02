@@ -48,12 +48,15 @@ export const getTodolistsTC = (): AppThunk => {
   return (dispatch) => {
     dispatch(appActions.setAppStatus({ status: "loading" }));
     todolistAPI.getTodolists().then((res) => {
-      console.log("getTodolistsTC", res.data);
+
       dispatch(todolistsActions.getTodolist({ todolists: res.data }));
     });
     dispatch(appActions.setAppStatus({ status: "succeeded" }));
   };
 };
+
+
+
 export const createTodolistTC =
   (title: string): AppThunk =>
   async (dispatch) => {
@@ -90,39 +93,41 @@ export const removeTodolistTC = (id: string): AppThunk => {
       });
   };
 };
-export const changeTitleTodolistTC = (todolistId: string, model: TodolistDomainModelType): AppThunk => {
-  return (dispatch, getState: () => AppRootStateType) => {
-    const todolist = getState().todolists.find((tl) => tl.id === todolistId);
-    if (!todolist) {
-      console.log("todolist is not exist");
-      return;
-    }
 
-    const modelApi = {
-      id: todolist.id,
-      addedDate: todolist.addedDate,
-      order: todolist.order,
-      title: todolist.title,
-      filter: todolist.filter,
-      ...model,
-    };
-    dispatch(appActions.setAppStatus({ status: "loading" }));
-    todolistAPI
-      .updateTodolist(todolistId, modelApi.title)
-      .then((res) => {
-        if (res.data.resultCode === 0) {
-          /*  dispatch(todolistsActions.removeTodolist({todolistId}))*/
-          dispatch(todolistsActions.updateTodolist({ todolistId: todolistId, model: { title: modelApi.title } }));
-          dispatch(appActions.setAppStatus({ status: "succeeded" })); // закончили крутилку
-        } else {
-          handleServerAppError(res.data, dispatch);
-        }
-      })
-      .catch((e: AxiosError<ResponseErrorType>) => {
-        handleServerNetworkError(e, dispatch);
-      });
-  };
-};
+
+// export const changeTitleTodolistTC = (todolistId: string, model: TodolistDomainModelType): AppThunk => {
+//   return (dispatch, getState: () => AppRootStateType) => {
+//     const todolist = getState().todolists.find((tl) => tl.id === todolistId);
+//     if (!todolist) {
+//       console.log("todolist is not exist");
+//       return;
+//     }
+//
+//     const modelApi = {
+//       id: todolist.id,
+//       addedDate: todolist.addedDate,
+//       order: todolist.order,
+//       title: todolist.title,
+//       filter: todolist.filter,
+//       ...model,
+//     };
+//     dispatch(appActions.setAppStatus({ status: "loading" }));
+//     todolistAPI
+//       .updateTodolist(todolistId, modelApi.title)
+//       .then((res) => {
+//         if (res.data.resultCode === 0) {
+//           /*  dispatch(todolistsActions.removeTodolist({todolistId}))*/
+//           dispatch(todolistsActions.updateTodolist({ todolistId: todolistId, model: { title: modelApi.title } }));
+//           dispatch(appActions.setAppStatus({ status: "succeeded" })); // закончили крутилку
+//         } else {
+//           handleServerAppError(res.data, dispatch);
+//         }
+//       })
+//       .catch((e: AxiosError<ResponseErrorType>) => {
+//         handleServerNetworkError(e, dispatch);
+//       });
+//   };
+// };
 
 //types
 export type FilterValuesType = "all" | "active" | "completed";

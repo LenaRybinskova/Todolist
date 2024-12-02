@@ -1,3 +1,5 @@
+# 18: RTK query
+
 # 17: prettier, оптим импортов
 
 # 17: redux toolkit (без изм в ТС)

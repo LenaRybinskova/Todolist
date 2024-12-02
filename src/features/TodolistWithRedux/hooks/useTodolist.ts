@@ -1,19 +1,22 @@
 import { useAppSelector } from "AppWithRedux/store";
 import { useCallback, useEffect, useMemo } from "react";
 import { addTaskTC, getTaskTC } from "features/tasksSlice";
-import { changeTitleTodolistTC, removeTodolistTC, TodolistDomainType, todolistsActions } from "features/todolistSlice";
-import { TaskStatuses, TaskType } from "api/todolists-api";
+import { TodolistDomainType, todolistsActions } from "features/todolistSlice";
+import {TaskStatuses, TaskType, useDeleteTodolistMutation, useUpdateTodolistMutation} from 'api/todolists-api';
 import { useDispatch } from "react-redux";
 
 export const UseTodolist = ({ id, filter, title }: TodolistDomainType, demo?: boolean) => {
   let tasks = useAppSelector<Array<TaskType>>((state) => state.tasks[id]);
-  console.log("filter", filter);
+
   const dispatch = useDispatch(); // useAppDispatch не работает
+    const [deleteTodolist]= useDeleteTodolistMutation()
+    const [updateTodolist]= useUpdateTodolistMutation()
 
   useEffect(() => {
     if (!demo) {
       dispatch(getTaskTC(id));
     } else {
+      return;
       return;
     }
   }, []);
@@ -26,11 +29,14 @@ export const UseTodolist = ({ id, filter, title }: TodolistDomainType, demo?: bo
   );
 
   const removeTodolist = () => {
-    dispatch(removeTodolistTC(id));
+    // dispatch(removeTodolistTC(id));
+      deleteTodolist(id)
   };
   const changeTodolistTitle = useCallback(
     (title: string) => {
-      dispatch(changeTitleTodolistTC(id, { title: title }));
+      // dispatch(changeTitleTodolistTC(id, { title: title }));
+        updateTodolist({id, title})
+
     },
     [dispatch, id, title],
   );
