@@ -5,6 +5,7 @@
    - Redux-thunk
    - Redux-Saga (ветка redux-saga)
    - Redux Toolkit
+   - RTK Query (ветка RTK Query)
    - React-router-dom
    - Axios
    - Formik
