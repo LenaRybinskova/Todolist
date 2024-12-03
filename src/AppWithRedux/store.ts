@@ -7,6 +7,7 @@ import { authReducer, authSlice } from "features/login/authSlice";
 import { configureStore, UnknownAction } from "@reduxjs/toolkit";
 import { todolistsApi} from 'api/todolists-api';
 import {RootState, setupListeners} from '@reduxjs/toolkit/query';
+import {baseApi} from 'api/base-api';
 
 
 
@@ -14,11 +15,11 @@ export const store = configureStore({
   reducer: {
     tasks: tasksSlice,
     // todolists: todolistSlice,
-    [todolistsApi.reducerPath]: todolistsApi.reducer,
+    [baseApi.reducerPath]: baseApi.reducer,
     app: appReducer,
-    auth: authReducer,
+auth: authReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(todolistsApi.middleware)
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware)
 });
 
 setupListeners(store.dispatch)

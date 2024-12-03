@@ -101,6 +101,7 @@ export type tasksReducer = ReturnType<typeof sliceTasks.getInitialState>;
 
 //thunk
 export const getTaskTC = (tlId: string) => {
+    console.log("запрос за тасками")
     return (dispatch: Dispatch) => {
         dispatch(appActions.setAppStatus({status: 'loading'}));
         tasksAPI.getTasks(tlId).then((res) => dispatch(tasksActions.getTasks({tasks: res.data.items, tlId})));

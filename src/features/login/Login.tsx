@@ -1,11 +1,12 @@
 import { useFormik } from "formik";
 import { Button, Checkbox, FormControlLabel, FormGroup, FormLabel, Grid, TextField } from "@mui/material";
 import { FormControl } from "@material-ui/core";
-import { loginTC } from "features/login/authSlice";
+
 import { useAppSelector } from "AppWithRedux/store";
 import { Navigate } from "react-router-dom";
 import { selectIsLoggedIn } from "./login-selectors";
 import { useDispatch } from "react-redux";
+import {useLoginMutation} from 'features/login/login-api';
 
 type ErrorType = {
   email?: string;
@@ -15,6 +16,7 @@ type ErrorType = {
 export const Login = () => {
   const dispatch = useDispatch(); // useAppDispatch не работает
   const isLoggedIn = useAppSelector<boolean>(selectIsLoggedIn);
+  const [login]=useLoginMutation()
 
   const formik = useFormik({
     initialValues: {
@@ -40,11 +42,14 @@ export const Login = () => {
     // onSubmit не сраб, если в объекте error что то есть
     // onSubmit когда сработает, все поля инпутов запишет в объект touched и выведутся все ошибки если они есть
     onSubmit: (values) => {
-      dispatch(loginTC(values));
-      formik.resetForm(); //зачистка формы после сабмит до initialValues
+      login(values).then(()=>{
+        formik.resetForm(); //зачистка формы после сабмит до initialValues
+      })
+      // dispatch(loginTC(values));
+
     },
   });
-
+console.log("isLoggedIn LOGIN", isLoggedIn)
   //если залогиненты -редирект на главную
   if (isLoggedIn) {
     return <Navigate to={"/"} />;

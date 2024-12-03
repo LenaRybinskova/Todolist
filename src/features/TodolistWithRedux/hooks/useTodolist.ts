@@ -6,27 +6,29 @@ import {TaskStatuses, TaskType, useDeleteTodolistMutation, useUpdateTodolistMuta
 import { useDispatch } from "react-redux";
 
 export const UseTodolist = ({ id, filter, title }: TodolistDomainType, demo?: boolean) => {
-  let tasks = useAppSelector<Array<TaskType>>((state) => state.tasks[id]);
+/*    let tasks:any=[]*/
+/*  let tasks = useAppSelector<Array<TaskType>>((state) => state.tasks[id]);*/
+/*  console.log("TASKS", tasks)*/
 
   const dispatch = useDispatch(); // useAppDispatch не работает
     const [deleteTodolist]= useDeleteTodolistMutation()
     const [updateTodolist]= useUpdateTodolistMutation()
 
-  useEffect(() => {
-    if (!demo) {
-      dispatch(getTaskTC(id));
-    } else {
-      return;
-      return;
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!demo) {
+  //     dispatch(getTaskTC(id));
+  //   } else {
+  //     return;
+  //   }
+  // }, []);
 
-  const addTask = useCallback(
-    (title: string) => {
-      dispatch(addTaskTC(title, id));
-    },
-    [dispatch],
-  );
+/*
+  const addTask = (title: string) => {
+      dispatch(addTaskTC(title, id))
+  }
+*/
+
+
 
   const removeTodolist = () => {
     // dispatch(removeTodolistTC(id));
@@ -72,24 +74,24 @@ export const UseTodolist = ({ id, filter, title }: TodolistDomainType, demo?: bo
     [dispatch, id],
   );
 
-  // это у нас как бы расчет математический, его надо обернуть в useMemo()
+ /* // это у нас как бы расчет математический, его надо обернуть в useMemo()
   tasks = useMemo(() => {
     if (filter === "active") {
-      tasks = tasks.filter((t) => t.status === TaskStatuses.New);
+      tasks = tasks.filter((t:any) => t.status === TaskStatuses.New);
     }
     if (filter === "completed") {
-      tasks = tasks.filter((t) => t.status === TaskStatuses.Completed);
+      tasks = tasks.filter((t:any) => t.status === TaskStatuses.Completed);
     }
     return tasks;
   }, [tasks, filter]);
 
-  console.log("tasksForFilter", tasks);
+*/
   return {
     title,
     changeTodolistTitle,
     removeTodolist,
-    addTask,
-    tasks,
+/*    addTask,*/
+    /*tasks,*/
     onAllClickHandler,
     onActiveClickHandler,
     onCompletedClickHandler,

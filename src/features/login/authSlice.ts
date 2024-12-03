@@ -5,7 +5,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Dispatch } from "redux";
 import { AppThunk } from "AppWithRedux/store";
 import { todolistsActions } from "features/todolistSlice";
-import {authAPI} from 'api/auth.api';
+
 
 export const authSlice = createSlice({
   name: "auth",
@@ -28,7 +28,7 @@ export type authInitialState = ReturnType<typeof authSlice.getInitialState>;
 export const selectIsLoggedIn = authSlice.selectors;
 
 //TC
-export const authMeTC = () => async (dispatch: Dispatch) => {
+/*export const authMeTC = () => async (dispatch: Dispatch) => {
   dispatch(appActions.setAppStatus({ status: "loading" }));
   try {
     const res = await authAPI.authMe();
@@ -42,7 +42,7 @@ export const authMeTC = () => async (dispatch: Dispatch) => {
   } catch (e) {
     handleServerNetworkError(e as { message: string }, dispatch);
   } finally {
-    dispatch(appActions.setInitialized({ isInitialized: true })); /* чтобы мы проиниц приложение в любом случае*/
+    dispatch(appActions.setInitialized({ isInitialized: true })); /!* чтобы мы проиниц приложение в любом случае*!/
   }
 };
 
@@ -61,9 +61,9 @@ export const loginTC =
     } catch (e) {
       handleServerNetworkError(e as { message: string }, dispatch);
     }
-  };
+  };*/
 
-export const logoutTC = (): AppThunk => async (dispatch) => {
+/*export const logoutTC = (): AppThunk => async (dispatch) => {
   dispatch(appActions.setAppStatus({ status: "loading" }));
   try {
     const res = await authAPI.logout();
@@ -77,7 +77,26 @@ export const logoutTC = (): AppThunk => async (dispatch) => {
   } catch (e) {
     handleServerNetworkError(e as { message: string }, dispatch);
   }
-};
+};*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 //REDUX

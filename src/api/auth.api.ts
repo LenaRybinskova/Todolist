@@ -1,7 +1,7 @@
 import {AxiosResponse} from 'axios';
 import {AuthMeResponseType, instanse, LoginParamType, ResponseType} from 'api/todolists-api';
 
-export const authAPI = {
+export const authAPI_ = {
     authMe() {
         return instanse.get<ResponseType<AuthMeResponseType>>("/auth/me");
     },

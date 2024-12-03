@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {AppBar, Button, CircularProgress, Container, LinearProgress, Toolbar, Typography} from '@mui/material';
 import IconButton from '@mui/material/IconButton/IconButton';
@@ -9,9 +9,11 @@ import {ErrorSnackbar} from 'components/ErrorSnackbar/ErrorSnackbar';
 import {Login} from 'features/login/Login';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {selectIsInitialize, selectStatus} from './app-selectors';
-import {authMeTC, logoutTC} from 'features/login/authSlice';
+import {authActions} from 'features/login/authSlice';
 import {selectIsLoggedIn} from 'features/login/login-selectors';
 import {useDispatch} from 'react-redux';
+import {useAuthMeQuery, useLogoutMutation} from 'features/login/login-api';
+import {appActions} from 'AppWithRedux/appSlice';
 
 type AppPropsType = {
     demo?: boolean;
@@ -20,13 +22,29 @@ type AppPropsType = {
 function App({demo = false}: AppPropsType) {
     const dispatch = useDispatch(); //useAppDispatch() не работает
     const status = useAppSelector<string | null>(selectStatus);
-    const isInitialized = useAppSelector<boolean>(selectIsInitialize);
+    //const isInitialized = useAppSelector<boolean>(selectIsInitialize);
     const isLoggedIn = useAppSelector<boolean>(selectIsLoggedIn);
+    const {data, isLoading}=useAuthMeQuery()
+    const [isInitialized, setIsInitialized]=useState(false)
+    const [logout]=useLogoutMutation()
 
     // после CircularProgress сработает юзЭффект
-    useEffect(() => {
-        dispatch(authMeTC());
-    }, []);
+    // useEffect(() => {
+    //     dispatch(authMeTC());
+    // }, []);
+
+
+    useEffect(()=>{
+        if(!isLoading){
+            setIsInitialized(true)
+        }
+        if(data?.resultCode===0){
+            console.log("useEffect2")
+            dispatch(authActions.setLogin({ value: true }));
+            dispatch(appActions.setAppStatus({ status: "succeeded" }))
+        }
+    }, [data,isLoading])
+
 
     //если прил не проиниц =>крутилка и дальше useEffect с authMeTC() в кот проверка куки и тд
     if (!isInitialized) {
@@ -34,7 +52,8 @@ function App({demo = false}: AppPropsType) {
     }
 
     const logoutHandler = () => {
-        dispatch(logoutTC());
+/*        dispatch(logoutTC());*/
+        logout()
     };
 
     return (

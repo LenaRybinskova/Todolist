@@ -7,6 +7,8 @@ import ButtonContainer from "../../components/ButtonWithRedux/ButtonContainer";
 import TaskWithRedux from "../../components/Task/TaskWithRedux";
 import { UseTodolist } from "./hooks/useTodolist";
 import { TodolistDomainType } from "features/todolistSlice";
+import {useAddTaskMutation, useGetTasksQuery} from 'api/tasks.api';
+import {TaskStatuses} from 'api/todolists-api';
 
 type PropsType = {
   todolist: TodolistDomainType;
@@ -18,14 +20,30 @@ export const Todolist = React.memo(({ todolist, demo }: PropsType) => {
     title,
     changeTodolistTitle,
     removeTodolist,
-    addTask,
-    tasks,
+  /*  addTask,*/
+    /*tasks,*/
     onAllClickHandler,
     onActiveClickHandler,
     onCompletedClickHandler,
     id,
     filter,
   } = UseTodolist({ ...todolist }, demo);
+
+  const {data} = useGetTasksQuery(todolist.id)
+  const [addTask ]=useAddTaskMutation()
+
+  const addTaskHandler=(newTitle:string)=>{
+    addTask( {todolistId:todolist.id, title:newTitle})
+  }
+
+  let tasksForTodolist = data?.items
+  if (todolist.filter === 'active') {
+    tasksForTodolist = tasksForTodolist?.filter((task:any) => task.status === TaskStatuses.New)
+  }
+  if (todolist.filter === 'completed') {
+    tasksForTodolist = tasksForTodolist?.filter((task:any) => task.status === TaskStatuses.Completed)
+  }
+
 
   return (
     <div>
@@ -35,9 +53,9 @@ export const Todolist = React.memo(({ todolist, demo }: PropsType) => {
           <Delete />
         </IconButton>
       </h3>
-      <AddItemForm addItem={addTask} disabled={todolist.entityStatus === "loading"} />
+      <AddItemForm addItem={addTaskHandler} disabled={todolist.entityStatus === "loading"} />
       <div>
-        {tasks.map((t) => (
+        {tasksForTodolist?.map((t) => (
           <TaskWithRedux key={t.id} task={t} todolistId={id} />
         ))}
       </div>

@@ -5,6 +5,7 @@ import IconButton from "@mui/material/IconButton/IconButton";
 import { Delete } from "@mui/icons-material";
 import { useTasksWithRedux } from "./hooks/useTasksWithRedux";
 import { TaskPriorities, TaskStatuses } from "api/todolists-api";
+import {useDeleteTaskMutation} from 'api/tasks.api';
 
 type TaskType = {
   id: string;
@@ -24,7 +25,13 @@ export type TaskWithReduxType = {
 };
 
 const TaskWithRedux = memo((props: TaskWithReduxType) => {
-  const { onChangeHandler, onTitleChangeHandler, onClickHandler } = useTasksWithRedux({ ...props });
+  const { onChangeHandler, onTitleChangeHandler,/* onClickHandler */} = useTasksWithRedux({ ...props });
+
+  const [deleteTask] = useDeleteTaskMutation()
+
+  const onClickHandler=()=>{
+    deleteTask({todolistId: props.todolistId, taskId: props.task.id})
+  }
 
   return (
     <div className={props.task.status === TaskStatuses.Completed ? "is-done" : ""}>

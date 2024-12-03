@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import {TodolistDomainType} from 'features/todolistSlice';
+import {baseApi} from 'api/base-api';
 
 export type TodolistType = {
     id: string;
@@ -89,16 +90,7 @@ export const todolistAPI = {
     },
 };
 
-export const todolistsApi = createApi({
-    reducerPath: 'todolists',
-    tagTypes: ["Todolist"],
-    baseQuery: fetchBaseQuery({
-        baseUrl: 'https://social-network.samuraijs.com/api/1.1',
-        credentials: 'include',
-        prepareHeaders: (headers) => {
-            headers.set('API-KEY', '2c45728a-68be-4862-8b0c-8cd42989c7e6')
-        }
-    }),
+export const todolistsApi = baseApi.injectEndpoints({
     endpoints: (build) => {
         return {
             getTodolists: build.query<TodolistDomainType[], void>({
@@ -116,9 +108,9 @@ export const todolistsApi = createApi({
             addTodolist: build.mutation<ResponseType<{ item: TodolistType }>, string>({
                 query: (title) => {
                     return {
-                        url: '/todo-lists',
+                        url: `/todo-lists`,
                         method: 'POST',
-                        body: title
+                        body: {title}
                     }
                 },
                 invalidatesTags:["Todolist"]
@@ -126,7 +118,7 @@ export const todolistsApi = createApi({
             deleteTodolist: build.mutation<ResponseType, string>({
                 query: (tlId) => {
                     return {
-                        url: '/todo-lists',
+                        url: `todo-lists/${tlId}`,
                         method: 'DELETE',
                         body: tlId
                     }
@@ -136,15 +128,16 @@ export const todolistsApi = createApi({
             updateTodolist: build.mutation<ResponseType, {id: string, title: string}>({
                 query: ({id,title} ) => {
                     return {
-                        url: '/todo-lists',
-                        method: 'POST',
-                        body: {id, title}
+                        url: `todo-lists/${id}`,
+                        method: 'PUT',
+                        body: {id,title}
                     }
                 },
                 invalidatesTags:["Todolist"]
             }),
         }
-    }
+    },
+    overrideExisting: true,
 })
 
 

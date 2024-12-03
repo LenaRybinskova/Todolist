@@ -5,7 +5,7 @@ export const appSlice = createSlice({
   initialState: {
     status: "idle" as RequestStatusType,
     error: null as string | null,
-    isInitialized: false,
+   isInitialized: false,
   },
   reducers: {
     setAppStatus: (state, action: PayloadAction<{ status: RequestStatusType }>) => {
